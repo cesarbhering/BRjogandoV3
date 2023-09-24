@@ -5,19 +5,21 @@ export default defineNuxtConfig({
 
   head: {
     // Maps to the inner-text value of the <title> element.
-    title: 'nuxt-firebase',
+    title: "nuxt-firebase",
   },
 
-  modules: [
-    '@nuxtjs/i18n',
-  ],
+  modules: ["@nuxtjs/i18n"],
 
   i18n: {
-    vueI18n: './i18n.config.js'
+    vueI18n: "./i18n.config.js",
   },
 
-  css: ['vuetify/lib/styles/main.sass', '@mdi/font/css/materialdesignicons.min.css'],
+  css: [
+    "vuetify/lib/styles/main.sass",
+    "@mdi/font/css/materialdesignicons.min.css",
+    "@/assets/style/main.scss",
+  ],
   build: {
-    transpile: ['vuetify'],
+    transpile: ["vuetify"],
   },
-})
+});
