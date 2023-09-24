@@ -1,16 +1,10 @@
 <template>
   <div>
-    <form>
-      <select v-model="locale">
-        <option value="pt-br">en</option>
-        <option value="en">fr</option>
-      </select>
       <p>{{ $t('welcome') }}</p>
-    </form>
+      <v-btn>Hello Sass Changes</v-btn>
   </div>
 </template>
 <script setup>
-const { locale } = useI18n()
 </script>
 
 <style lang="scss" scoped>
