@@ -1,10 +1,16 @@
 <template>
   <div>
     <p class="teste">{{ $t("welcome") }}</p>
-    <v-btn>Hello Sass Changes</v-btn>
+    <v-btn>{{ list }}</v-btn>
   </div>
 </template>
 <script setup>
+import { useMainStore } from "~/store/main";
+import { storeToRefs } from "pinia";
+
+const mainStore = useMainStore();
+const { list } = storeToRefs(mainStore);
+
 definePageMeta({
   layout: "teste",
 });
