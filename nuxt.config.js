@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     title: "nuxt-firebase",
   },
 
-  modules: ["@nuxtjs/i18n"],
+  modules: ["@nuxtjs/i18n", "@pinia/nuxt"],
 
   i18n: {
     vueI18n: "./i18n.config.js",
@@ -19,7 +19,13 @@ export default defineNuxtConfig({
     "@mdi/font/css/materialdesignicons.min.css",
     "@/assets/style/main.scss",
   ],
+
   build: {
     transpile: ["vuetify"],
   },
+
+  alias: {
+    pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs"
+  }
+  
 });
