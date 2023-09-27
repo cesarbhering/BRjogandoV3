@@ -3,11 +3,6 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
 
-  head: {
-    // Maps to the inner-text value of the <title> element.
-    title: "nuxt-firebase",
-  },
-
   modules: ["@nuxtjs/i18n", "@pinia/nuxt"],
 
   i18n: {
@@ -23,9 +18,10 @@ export default defineNuxtConfig({
   build: {
     transpile: ["vuetify"],
   },
-
+  
   alias: {
+    // Resolve bug do pinia ao ser instalado pelo NPM (Cannot start nuxt:  Cannot find module 'pinia/dist/pinia.mjs')
     pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs"
   }
-  
+
 });
