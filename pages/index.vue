@@ -12,11 +12,15 @@ import { useNuxtApp } from "nuxt/app";
 const mainStore = useMainStore();
 const { list } = storeToRefs(mainStore);
 const nuxtApp = useNuxtApp()
+
+let a = ''
+
 definePageMeta({
   layout: "teste",
 });
 
-onMounted(() => {
+onMounted(async () => {
+  a = await $fetch('/.netlify/functions/fetchUpcomingMatches')
   console.log(nuxtApp)
   nuxtApp.$restCall.get('cleiton/mercearia', {coco: 'coco'})
   nuxtApp.$restCall.put('cleiton/mercearia', {coco: 'coco'}, {cleber: 'cleber'})
