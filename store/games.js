@@ -6,7 +6,8 @@ export const useGamesStore = defineStore({
   state: () => {
     return {
       upcomingMatches: [],
-      runningMatches: []
+      runningMatches: [],
+      pastMatches: []
     };
   },
   actions: {
@@ -24,6 +25,14 @@ export const useGamesStore = defineStore({
         .then((res) => res.json())
         .then((res) => {
           this.upcomingMatches = res.data;
+        });
+    },
+
+    fetchPastMatches() {
+      fetch("/.netlify/functions/fetchPastMatches")
+        .then((res) => res.json())
+        .then((res) => {
+          this.pastMatches = res.data;
         });
     }
   },

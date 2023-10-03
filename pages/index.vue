@@ -37,6 +37,24 @@
         </v-col>
       </v-row>
     </v-container>
+    <h1>Últimas Partidas</h1>
+    <v-container>
+      <v-row no-gutters>
+        <v-col
+          v-for="(pastMatch, index) in upcomingMatches"
+          :key="index"
+          class="mt-1"
+          cols="4"
+          sm="4"
+        >
+          <v-card>
+            <v-card-title>{{ pastMatch.name }}</v-card-title>
+            <!-- <v-card-subtitle>{{ pastMatch.begin_at }}</v-card-subtitle> -->
+            <v-card-text>{{ pastMatch.videogame.name }}</v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 <script setup>
@@ -47,6 +65,8 @@ import { useNuxtApp } from "nuxt/app";
 const gamesStore = useGamesStore();
 const { upcomingMatches } = storeToRefs(gamesStore);
 const { runningMatches } = storeToRefs(gamesStore);
+const { pastMatches } = storeToRefs(gamesStore);
+
 const nuxtApp = useNuxtApp();
 
 definePageMeta({
@@ -56,6 +76,7 @@ definePageMeta({
 onBeforeMount(async () => {
   gamesStore.fetchUpcomingMatches();
   gamesStore.fetchRunningMatches();
+  gamesStore.fetchPastMatches();
 });
 
 onMounted(async () => {
