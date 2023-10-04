@@ -7,7 +7,7 @@ const fileBrPlayers = "./helpers/player_ids.txt";
 
 const constructArrayWithRelevantIds = (fileTeamsWithBrs) => {
   // Read the contents of the .txt file
-  fs.readFile(fileTeamsWithBrs, "utf8", (err, data) => {
+  return fs.readFileSync(fileTeamsWithBrs, "utf8", (err, data) => {
     if (err) {
       console.error("Error reading the file:", err);
       return;
@@ -24,7 +24,6 @@ const constructArrayWithRelevantIds = (fileTeamsWithBrs) => {
 };
 
 const playerProcessor = (game, array) => {
-  console.log(array);
   if (array.includes(game.opponents[0].id || game.opponents[1].id)) {
     return game;
   }
@@ -53,10 +52,9 @@ const handler = async function () {
 
     const gamesWithBrs = [];
 
-    const teamsArray = await constructArrayWithRelevantIds(fileTeamsWithBrs);
-    const playersArray = await constructArrayWithRelevantIds(fileBrPlayers);
+    const teamsArray = constructArrayWithRelevantIds(fileTeamsWithBrs);
+    const playersArray = constructArrayWithRelevantIds(fileBrPlayers);
 
-    console.log('playersArray > ', playersArray)
 
     data.forEach((game) => {
       game.opponents[0].type === "Team"
