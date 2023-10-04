@@ -1,20 +1,70 @@
-// samething as fetchUpcomingMatches, but using /matches/running endpoint instead
-
 const fetch = require("node-fetch");
+const fs = require("fs");
+
+const fileTeamsWithBrs = "./helpers/teams_ids.txt";
+
+const fileBrPlayers = "./helpers/player_ids.txt";
+
+const constructArrayWithRelevantIds = (fileTeamsWithBrs) => {
+  // Read the contents of the .txt file
+  fs.readFile(fileTeamsWithBrs, "utf8", (err, data) => {
+    if (err) {
+      console.error("Error reading the file:", err);
+      return;
+    }
+
+    // Split the file content into an array of lines
+    const lines = data.split("\n");
+
+    // Remove any empty lines or whitespace
+    const idsArray = lines.filter((line) => line.trim() !== "");
+
+    return idsArray;
+  });
+};
+
+const playerProcessor = (game, array) => {
+  console.log(array);
+  if (array.includes(game.opponents[0].id || game.opponents[1].id)) {
+    return game;
+  }
+};
 
 const handler = async function () {
   try {
-    const response = await fetch("https://api.pandascore.co/matches/upcoming", {
-      headers: {
-        accept: 'application/json',
-        authorization: 'Bearer REDACTED_PANDASCORE_TOKEN'
-      },
-    });
+    const response = await fetch(
+      "https://api.pandascore.co/matches/upcoming?filter[opponents_filled]=true",
+      {
+        headers: {
+          accept: "application/json",
+          authorization:
+            "Bearer REDACTED_PANDASCORE_TOKEN",
+        },
+        params: {
+          "filter[opponents_filled]": true,
+        },
+      }
+    );
     if (!response.ok) {
       // NOT res.status >= 200 && res.status < 300
       return { statusCode: response.status, body: response.statusText };
     }
     const data = await response.json();
+
+    const gamesWithBrs = [];
+
+    const teamsArray = await constructArrayWithRelevantIds(fileTeamsWithBrs);
+    const playersArray = await constructArrayWithRelevantIds(fileBrPlayers);
+
+    console.log('playersArray > ', playersArray)
+
+    data.forEach((game) => {
+      game.opponents[0].type === "Team"
+        ? gamesWithBrs.push(playerProcessor(game, teamsArray))
+        : gamesWithBrs.push(playerProcessor(game, playersArray));
+    });
+
+    console.log(gamesWithBrs);
 
     return {
       statusCode: 200,
