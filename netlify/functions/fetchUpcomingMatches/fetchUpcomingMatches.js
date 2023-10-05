@@ -28,8 +28,10 @@ const playerProcessor = (game, array) => {
   }
 };
 
-const handler = async function () {
+const handler = async function (event, ) {
   try {
+    console.log(event)
+    console.log(event.queryStringParameters)
     const response = await fetch(
       "https://api.pandascore.co/matches/upcoming?filter[opponents_filled]=true",
       {
