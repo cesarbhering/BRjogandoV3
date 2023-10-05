@@ -6,25 +6,24 @@ const fileTeamsWithBrs = "./helpers/teams_ids.txt";
 const fileBrPlayers = "./helpers/player_ids.txt";
 
 const constructArrayWithRelevantIds = (fileTeamsWithBrs) => {
-  // Read the contents of the .txt file
-  return fs.readFileSync(fileTeamsWithBrs, "utf8", (err, data) => {
-    if (err) {
-      console.error("Error reading the file:", err);
-      return;
-    }
+  let idsArray = [];
 
-    // Split the file content into an array of lines
-    const lines = data.split("\n");
+  fs.readFileSync(fileTeamsWithBrs)
+    .toString()
+    .split("\n")
+    .forEach((line) => {
+      idsArray.push(parseInt(line));
+    });
 
-    // Remove any empty lines or whitespace
-    const idsArray = lines.filter((line) => line.trim() !== "");
-
-    return idsArray;
-  });
+  return idsArray;
 };
 
 const playerProcessor = (game, array) => {
-  if (array.includes(game.opponents[0].id || game.opponents[1].id)) {
+  if (
+    array.includes(
+      game.opponents[0].opponent.id || game.opponents[1].opponent.id
+    )
+  ) {
     return game;
   }
 };
@@ -50,23 +49,20 @@ const handler = async function () {
     }
     const data = await response.json();
 
-    const gamesWithBrs = [];
-
     const teamsArray = constructArrayWithRelevantIds(fileTeamsWithBrs);
     const playersArray = constructArrayWithRelevantIds(fileBrPlayers);
 
-
+    const gamesWithBrs = [];
     data.forEach((game) => {
       game.opponents[0].type === "Team"
         ? gamesWithBrs.push(playerProcessor(game, teamsArray))
         : gamesWithBrs.push(playerProcessor(game, playersArray));
     });
 
-    console.log(gamesWithBrs);
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ data }),
+      body: JSON.stringify({ data: gamesWithBrs.filter( Boolean ) }),
     };
   } catch (error) {
     // output to netlify function log
