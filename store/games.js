@@ -13,7 +13,7 @@ export const useGamesStore = defineStore({
   actions: {
 
     fetchRunningMatches() {
-      fetch("/.netlify/functions/fetchRunningMatches")
+      fetch('/.netlify/functions/fetchRunningMatches')
         .then((res) => res.json())
         .then((res) => {
           this.runningMatches = res.data;
@@ -21,7 +21,9 @@ export const useGamesStore = defineStore({
     },
 
     fetchUpcomingMatches() {
-      fetch("/.netlify/functions/fetchUpcomingMatches")
+      const thing = 'cleiton'
+
+      fetch(`/.netlify/functions/fetchUpcomingMatches?item=${thing}`)
         .then((res) => res.json())
         .then((res) => {
           this.upcomingMatches = res.data;
