@@ -13,7 +13,7 @@ export const useGamesStore = defineStore({
   actions: {
 
     fetchRunningMatches() {
-      fetch('/.netlify/functions/fetchRunningMatches')
+      fetch('/.netlify/functions/fetchPandaScoreMatches?matchOccurrence=running')
         .then((res) => res.json())
         .then((res) => {
           this.runningMatches = res.data;
@@ -21,9 +21,7 @@ export const useGamesStore = defineStore({
     },
 
     fetchUpcomingMatches() {
-      const thing = 'cleiton'
-
-      fetch(`/.netlify/functions/fetchUpcomingMatches?item=${thing}`)
+      fetch('/.netlify/functions/fetchPandaScoreMatches?matchOccurrence=upcoming')
         .then((res) => res.json())
         .then((res) => {
           this.upcomingMatches = res.data;
@@ -31,7 +29,7 @@ export const useGamesStore = defineStore({
     },
 
     fetchPastMatches() {
-      fetch("/.netlify/functions/fetchPastMatches")
+      fetch('/.netlify/functions/fetchPandaScoreMatches?matchOccurrence=past')
         .then((res) => res.json())
         .then((res) => {
           this.pastMatches = res.data;
