@@ -41,7 +41,7 @@
     <v-container>
       <v-row no-gutters>
         <v-col
-          v-for="(pastMatch, index) in upcomingMatches"
+          v-for="(pastMatch, index) in pastMatches"
           :key="index"
           class="mt-1"
           cols="4"
@@ -74,8 +74,9 @@ definePageMeta({
 });
 
 onBeforeMount(async () => {
-  gamesStore.fetchUpcomingMatches();
+  // Carrega a informação das partidas na store
   gamesStore.fetchRunningMatches();
+  gamesStore.fetchUpcomingMatches();
   gamesStore.fetchPastMatches();
 });
 
