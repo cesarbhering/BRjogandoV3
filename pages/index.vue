@@ -81,7 +81,7 @@ onBeforeMount(async () => {
 });
 
 onMounted(async () => {
-/*   nuxtApp.$restCall.get("cleiton/mercearia", { coco: "coco" });
+  nuxtApp.$restCall.get("cleiton/mercearia", { coco: "coco" });
   nuxtApp.$restCall.put(
     "cleiton/mercearia",
     { coco: "coco" },
@@ -97,7 +97,7 @@ onMounted(async () => {
     "cleiton/mercearia",
     { coco: "coco" },
     { cleber: "cleber" }
-  ); */
+  );
 });
 </script>
 
