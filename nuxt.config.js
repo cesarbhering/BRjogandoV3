@@ -5,7 +5,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      gtagId: 'GTM-K77DBQNQ',
+      gtagId: 'G-24H7QSPX4G',
     }
   },
 
