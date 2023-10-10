@@ -1,14 +1,9 @@
 const fetch = require("node-fetch");
 const fs = require("fs");
 
-const fileTeamsWithBrs = "./helpers/teams_ids.txt";
-
-const fileBrPlayers = "./helpers/player_ids.txt";
-
-
 /**
- * Função para processar o documento de texto com os Ids relevantes da nacionalidade. 
- * @param {File} fileWithIds Documento de texto com os ids que você quer filtrar, um em cada linha.
+ * Função para processar o documento de texto com os Ids relevantes da nacionalidade.
+ * @param {String} fileWithIds Caminho (relativo a base do projeto) para o ocumento de texto com os ids que você quer filtrar, um em cada linha.
  * @returns {Array} Array com os ids contidos no arquivo informado.
  */
 const constructArrayWithRelevantIds = (fileWithIds) => {
@@ -20,12 +15,11 @@ const constructArrayWithRelevantIds = (fileWithIds) => {
     .forEach((line) => {
       idsArray.push(parseInt(line));
     });
-
   return idsArray;
 };
 
 /**
- * Recebe o jogo e o array com os Ids a filtrar, retorna apenas jogos que tenham os Ids de oponente que queremos. 
+ * Recebe o jogo e o array com os Ids a filtrar, retorna apenas jogos que tenham os Ids de oponente que queremos.
  * @param {Object} game Jogo a analisar se temos interesse em mostrar na tela.
  * @param {Array} array Array gerado em constructArrayWithRelevantIds.
  * @returns {Object} objeto do jogo que nos interessa.
@@ -42,7 +36,7 @@ const playerProcessor = (game, arrayWithIds) => {
 
 const handler = async function (event) {
   try {
-    // usar filter[opponents_filled]=true ? 
+    // usar filter[opponents_filled]=true ?
     const matchOccurrence = event.queryStringParameters.matchOccurrence;
     const response = await fetch(
       `https://api.pandascore.co/matches/${matchOccurrence}`,
@@ -50,7 +44,7 @@ const handler = async function (event) {
         headers: {
           accept: "application/json",
           authorization: `Bearer REDACTED_PANDASCORE_TOKEN`,
-        }
+        },
       }
     );
     if (!response.ok) {
@@ -59,8 +53,10 @@ const handler = async function (event) {
     }
     const data = await response.json();
 
-    const teamsArray = constructArrayWithRelevantIds(fileTeamsWithBrs);
-    const playersArray = constructArrayWithRelevantIds(fileBrPlayers);
+    const teamsArray = constructArrayWithRelevantIds("./helpers/teams_ids.txt");
+    const playersArray = constructArrayWithRelevantIds(
+      "./helpers/player_ids.txt"
+    );
 
     const gamesWithBrs = [];
     data.forEach((game) => {
