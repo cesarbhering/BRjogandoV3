@@ -3,7 +3,7 @@ const fs = require("fs");
 
 /**
  * Função para processar o documento de texto com os Ids relevantes da nacionalidade.
- * @param {String} fileWithIds Caminho (relativo a base do projeto) para o ocumento de texto com os ids que você quer filtrar, um em cada linha.
+ * @param {String} fileWithIds Caminho para o ocumento de texto com os ids que você quer filtrar, um em cada linha.
  * @returns {Array} Array com os ids contidos no arquivo informado.
  */
 const constructArrayWithRelevantIds = (fileWithIds) => {
