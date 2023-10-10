@@ -3,6 +3,12 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
 
+  runtimeConfig: {
+    public: {
+      gtagId: 'GTM-K77DBQNQ',
+    }
+  },
+
   modules: ["@nuxtjs/i18n", "@pinia/nuxt"],
 
   i18n: {
