@@ -9,7 +9,7 @@ const fs = require("fs");
 const constructArrayWithRelevantIds = (fileWithIds) => {
   let idsArray = [];
 
-  fs.readFileSync(fileWithIds)
+  fs.readFileSync(require.resolve(fileWithIds))
     .toString()
     .split("\n")
     .forEach((line) => {
