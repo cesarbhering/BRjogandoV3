@@ -8,13 +8,21 @@ const fs = require("fs");
  */
 const constructArrayWithRelevantIds = (fileWithIds) => {
   let idsArray = [];
-
-  fs.readFileSync(require.resolve(fileWithIds))
-    .toString()
-    .split("\n")
-    .forEach((line) => {
-      idsArray.push(parseInt(line));
-    });
+  if (process.env.DEV) { // Necessário para que faça a chamada tanto no ambiente de desenvolvimento quanto em produção.
+    fs.readFileSync(fileWithIds)
+      .toString()
+      .split("\n")
+      .forEach((line) => {
+        idsArray.push(parseInt(line));
+      });
+  } else {
+    fs.readFileSync(require.resolve(fileWithIds))
+      .toString()
+      .split("\n")
+      .forEach((line) => {
+        idsArray.push(parseInt(line));
+      });
+  }
   return idsArray;
 };
 
@@ -43,7 +51,7 @@ const handler = async function (event) {
       {
         headers: {
           accept: "application/json",
-          authorization: `Bearer 2e23Rxs8cp_cezkKBI9xgJGrBWezAsXMK7WIhKRlGypakBbZJvk`,
+          authorization: `Bearer ${process.env.API_PANDASCORE_TOKEN}`,
         },
       }
     );
