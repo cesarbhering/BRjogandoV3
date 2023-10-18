@@ -8,7 +8,8 @@ const fs = require("fs");
  */
 const constructArrayWithRelevantIds = (fileWithIds) => {
   let idsArray = [];
-  if (process.env.DEV) { // Necessário para que faça a chamada tanto no ambiente de desenvolvimento quanto em produção.
+  console.log(typeof process.env.DEV)
+  if (process.env.DEV === 'true') { // Necessário para que faça a chamada tanto no ambiente de desenvolvimento quanto em produção.
     fs.readFileSync(fileWithIds)
       .toString()
       .split("\n")
@@ -16,6 +17,7 @@ const constructArrayWithRelevantIds = (fileWithIds) => {
         idsArray.push(parseInt(line));
       });
   } else {
+    console.log('false')
     fs.readFileSync(require.resolve(fileWithIds))
       .toString()
       .split("\n")
