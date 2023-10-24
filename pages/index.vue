@@ -1,5 +1,5 @@
 <template>
-  <primeiraPagina/>
+  <Header/>
   <div>
     <p class="teste">{{ $t("welcome") }}</p>
     <h1>Partidas ao vivo</h1>
@@ -56,12 +56,15 @@
         </v-col>
       </v-row>
     </v-container>
+    
   </div>
+  <Footer/>
 </template>
 <script setup>
 import { useGamesStore } from "~/store/games";
 import { storeToRefs } from "pinia";
-import primeiraPagina from "../layouts/primeiraPagina.vue"
+import Header from "../layouts/Header.vue";
+import Footer from "../layouts/Footer.vue";
 import { useNuxtApp } from "nuxt/app";
 
 const gamesStore = useGamesStore();
