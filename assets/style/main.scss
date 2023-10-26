@@ -1,1 +1,8 @@
 // Classes customizadas globalmente.
+
+.nation-colors-line {
+  height: 2px;
+  width: 100vw;
+  background-image: linear-gradient(to right, #ffdf00, #009c3b);
+  align-self: flex-end;
+}
