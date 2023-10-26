@@ -1,5 +1,4 @@
 <template>
-  <Header/>
   <div>
     <p class="teste">{{ $t("welcome") }}</p>
     <h1>Partidas ao vivo</h1>
@@ -56,15 +55,11 @@
         </v-col>
       </v-row>
     </v-container>
-    
   </div>
-  <Footer/>
 </template>
 <script setup>
 import { useGamesStore } from "~/store/games";
 import { storeToRefs } from "pinia";
-import Header from "../layouts/Header.vue";
-import Footer from "../layouts/Footer.vue";
 import { useNuxtApp } from "nuxt/app";
 
 const gamesStore = useGamesStore();
@@ -74,10 +69,6 @@ const { pastMatches } = storeToRefs(gamesStore);
 
 const nuxtApp = useNuxtApp();
 
-definePageMeta({
-  layout: "teste",
-});
-
 onBeforeMount(async () => {
   // Carrega a informação das partidas na store
   gamesStore.fetchRunningMatches();
@@ -85,7 +76,7 @@ onBeforeMount(async () => {
   gamesStore.fetchPastMatches();
 });
 
-onMounted(async () => {
+/* onMounted(async () => {
   nuxtApp.$restCall.get("cleiton/mercearia", { coco: "coco" });
   nuxtApp.$restCall.put(
     "cleiton/mercearia",
@@ -103,7 +94,7 @@ onMounted(async () => {
     { coco: "coco" },
     { cleber: "cleber" }
   );
-});
+}); */
 </script>
 
 <style lang="scss" scoped>
