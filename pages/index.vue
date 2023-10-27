@@ -3,25 +3,24 @@
     <p class="teste">{{ $t("welcome") }}</p>
     <h1>Partidas ao vivo</h1>
     <v-container>
-      <v-row no-gutters>
+      <v-row>
         <v-col
           v-for="(runningMatch, index) in runningMatches"
           :key="index"
           class="mt-1"
-          cols="4"
-          sm="4"
+          cols="3"
         >
-          <v-card>
-            <v-card-title>{{ runningMatch.name }}</v-card-title>
-            <v-card-subtitle>{{ runningMatch.begin_at }}</v-card-subtitle>
-            <v-card-text>{{ runningMatch.videogame.name }}</v-card-text>
-          </v-card>
+        <!-- REATIVIDADE MOBILE VERIFICAR -->
+        <!-- VER QUESTÃO DE VIRAR CARROUSELL -->
+        <CardsMedium
+          :match-info="runningMatch"
+          />
         </v-col>
       </v-row>
     </v-container>
     <h1>Próximas Partidas</h1>
     <v-container>
-      <v-row no-gutters>
+      <v-row>
         <v-col
           v-for="(upcomingMatch, index) in upcomingMatches"
           :key="index"
@@ -39,7 +38,7 @@
     </v-container>
     <h1>Últimas Partidas</h1>
     <v-container>
-      <v-row no-gutters>
+      <v-row>
         <v-col
           v-for="(pastMatch, index) in pastMatches"
           :key="index"

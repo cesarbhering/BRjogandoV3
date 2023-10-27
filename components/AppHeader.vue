@@ -1,6 +1,6 @@
 <template>
   <!-- HEADER DESKTOP -->
-  <v-tool-bar v-if="!mobile" class="header">
+  <v-toolbar v-if="!mobile" class="header">
     <img src="../assets/image/Logo-Branca.png" alt="brjogando" />
     <v-btn to="/"> Início </v-btn>
     <v-menu>
@@ -20,7 +20,7 @@
     <v-btn :to="{ name: 'institutional-cronogram' }"> Cronograma </v-btn>
     <v-btn :to="{ name: 'institutional-about' }"> Sobre nós </v-btn>
     <v-btn :to="{ name: 'institutional-support' }"> Suporte </v-btn>
-  </v-tool-bar>
+  </v-toolbar>
 
   <!-- HEADER MOBILE -->
   <v-app-bar v-else class="header">
