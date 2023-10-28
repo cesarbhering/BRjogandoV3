@@ -77,7 +77,7 @@ const handler = async function (event) {
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ data: gamesWithBrs.filter(Boolean) }),
+      body: JSON.stringify({ data/* : gamesWithBrs.filter(Boolean) */ }),
     };
   } catch (error) {
     // Printa o erro no log da netlify, não no browser do usuário.
