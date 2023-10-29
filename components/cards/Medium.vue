@@ -17,7 +17,7 @@
         v-for="(opponent, index) in matchInfo.opponents"
         class="opponent-line justify-space-between"
         :key="index"
-        :class="{'mb-4': index === matchInfo.opponents.length - 1 }"
+        :class="{'mb-4': index !== matchInfo.opponents.length - 1 }"
       >
         <div class="d-flex">
           <!-- LOGO -->
@@ -112,8 +112,8 @@ const vVideoGameBasedBackground = {
 }
 
 img {
+  max-height: 41px;
   max-width: 36px;
-  max-height: 45px;
 }
 
 .opponent-line {
@@ -144,5 +144,6 @@ img {
 .live img {
   width: 100%;
   min-width: 81px;
+  max-width: 36px;
 }
 </style>
