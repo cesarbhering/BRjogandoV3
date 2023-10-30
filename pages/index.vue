@@ -1,22 +1,23 @@
 <template>
-  <div>
+  <div class="home">
     <p class="teste">{{ $t("welcome") }}</p>
     <h1>Partidas ao vivo</h1>
     <v-container>
-      <v-row>
-        <v-col
-          v-for="(runningMatch, index) in runningMatches"
-          :key="index"
-          class="mt-1"
-          cols="3"
-        >
-        <!-- REATIVIDADE MOBILE VERIFICAR -->
-        <!-- VER QUESTÃO DE VIRAR CARROUSELL -->
-        <CardsMedium
-          :match-info="runningMatch"
-          />
-        </v-col>
-      </v-row>
+      <v-sheet color="#E4E7EC">
+        <!-- COLCOAR ESPAÇAMENTO ENTRE OS CARD NO CARROSEL -->
+        <v-slide-group v-model="model" show-arrows>
+          <v-slide-group-item
+            v-for="(runningMatch, index) in runningMatches"
+            :key="index"
+            v-slot="{ isSelected, toggle, selectedClass }"
+            class="mr-1"
+          >
+            <!-- REATIVIDADE MOBILE VERIFICAR -->
+            <!-- OCUPAR MAIS ESPAÇO NA TELA -->
+            <CardsMedium class="mr-10" :match-info="runningMatch" />
+          </v-slide-group-item>
+        </v-slide-group>
+      </v-sheet>
     </v-container>
     <h1>Próximas Partidas</h1>
     <v-container>
@@ -68,6 +69,8 @@ const { pastMatches } = storeToRefs(gamesStore);
 
 const nuxtApp = useNuxtApp();
 
+let model = null;
+
 onBeforeMount(async () => {
   // Carrega a informação das partidas na store
   gamesStore.fetchRunningMatches();
@@ -97,4 +100,7 @@ onBeforeMount(async () => {
 </script>
 
 <style lang="scss" scoped>
+.home {
+  background-color: #E4E7EC
+}
 </style>
