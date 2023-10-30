@@ -1,6 +1,6 @@
 <template>
   <!-- LEMBRAR DE REMOVER A SHADE DO CARD -->
-  <v-card class="mx-auto medium-card" width="288" height="211">
+  <v-card class="mx-auto medium-card" variant="flat" width="288" height="211">
     <v-card-title>
       <div class="upper-line" v-video-game-based-background></div>
     </v-card-title>
@@ -17,18 +17,21 @@
         v-for="(opponent, index) in matchInfo.opponents"
         class="opponent-line justify-space-between"
         :key="index"
-        :class="{'mb-4': index !== matchInfo.opponents.length - 1 }"
+        :class="{ 'mb-4': index !== matchInfo.opponents.length - 1 }"
       >
         <div class="d-flex">
           <!-- LOGO -->
-          <img
-            :src="
-              teamLogoThumb(
-                opponent.opponent.image_url,
-                opponent.opponent.location
-              )
-            "
-          />
+          <!-- logo esta ficando acima da sigla, colocar na mesma altura -->
+          <div class="team-logo">
+            <img
+              :src="
+                teamLogoThumb(
+                  opponent.opponent.image_url,
+                  opponent.opponent.location
+                )
+              "
+            />
+          </div>
           <!-- SIGLA -->
           <p class="text-h4 pl-4 text--primary acronym">
             {{ opponent.opponent.acronym || opponent.opponent.name }}
@@ -111,9 +114,13 @@ const vVideoGameBasedBackground = {
   top: 0px;
 }
 
-img {
-  max-height: 41px;
-  max-width: 36px;
+.team-logo {
+  width: 36px;
+
+  img {
+    max-height: 41px;
+    max-width: 36px;
+  }
 }
 
 .opponent-line {
