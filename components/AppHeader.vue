@@ -2,24 +2,26 @@
   <!-- HEADER DESKTOP -->
   <v-toolbar v-if="!mobile" class="header">
     <img src="../assets/image/Logo-Branca.png" alt="brjogando" />
-    <v-btn to="/"> Início </v-btn>
+    <NuxtLink to="/"> Início </NuxtLink>      
+    
     <v-menu>
       <template v-slot:activator="{ props }">
-        <v-btn v-bind="props">Jogos</v-btn>
+        <v-btn outlined v-bind="props">Jogos <span>V</span></v-btn>
       </template>
       <template v-slot:default>
         <v-list>
           <v-list-item v-for="(item, index) in arrayDeJogos" :key="index">
-            <v-btn :to="'esports/' + item">{{
+            <NuxtLink :to="'esports/' + item">{{
               item.split("_").join(" ")
-            }}</v-btn>
+            }}</NuxtLink>
           </v-list-item>
         </v-list>
       </template>
-    </v-menu>
-    <v-btn :to="{ name: 'institutional-cronogram' }"> Cronograma </v-btn>
-    <v-btn :to="{ name: 'institutional-about' }"> Sobre nós </v-btn>
-    <v-btn :to="{ name: 'institutional-support' }"> Suporte </v-btn>
+    </v-menu> 
+
+    <NuxtLink :to="{ name: 'institutional-cronogram' }"> Cronograma </NuxtLink>
+    <NuxtLink :to="{ name: 'institutional-about' }"> Sobre nós </NuxtLink>
+    <NuxtLink :to="{ name: 'institutional-support' }"> Suporte </NuxtLink>
   </v-toolbar>
 
   <!-- HEADER MOBILE -->
@@ -52,21 +54,41 @@ import { useDisplay } from "vuetify";
 const { mobile } = useDisplay();
 
 const arrayDeJogos = [
-  "Dota_2",
-  "League_of_Legends",
-  "Counter_Strike_2",
-  "Overwatch",
+  'Dota_2',
+  'League_of_Legends',
+  'Counter_Strike_2',
+  'Overwatch',
 ];
 
+const selectedItem= null
+
 const drawer = ref(false);
+
+
 </script>
 
 <style lang="scss" scoped>
-.header {
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
+.v-toolbar {
   height: 80px;
+  width: 100vw;
   background-color: #040c2d;
   display: flex;
   flex-direction: row;
+  align-items: center;
+}
+
+.v-toolbar *{
+  margin-right: 16px;
+}
+
+.v-toolbar:first-child{
+  padding-left: 71px;
+}
+
+.v-toolbar:nth-child(2){
+  font-weight: bold;
 }
 
 img {
@@ -78,15 +100,38 @@ img {
   background-color: #040c2d;
   color: #ffff;
   padding: 0;
-  display: inline;
-  margin-top: 25px;
 }
-.v-list-item a {
+
+.v-btn span{
+  margin-left: 8px;
+  font-weight: bold;
+  font-size: 10px;
+  font-family: 'Orbitron', sans-serif;
+  transition: transform 0.5s ease-in-out;
+}
+
+.v-btn:active span{
+  transform:rotate(180deg);
+}
+
+a{
+  text-decoration: none;
+  color: #ffff;
+}
+
+.v-navigation-drawer{
+  margin-top: 16px;
+}
+
+.v-list-item{
+  color: #000;
+}
+.v-list-item a{
   text-decoration: none;
   color: #000;
 }
 
-.v-list-item:hover {
+.v-list-item a:hover {
   background-color: #e6e6e6;
 }
 </style>
