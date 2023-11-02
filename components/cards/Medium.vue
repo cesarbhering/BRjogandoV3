@@ -1,43 +1,51 @@
 <template>
   <!-- LEMBRAR DE REMOVER A SHADE DO CARD -->
-  <v-card class="mx-auto medium-card" max-width="288" max-height="211">
+  <v-card class="mx-auto medium-card" variant="flat" width="288" height="211">
     <v-card-title>
       <div class="upper-line" v-video-game-based-background></div>
     </v-card-title>
-    <v-card-subtitle class="d-flex flex-column">
+    <v-card-subtitle class="d-flex flex-column text-center">
       <span>{{ matchInfo.videogame.name }}</span>
       <span>
         {{ matchInfo.league.name }} -
         {{ `Melhor de ${matchInfo.games.length}` }}
       </span>
     </v-card-subtitle>
-    <v-card-text>
-      <!-- USAR V-FOR PARA CADA OPONENTE VAI ME AJUDAR COM O INDEX E EVITAR REPETICOES -->
-      <div class="opponent-line">
-        <img
-          :src="teamLogoThumb(team0LogoUrl,team0Nationality).URL"
-        />
-        <p class="text-h4 text--primary">
-          {{ matchInfo.opponents[0].opponent.acronym }}
-        </p>
-        <p class="text-h4 text--primary">
-          {{ matchInfo.results[0].score }}
-        </p>
+    <v-card-text class="pb-0">
+      <!-- LOGO/SIGLA/SCORE -->
+      <div
+        v-for="(opponent, index) in matchInfo.opponents"
+        class="opponent-line justify-space-between"
+        :key="index"
+        :class="{ 'mb-4': index !== matchInfo.opponents.length - 1 }"
+      >
+        <div class="d-flex">
+          <!-- LOGO -->
+          <!-- logo esta ficando acima da sigla, colocar na mesma altura -->
+          <div class="team-logo">
+            <img
+              :src="
+                teamLogoThumb(
+                  opponent.opponent.image_url,
+                  opponent.opponent.location
+                )
+              "
+            />
+          </div>
+          <!-- SIGLA -->
+          <p class="text-h4 pl-4 text--primary acronym">
+            {{ opponent.opponent.acronym || opponent.opponent.name }}
+          </p>
+        </div>
+        <div>
+          <!-- SCORE -->
+          <p class="text-h4 text--primary score">
+            {{ matchInfo.results[index].score }}
+          </p>
+        </div>
       </div>
-      <div class="opponent-line">
-        <!-- usar computed -->
-        <img
-          :src="teamLogoThumb(team1LogoUrl, team1Nationality).URL"
-        />
-        <p class="text-h4 text--primary">
-          {{ matchInfo.opponents[1].opponent.acronym }}
-        </p>
-        <p class="text-h4 text--primary">
-          {{ matchInfo.results[1].score }}
-        </p>
-      </div>
-
-      <div class="live">
+      <!-- AO VIVO SVG -->
+      <div class="live text-center">
         <img
           src="../../assets/image/aovivo.svg"
           alt="Live game"
@@ -58,22 +66,6 @@ const props = defineProps({
 });
 
 const { teamLogoThumb } = useLogos();
-
-const team0LogoUrl = computed(() => {
-  return props.matchInfo.opponents[0].opponent.image_url;
-});
-
-const team1LogoUrl = computed(() => {
-  return props.matchInfo.opponents[1].opponent.image_url;
-});
-
-const team0Nationality = computed(() => {
-  return props.matchInfo.opponents[0].opponent.location;
-});
-
-const team1Nationality = computed(() => {
-  return props.matchInfo.opponents[1].opponent.location;
-});
 
 const colors = {
   greenFlag: "#009C3B",
@@ -122,9 +114,13 @@ const vVideoGameBasedBackground = {
   top: 0px;
 }
 
-img {
-  width: 100%;
-  max-width: 36px;
+.team-logo {
+  width: 36px;
+
+  img {
+    max-height: 41px;
+    max-width: 36px;
+  }
 }
 
 .opponent-line {
@@ -132,12 +128,29 @@ img {
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
+
+  .acronym {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 45px;
+    color: #000000;
+  }
+
+  .score {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+    color: #002776;
+  }
 }
 
 .live img {
   width: 100%;
   min-width: 81px;
+  max-width: 36px;
 }
 </style>
-
-
