@@ -13,14 +13,14 @@ export const useLogos = () => {
       const newFilename = "thumb_" + filename;
       parts.push(newFilename); // Replace the filename with the new one
       const transformedURL = parts.join("/");
-      return {
-        URL: transformedURL
-      };
+      return transformedURL
+    
     }
     // Quando for BR importar o br-flag.svg que já temos no assets, pra economizar tempo de download.
-    return {
-      URL: `https://flagcdn.com/${nationality.toLowerCase()}.svg`,
-    };
+    if (nationality) {
+      return `https://flagcdn.com/${nationality.toLowerCase()}.svg`
+    }
+    
   };
   return { teamLogoThumb };
 };
