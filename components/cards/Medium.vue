@@ -10,7 +10,7 @@
         {{ `Melhor de ${matchInfo.games.length}` }}
       </span>
     </v-card-subtitle>
-    <v-card-text class="pb-0">
+    <v-card-text>
       <!-- LOGO/SIGLA/SCORE -->
       <div
         v-for="(opponent, index) in matchInfo.opponents"
@@ -38,13 +38,14 @@
         </div>
         <div>
           <!-- SCORE -->
-          <p class="text-h4 text--primary mr-5 score">
+          <!-- QUANDO ESTA 1X0 OS NUMERO NAO FICAM ALINHADOS -->
+          <p class="text-h4 text--primary mr-5 score text-center">
             {{ matchInfo.results[index].score }}
           </p>
         </div>
       </div>
       <!-- AO VIVO SVG -->
-      <div class="live text-center pt-2">
+      <div class="live text-center">
         <img
           src="../../assets/image/aovivo.svg"
           alt="Live game"
@@ -131,18 +132,23 @@ const vVideoGameBasedBackground = {
   .acronym {
     font-family: "Poppins";
     font-weight: bold;
+    font-size: 25px !important;
   }
 
   .score {
     font-family: "Poppins";
     font-weight: bold;
+    font-size: 20px !important;
     color: #002776;
   }
 }
 
-.live img {
+.live {
   width: 100%;
   min-width: 81px;
   max-width: 36px;
+  position: absolute;
+    bottom: 0;
+  padding-left: 31%;
 }
 </style>
