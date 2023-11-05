@@ -3,11 +3,15 @@
     <v-card-title>
       <div class="upper-line" v-video-game-based-background></div>
     </v-card-title>
-    <v-card-subtitle class="d-flex flex-column text-center">
+    <v-card-subtitle class="d-flex flex-column text-center match-infos">
       <span>{{ matchInfo.videogame.name }}</span>
       <span>
         {{ matchInfo.league.name }} -
-        {{ mobile ? `Md ${matchInfo.games.length}` :`Melhor de ${matchInfo.games.length}` }}
+        {{
+          mobile
+            ? `Md ${matchInfo.games.length}`
+            : `Melhor de ${matchInfo.games.length}`
+        }}
       </span>
     </v-card-subtitle>
     <v-card-text>
@@ -16,7 +20,7 @@
         v-for="(opponent, index) in matchInfo.opponents"
         class="opponent-line justify-space-between"
         :key="index"
-        :class="{ 'mb-4': index !== matchInfo.opponents.length - 1 }"
+        :class="{ 'mb-4': index !== matchInfo.opponents.length - 1 && !mobile }"
       >
         <div class="d-flex align-center ml-5">
           <!-- LOGO -->
@@ -46,11 +50,7 @@
       </div>
       <!-- AO VIVO SVG -->
       <div class="live text-center">
-        <img
-          src="../../assets/image/aovivo.svg"
-          alt="Live game"
-          min-width="81px"
-        />
+        <img src="../../assets/image/aovivo.svg" alt="Live game" />
       </div>
     </v-card-text>
   </v-card>
@@ -62,7 +62,6 @@ export default {
 </script>
 <script setup>
 import { useDisplay } from "vuetify";
-
 
 const props = defineProps({
   matchInfo: { type: Object, required: true },
@@ -108,10 +107,23 @@ const vVideoGameBasedBackground = {
 <style lang="scss" scoped>
 .medium-card {
   border-radius: 8px;
-  width:288px;
-  height:211px;
+  width: 288px;
+  height: 211px;
+  @media (max-width: 960px) {
+    width: 190px;
+    height: 120px;
+    .v-card-text {
+      padding: 0px 0px 0px 0px;
+      margin: 0px 0px 0px 0px;
+    }
+  }
 }
 
+.v-card-title {
+  @media (max-width: 960px) {
+    padding: 1px;
+  }
+}
 .upper-line {
   position: absolute;
   width: 288px;
@@ -120,12 +132,23 @@ const vVideoGameBasedBackground = {
   top: 0px;
 }
 
+.match-infos {
+  @media (max-width: 960px) {
+    display: inline;
+    padding: 0;
+    font-size: 10px;
+  }
+}
+
 .team-logo {
   width: 36px;
 
   img {
     max-height: 41px;
     max-width: 36px;
+    @media (max-width: 960px) {
+      max-width: 25px;
+    }
   }
 }
 
@@ -134,11 +157,18 @@ const vVideoGameBasedBackground = {
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
+  @media (max-width: 960px) {
+    margin: 0px 0px 0px 0px;
+    height: 30px;
+  }
 
   .acronym {
     font-family: "Poppins";
     font-weight: bold;
     font-size: 25px !important;
+    @media (max-width: 960px) {
+      font-size: 18px !important;
+    }
   }
 
   .score {
@@ -146,15 +176,24 @@ const vVideoGameBasedBackground = {
     font-weight: bold;
     font-size: 20px !important;
     color: #002776;
+    @media (max-width: 960px) {
+      font-size: 14px !important;
+    }
   }
 }
 
 .live {
   width: 100%;
-  min-width: 81px;
-  max-width: 36px;
+  max-width: 31px;
   position: absolute;
-    bottom: 0;
+  bottom: 0;
   padding-left: 31%;
+  @media (max-width: 960px) {
+    padding-left: 37%;
+
+    img {
+      max-width: 51px;
+    }
+  }
 }
 </style>
