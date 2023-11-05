@@ -1,5 +1,4 @@
 <template>
-  <!-- LEMBRAR DE REMOVER A SHADE DO CARD -->
   <v-card class="mx-auto medium-card" variant="flat" width="288" height="211">
     <v-card-title>
       <div class="upper-line" v-video-game-based-background></div>
