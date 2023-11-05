@@ -42,7 +42,7 @@ const playerProcessor = (game, arrayWithIds) => {
   }
 };
 
-const handler = async function (event) {
+export const handler = async function (event) {
   try {
     // usar filter[opponents_filled]=true ?
     const matchOccurrence = event.queryStringParameters.matchOccurrence;
@@ -89,5 +89,3 @@ const handler = async function (event) {
     };
   }
 };
-
-module.exports = { handler };
