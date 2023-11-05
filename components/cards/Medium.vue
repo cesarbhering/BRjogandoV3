@@ -18,7 +18,7 @@
         :key="index"
         :class="{ 'mb-4': index !== matchInfo.opponents.length - 1 }"
       >
-        <div class="d-flex">
+        <div class="d-flex align-center ml-5">
           <!-- LOGO -->
           <!-- logo esta ficando acima da sigla, colocar na mesma altura -->
           <div class="team-logo">
@@ -38,13 +38,13 @@
         </div>
         <div>
           <!-- SCORE -->
-          <p class="text-h4 text--primary score">
+          <p class="text-h4 text--primary mr-5 score">
             {{ matchInfo.results[index].score }}
           </p>
         </div>
       </div>
       <!-- AO VIVO SVG -->
-      <div class="live text-center">
+      <div class="live text-center pt-2">
         <img
           src="../../assets/image/aovivo.svg"
           alt="Live game"
@@ -130,19 +130,12 @@ const vVideoGameBasedBackground = {
 
   .acronym {
     font-family: "Poppins";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 30px;
-    line-height: 45px;
-    color: #000000;
+    font-weight: bold;
   }
 
   .score {
     font-family: "Poppins";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 30px;
+    font-weight: bold;
     color: #002776;
   }
 }
