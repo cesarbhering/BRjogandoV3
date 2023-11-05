@@ -4,7 +4,7 @@
     <h1>Partidas ao vivo</h1>
     <v-container fluid class="px-0">
       <v-sheet color="#E4E7EC">
-        <v-slide-group v-model="model" :show-arrows="mobile">
+        <v-slide-group v-model="model" :show-arrows="!mobile">
           <v-slide-group-item
             v-for="(runningMatch, index) in runningMatches"
             :key="index"

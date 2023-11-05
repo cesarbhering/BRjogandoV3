@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto medium-card" variant="flat" width="288" height="211">
+  <v-card class="mx-auto medium-card" variant="flat">
     <v-card-title>
       <div class="upper-line" v-video-game-based-background></div>
     </v-card-title>
@@ -7,7 +7,7 @@
       <span>{{ matchInfo.videogame.name }}</span>
       <span>
         {{ matchInfo.league.name }} -
-        {{ `Melhor de ${matchInfo.games.length}` }}
+        {{ mobile ? `Md ${matchInfo.games.length}` :`Melhor de ${matchInfo.games.length}` }}
       </span>
     </v-card-subtitle>
     <v-card-text>
@@ -38,7 +38,7 @@
         </div>
         <div>
           <!-- SCORE -->
-          <!-- QUANDO ESTA 1X0 OS NUMERO NAO FICAM ALINHADOS -->
+          <!-- @TODO: QUANDO ESTA 1X0 OS NUMERO NAO FICAM ALINHADOS -->
           <p class="text-h4 text--primary mr-5 score text-center">
             {{ matchInfo.results[index].score }}
           </p>
@@ -61,10 +61,14 @@ export default {
 };
 </script>
 <script setup>
+import { useDisplay } from "vuetify";
+
+
 const props = defineProps({
   matchInfo: { type: Object, required: true },
 });
 
+const { mobile } = useDisplay();
 const { teamLogoThumb } = useLogos();
 
 const colors = {
@@ -104,6 +108,8 @@ const vVideoGameBasedBackground = {
 <style lang="scss" scoped>
 .medium-card {
   border-radius: 8px;
+  width:288px;
+  height:211px;
 }
 
 .upper-line {
