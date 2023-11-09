@@ -2,10 +2,10 @@
   <div class="home">
     <p class="teste">{{ $t("welcome") }}</p>
     <h1>Partidas ao vivo</h1>
-    <v-container>
+    <v-container  class="px-1">
+      <!-- VER ESPAÇAMENTO QUANDO TEM POUCOS CARDS -->
       <v-sheet color="#E4E7EC">
-        <!-- COLCOAR ESPAÇAMENTO ENTRE OS CARD NO CARROSEL -->
-        <v-slide-group v-model="model" show-arrows>
+        <v-slide-group v-model="model" :show-arrows="!mobile">
           <v-slide-group-item
             v-for="(runningMatch, index) in runningMatches"
             :key="index"
@@ -13,8 +13,7 @@
             class="mr-1"
           >
             <!-- REATIVIDADE MOBILE VERIFICAR -->
-            <!-- OCUPAR MAIS ESPAÇO NA TELA -->
-            <CardsMedium class="mr-10" :match-info="runningMatch" />
+            <CardsMedium class="mr-3" :match-info="runningMatch" />
           </v-slide-group-item>
         </v-slide-group>
       </v-sheet>
@@ -58,9 +57,12 @@
   </div>
 </template>
 <script setup>
+import { useDisplay } from "vuetify";
 import { useGamesStore } from "~/store/games";
 import { storeToRefs } from "pinia";
 import { useNuxtApp } from "nuxt/app";
+
+const { mobile } = useDisplay();
 
 const gamesStore = useGamesStore();
 const { upcomingMatches } = storeToRefs(gamesStore);
@@ -69,6 +71,7 @@ const { pastMatches } = storeToRefs(gamesStore);
 
 const nuxtApp = useNuxtApp();
 
+// Para auxiliar o carrossel
 let model = null;
 
 onBeforeMount(async () => {
@@ -103,4 +106,5 @@ onBeforeMount(async () => {
 .home {
   background-color: #E4E7EC
 }
+
 </style>
