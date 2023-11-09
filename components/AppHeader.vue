@@ -68,8 +68,6 @@ const drawer = ref(false);
 </script>
 
 <style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
-
 .v-toolbar {
   height: 80px;
   width: 100vw;
@@ -77,6 +75,13 @@ const drawer = ref(false);
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+/* MELHORAR ESTE SELETOR */
+#__nuxt > div > div > div > div > header {
+  @media (max-width: 960px) {
+    padding: 0px;
+  }
 }
 
 .v-toolbar *{
