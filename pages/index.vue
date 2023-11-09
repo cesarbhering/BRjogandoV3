@@ -2,7 +2,8 @@
   <div class="home">
     <p class="teste">{{ $t("welcome") }}</p>
     <h1>Partidas ao vivo</h1>
-    <v-container fluid class="px-1">
+    <v-container  class="px-1">
+      <!-- VER ESPAÇAMENTO QUANDO TEM POUCOS CARDS -->
       <v-sheet color="#E4E7EC">
         <v-slide-group v-model="model" :show-arrows="!mobile">
           <v-slide-group-item
@@ -106,10 +107,4 @@ onBeforeMount(async () => {
   background-color: #E4E7EC
 }
 
-.full-width1 {
-  width: 100%;
-  padding-left: 0;
-  padding-right: 0;
-  background-color: red;
-}
 </style>

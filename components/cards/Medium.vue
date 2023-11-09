@@ -110,7 +110,7 @@ const vVideoGameBasedBackground = {
   width: 288px;
   height: 211px;
   @media (max-width: 960px) {
-    width: 190px;
+    width: 180px;
     height: 120px;
     .v-card-text {
       padding: 0px 0px 0px 0px;
