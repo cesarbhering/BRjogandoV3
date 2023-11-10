@@ -1,11 +1,12 @@
 <template>
-  <v-card class="mx-auto big-card" variant="flat">
+  <v-card class="big-card" variant="flat">
     <v-card-title>
       <div class="upper-image">
-        <img
+        <!-- PROVAVELMENTE USAR A IMAGEM DO VIDEOGAME COMO BAKGROUND ESTA PIORANDO O SEO/ACESSIBILIDADE, VERIFICAR ISTO -->
+                <img
           :src="videoGameImage(matchInfo.videogame.name)"
           :alt="matchInfo.videogame.name"
-        />
+        /> 
       </div>
     </v-card-title>
     <v-card-text>
@@ -102,12 +103,10 @@ function videoGameImage(videogameName) {
 }
 
 .v-card-title {
+  background-color: red;
+  height: 136px;
+  padding: 0px;
   .upper-image {
-    object-fit: cover;
-    width: 100%;
-    height: 90px;
-    left: 0px;
-    top: 0px;
   }
 
   @media (max-width: 960px) {
