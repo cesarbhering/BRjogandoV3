@@ -2,45 +2,41 @@
   <v-card class="big-card" variant="flat">
     <v-card-title>
       <div class="upper-image">
-        <!-- PROVAVELMENTE USAR A IMAGEM DO VIDEOGAME COMO BAKGROUND ESTA PIORANDO O SEO/ACESSIBILIDADE, VERIFICAR ISTO -->
-                <img
+        <img
           :src="videoGameImage(matchInfo.videogame.name)"
           :alt="matchInfo.videogame.name"
-        /> 
+        />
       </div>
     </v-card-title>
-    <v-card-text>
-      <!-- LOGO/SIGLA/SCORE -->
-      <div
-        v-for="(opponent, index) in matchInfo.opponents"
-        class="opponent-line justify-space-between"
-        :key="index"
-        :class="{ 'mb-4': index !== matchInfo.opponents.length - 1 && !mobile }"
-      >
-        <div class="d-flex align-center ml-5">
-          <!-- LOGO -->
-          <!-- logo esta ficando acima da sigla, colocar na mesma altura -->
-          <div class="team-logo">
-            <img
-              :src="
-                teamLogoThumb(
-                  opponent.opponent.image_url,
-                  opponent.opponent.location
-                )
-              "
-            />
+    <v-card-text class="bg-blue">
+      <div class="match-info d-flex flex-column bg-pink">
+        <!-- NOME DA LIGA -->
+        <span>{{ matchInfo.league.name }}</span>
+        <!-- DATA E HORARIO DE INICIO -->
+        <span class="bg-blue">{{ formatDate(matchInfo.begin_at) }}</span>
+      </div>
+      <!-- LOGO/SIGLA -->
+      <div class="d-flex align-center ml-5">
+        <div v-for="(opponent, index) in matchInfo.opponents" :key="index">
+          <div class="d-flex align-center ml-5">
+            <!-- LOGO -->
+            <div class="team-logo">
+              <img
+                :src="
+                  teamLogoThumb(
+                    opponent.opponent.image_url,
+                    opponent.opponent.location
+                  )
+                "
+              />
+            </div>
+            <!-- SIGLA -->
+            <div>
+              <p class="text-h4 pl-4 text--primary acronym">
+                {{ opponent.opponent.acronym || opponent.opponent.name }}
+              </p>
+            </div>
           </div>
-          <!-- SIGLA -->
-          <p class="text-h4 pl-4 text--primary acronym">
-            {{ opponent.opponent.acronym || opponent.opponent.name }}
-          </p>
-        </div>
-        <div>
-          <!-- SCORE -->
-          <!-- @TODO: QUANDO ESTA 1X0 OS NUMERO NAO FICAM ALINHADOS -->
-          <p class="text-h4 text--primary mr-5 score text-center">
-            {{ matchInfo.results[index].score }}
-          </p>
         </div>
       </div>
     </v-card-text>
@@ -68,22 +64,45 @@ const { teamLogoThumb } = useLogos();
  */
 function videoGameImage(videogameName) {
   switch (videogameName) {
-    case "League of Legends":
-      return new URL("../../assets/image/LoLBg.png", import.meta.url);
+    case "LoL":
+      return new URL("~/assets/image/LoLBg.png", import.meta.url);
     case "Counter-Strike":
-      return new URL("../../assets/image/counterStrikeBg.png", import.meta.url);
-    /*     case "Dota 2":
-      return colors.greenFlag;
+      return new URL("~/assets/image/counterStrikeBg.png", import.meta.url);
+    case "Dota 2":
+      return new URL("~/assets/image/dota2Bg.png", import.meta.url);
     case "Valorant":
-      return colors.greenAlt;
+      return new URL("~/assets/image/valorantBg.png", import.meta.url);
     case "Free Fire":
-      return colors.yellowAlt;
-    case "Rainbow Six Siege":
-      return colors.blueAlt; */
-    default:
-      debugger;
-      return new URL("../../assets/image/LoLBg.png", import.meta.url);
+      return new URL("~/assets/image/dota2Bg.png", import.meta.url);
+    case "Rainbow 6 Siege":
+      return new URL("~/assets/image/rb6Bg.png", import.meta.url);
+    /* default: */
+    /* VERIFICAR COM O DESIGNER UMA IMAGEM PADRÃO */
+    /* return new URL("../../assets/image/LoLBg.png", import.meta.url); */
   }
+}
+
+/**
+ * Esta função é apenas uma copia do chatGPT, com certeza pode ser simplificada.
+ * @param {String} inputDate Data do begin_at informado na prop matchInfo
+ * @returns {String} string formata dd/MM HH:mm
+ */
+function formatDate(inputDate) {
+  const date = new Date(inputDate);
+
+  // Adjust for GMT-3 - GMT-3 É O NOSOS TIME ZONE NO BRASIL, SEMPRE TER ISTO EM MENTE
+  date.setHours(date.getHours() - 3);
+
+  // Get day, month, hours, and minutes
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+
+  // Construct the formatted string
+  const formattedDate = `${day}/${month} ${hours}:${minutes}`;
+
+  return formattedDate;
 }
 </script>
 
@@ -106,20 +125,14 @@ function videoGameImage(videogameName) {
   background-color: red;
   height: 136px;
   padding: 0px;
-  .upper-image {
-  }
 
   @media (max-width: 960px) {
     padding: 1px;
   }
 }
 
-.match-infos {
-  @media (max-width: 960px) {
-    display: inline;
-    padding: 0;
-    font-size: 10px;
-  }
+.match-info {
+  text-align: center;
 }
 
 .team-logo {
@@ -135,10 +148,6 @@ function videoGameImage(videogameName) {
 }
 
 .opponent-line {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
   @media (max-width: 960px) {
     margin: 0px 0px 0px 0px;
     height: 30px;
@@ -150,16 +159,6 @@ function videoGameImage(videogameName) {
     font-size: 25px !important;
     @media (max-width: 960px) {
       font-size: 18px !important;
-    }
-  }
-
-  .score {
-    font-family: "Poppins";
-    font-weight: bold;
-    font-size: 20px !important;
-    color: #002776;
-    @media (max-width: 960px) {
-      font-size: 14px !important;
     }
   }
 }
