@@ -24,7 +24,6 @@
       >
         <div class="d-flex align-center ml-5">
           <!-- LOGO -->
-          <!-- logo esta ficando acima da sigla, colocar na mesma altura -->
           <div class="team-logo">
             <img
               :src="
@@ -42,7 +41,7 @@
         </div>
         <div>
           <!-- SCORE -->
-          <!-- @TODO: QUANDO ESTA 1X0 OS NUMERO NAO FICAM ALINHADOS -->
+          <!-- @TODO: QUANDO ESTA 1X0 OS NUMEROS NAO FICAM ALINHADOS -->
           <p class="text-h4 text--primary mr-5 score text-center">
             {{ matchInfo.results[index].score }}
           </p>

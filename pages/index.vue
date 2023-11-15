@@ -28,11 +28,7 @@
           cols="4"
           sm="4"
         >
-          <v-card>
-            <v-card-title>{{ upcomingMatch.name }}</v-card-title>
-            <v-card-subtitle>{{ upcomingMatch.begin_at }}</v-card-subtitle>
-            <v-card-text>{{ upcomingMatch.videogame.name }}</v-card-text>
-          </v-card>
+        <CardsBig class="mr-3" :match-info="upcomingMatch" />
         </v-col>
       </v-row>
     </v-container>
