@@ -1,45 +1,80 @@
 <template>
   <v-card class="big-card" variant="flat">
     <v-card-title>
-      <div class="upper-image">
-        <img
-          :src="videoGameImage(matchInfo.videogame.name)"
-          :alt="matchInfo.videogame.name"
-        />
+      <img
+        class="game-image"
+        :src="videoGameImage(matchInfo.videogame.name)"
+        :alt="matchInfo.videogame.name"
+      />
+      <div class="final-alert" v-if="matchInfo.name.includes('final')">
+        <span class="ml-3 special-match-name">{{ specialMatchName }}</span>
+        <span class="mr-3 special-match-countdown">{{
+          specialMatchCountdown
+        }}</span>
       </div>
     </v-card-title>
-    <v-card-text class="bg-blue">
-      <div class="match-info d-flex flex-column bg-pink">
+    <v-card-text>
+      <div class="match-info d-flex flex-column">
         <!-- NOME DA LIGA -->
         <span>{{ matchInfo.league.name }}</span>
         <!-- DATA E HORARIO DE INICIO -->
-        <span class="bg-blue">{{ formatDate(matchInfo.begin_at) }}</span>
+        <span>{{ formatDate(matchInfo.begin_at) }}</span>
       </div>
-      <!-- LOGO/SIGLA -->
-      <div class="d-flex align-center ml-5">
-        <div v-for="(opponent, index) in matchInfo.opponents" :key="index">
-          <div class="d-flex align-center ml-5">
-            <!-- LOGO -->
-            <div class="team-logo">
-              <img
-                :src="
-                  teamLogoThumb(
-                    opponent.opponent.image_url,
-                    opponent.opponent.location
-                  )
-                "
-              />
-            </div>
-            <!-- SIGLA -->
-            <div>
-              <p class="text-h4 pl-4 text--primary acronym">
-                {{ opponent.opponent.acronym || opponent.opponent.name }}
-              </p>
-            </div>
+    </v-card-text>
+    <v-card-actions>
+      <!-- LOGO/SIGLA TIME 0 -->
+      <div class="opponent-actions">
+        <div class="d-flex align-center">
+          <!-- LOGO -->
+          <div class="team-logo">
+            <img
+              :src="
+                teamLogoThumb(
+                  matchInfo.opponents[0].opponent.image_url,
+                  matchInfo.opponents[0].opponent.location
+                )
+              "
+            />
+          </div>
+          <!-- SIGLA -->
+          <div>
+            <p class="text-h4 pl-4 text--primary acronym">
+              {{
+                matchInfo.opponents[0].opponent.acronym ||
+                matchInfo.opponents[0].opponent.name
+              }}
+            </p>
           </div>
         </div>
       </div>
-    </v-card-text>
+      <!-- O "X" -->
+      <div class="versusX">X</div>
+      <!-- LOGO/SIGLA TIME 1 -->
+      <div class="opponent-actions">
+        <div class="d-flex align-center">
+          <!-- LOGO -->
+          <div class="team-logo">
+            <img
+              :src="
+                teamLogoThumb(
+                  matchInfo.opponents[1].opponent.image_url,
+                  matchInfo.opponents[1].opponent.location
+                )
+              "
+            />
+          </div>
+          <!-- SIGLA -->
+          <div>
+            <p class="text-h4 pl-4 text--primary acronym">
+              {{
+                matchInfo.opponents[1].opponent.acronym ||
+                matchInfo.opponents[1].opponent.name
+              }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </v-card-actions>
   </v-card>
 </template>
 <script>
@@ -56,6 +91,31 @@ const props = defineProps({
 
 const { mobile } = useDisplay();
 const { teamLogoThumb } = useLogos();
+
+let now = ref(Date.now());
+
+onMounted(() => {
+  // Para atualizar a função specialMatchCountdown
+  setInterval(() => {
+    now.value = Date.now();
+  }, 1000);
+});
+// @TODO fazer esta função mais maleável, para que possa ser usada na internacionalização
+/**
+ * Retorna o tipo de partida no play-off
+ * @returns {String}
+ */ 
+ const specialMatchName = computed(() => {
+  if (props.matchInfo.name.includes("semifinal")) {
+    return "Semifinal";
+  } else if (props.matchInfo.name.includes("quarterfinal")) {
+    return "Quartas de Final";
+  } else if (props.matchInfo.name.includes("playoffs")) {
+    return "Playoffs";
+  } else if (props.matchInfo.name.includes("final")) {
+    return "Final";
+  }
+});
 
 /**
  * Recebe o nome do videogame e retorna a imagem a ser utilizada no topo do cartão.
@@ -76,9 +136,9 @@ function videoGameImage(videogameName) {
       return new URL("~/assets/image/dota2Bg.png", import.meta.url);
     case "Rainbow 6 Siege":
       return new URL("~/assets/image/rb6Bg.png", import.meta.url);
-    /* default: */
-    /* VERIFICAR COM O DESIGNER UMA IMAGEM PADRÃO */
-    /* return new URL("../../assets/image/LoLBg.png", import.meta.url); */
+    default:
+      /* VERIFICAR COM O DESIGNER UMA IMAGEM PADRÃO */
+      return new URL("../../assets/image/LoLBg.png", import.meta.url);
   }
 }
 
@@ -90,7 +150,7 @@ function videoGameImage(videogameName) {
 function formatDate(inputDate) {
   const date = new Date(inputDate);
 
-  // Adjust for GMT-3 - GMT-3 É O NOSOS TIME ZONE NO BRASIL, SEMPRE TER ISTO EM MENTE
+  // Adjust for GMT-3 - GMT-3 É O NOSSO TIME ZONE NO BRASIL, SEMPRE TER ISTO EM MENTE
   date.setHours(date.getHours() - 3);
 
   // Get day, month, hours, and minutes
@@ -104,13 +164,36 @@ function formatDate(inputDate) {
 
   return formattedDate;
 }
+
+// @TODO fazer função amis maleavel na questão do fuso para atender internacionalização.
+/**
+ * Countdown exibido na div final-alert
+ * @returns {String}
+ */
+const specialMatchCountdown = computed(() => {
+  const date = new Date(props.matchInfo.begin_at);
+  const diff = date - now.value;
+  const hours = Math.floor(diff / 1000 / 60 / 60)
+    .toString()
+    .padStart(2, "0");
+  const minutes = Math.floor((diff / 1000 / 60 / 60 - hours) * 60)
+    .toString()
+    .padStart(2, "0");
+  const seconds = Math.floor(
+    ((diff / 1000 / 60 / 60 - hours) * 60 - minutes) * 60
+  )
+    .toString()
+    .padStart(2, "0");
+  // Remove 3grs da conta devido ao GMT-3, @TODO fazer função mais flexivel para internacionalização
+  return `${hours}:${minutes}:${seconds}`;
+});
 </script>
 
 <style lang="scss" scoped>
 .big-card {
   border-radius: 8px;
   width: 392px;
-  height: 339px;
+  height: 280px;
   @media (max-width: 960px) {
     width: 180px;
     height: 120px;
@@ -122,9 +205,44 @@ function formatDate(inputDate) {
 }
 
 .v-card-title {
-  background-color: red;
   height: 136px;
   padding: 0px;
+
+  .game-image {
+    position: relative;
+  }
+
+  .final-alert {
+    width: 100%;
+    position: absolute;
+    top: 104px;
+    background: #ffdf00;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .special-match-name {
+      margin: 0 auto;
+      width: 144px;
+      height: 30px;
+      font-family: "Poppins";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 20px;
+      color: #ffffff;
+    }
+
+    .special-match-countdown {
+      margin: 0 auto;
+      width: 70px;
+
+      font-family: "Poppins";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 17px;
+      color: #666666;
+    }
+  }
 
   @media (max-width: 960px) {
     padding: 1px;
@@ -132,11 +250,38 @@ function formatDate(inputDate) {
 }
 
 .match-info {
+  padding-top:10px;
+  width: 360px;
+  height: 42px;
+
+  /* Desktop/Body 1 */
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 26px;
   text-align: center;
+
+  /* Neutral/Fog */
+  color: #b3b3b3;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.v-card-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .team-logo {
   width: 36px;
+  line-height: 0px;
 
   img {
     max-height: 41px;
@@ -147,19 +292,25 @@ function formatDate(inputDate) {
   }
 }
 
-.opponent-line {
-  @media (max-width: 960px) {
-    margin: 0px 0px 0px 0px;
-    height: 30px;
-  }
+.opponent-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
 
-  .acronym {
-    font-family: "Poppins";
-    font-weight: bold;
-    font-size: 25px !important;
-    @media (max-width: 960px) {
-      font-size: 18px !important;
-    }
-  }
+.versusX {
+  /* x */
+  width: 18px;
+  height: 45px;
+
+  /* Desktop/H1 */
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 48px;
+
+  /* Neutral/Fog */
+  color: #b3b3b3;
 }
 </style>
