@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <p class="teste">{{ $t("welcome") }}</p>
+    <p>{{ $t("welcome") }}</p>
     <h1>Partidas ao vivo</h1>
     <v-container  class="px-1">
       <!-- VER ESPAÇAMENTO QUANDO TEM POUCOS CARDS -->
@@ -25,10 +25,9 @@
           v-for="(upcomingMatch, index) in upcomingMatches"
           :key="index"
           class="mt-1"
-          cols="4"
-          sm="4"
+          :cols="mobile ? 6 : 4"
         >
-        <CardsBig class="mr-3" :match-info="upcomingMatch" />
+        <CardsBig :class="mobile ? '' : 'mr-3'" :match-info="upcomingMatch" />
         </v-col>
       </v-row>
     </v-container>
