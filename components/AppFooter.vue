@@ -1,75 +1,199 @@
 <template>
-    <footer>
-      <div class="bottom-line"></div>
-    </footer>
+    <div v-if="!mobile" class="container-apostas">
+          <div class="container-apostas-txt">
+            <div>
+              <h2>Apostas com Segurança</h2>
+            </div>            
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde expedita quaerat eveniet odit! Earum repellat veniam placeat pariatur tenetur, possimus suscipit quod inventore? Eveniet ipsum alias totam officia architecto iure.</p>
+            <v-btn rounded="lg">Ver todas as Partidas</v-btn>
+          </div>          
+    </div>    
+    <v-footer app>     
+      <div class="top-line"></div>
+      <div class="footer-logo">
+        <img src="../assets/image/Logo-Branca.png" alt="">
+      </div>
+      <div class="footer-infos">
+        <div class="footer-infos-links">
+          <NuxtLink :to="{ name: 'institutional-about' }"> Sobre </NuxtLink>
+          <NuxtLink :to="{ name: 'institutional-contact' }"> Contato </NuxtLink>
+          <NuxtLink :to="{ name: 'institutional-terms' }"> Termo de Uso </NuxtLink>
+          <NuxtLink :to="{ name: 'institutional-games' }"> Jogos</NuxtLink>
+          <NuxtLink :to="{ name: 'institutional-bets' }"> Apostas </NuxtLink>
+          <NuxtLink :to="{ name: 'institutional-profile' }"> Perfil </NuxtLink>
+          <NuxtLink :to="{ name: 'institutional-questions' }"> Perguntas Frequentes </NuxtLink>
+          <NuxtLink :to="{ name: 'institutional-privacy' }"> Política de Privacidade </NuxtLink>
+          <NuxtLink :to="{ name: 'institutional-betting' }"> Casas de Apostas </NuxtLink>
+        </div>
+        <div class="footer-infos-social-media">
+          <div><p>Redes Sociais</p></div>
+          <div>
+            <NuxtLink :to="{ name: 'institutional-cronogram' }"> <img src="../assets/image/logo-twitter-branco.png" alt="logo-twitter"></NuxtLink>
+            <NuxtLink :to="{ name: 'institutional-about' }"> <img src="../assets/image/logo-instagram-branco.png" alt=""> </NuxtLink>
+            <NuxtLink :to="{ name: 'institutional-support' }"> <img src="../assets/image/logo-facebook-branco.png" alt="logo-facebook"> </NuxtLink>
+          </div>
+        </div>
+      </div>
+      <div class="footer-creators">
+        <div>
+          <p>BR Jogando &copy 2023. Todos os direitos reservados.</p>
+        </div>        
+      </div> 
+    </v-footer>
 </template>
 
-<script >
-export default {
-  name: "Footer",
-};
+<script setup>
+import { useDisplay } from "vuetify";
+
+
+
+const { mobile } = useDisplay();
+
 </script>
 
 <style lang="scss" scoped>
-footer {
-  height: 80px;
-  background-color: #040c2d;
-  display: flex;
-  flex-direction: row;
-}
-.bottom-line {
-  height: 2px;
+
+.container-apostas{
+  font-family: "Poppins";
+  background-image: url(../assets/image/footer-image.png);
+  background-size: 100% 53%;
+  height: 825px;
   width: 100vw;
-  position: absolute;
-  background-image: linear-gradient(to right, #ffdf00, #009c3b);
-  align-self: flex-end;
+  color: white;
+
+  @media (max-width:960px){
+
+  }
 }
 
-.box {
+.container-apostas-txt{
+  margin-left: 101px;
+  margin-top: 60px;
+  width: 569px;
+  height: 254px;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  right: 30px;
-  margin-left: 71px;
-}
-img {
-  height: 50px;
-}
-nav ul {
-  height: 100%;
-  display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 12px;
-  align-items: center;
-  list-style: none;
-  color: #ffff;
+}
+.container-apostas-txt h2{
+  font-size: 48px;
 }
 
-ul a {
-  color: #ffff;
-  text-decoration: none;
+.container-apostas-txt .v-btn{
+  align-self: flex-start;
+  background-color:rgb(255, 184, 0);
+  color: white;
+  font-weight: bold;
+  height: 40px;
 }
 
-.v-btn {
-  text-transform: none;
-  background-color: transparent;
-  color: #ffff;
+
+.v-footer {
+  font-family: "Poppins";
+  height: 388px;
+  width: 100vw;
+  background-color: #040c2d;
   padding: 0;
-  display: inline;
+  display: flex;
+  flex-direction: column;
+
 }
-.v-list-item a {
+
+.top-line {
+  height: 2px !important;
+  width: 100vw;
+  background-image: linear-gradient(to right, #ffdf00, #009c3b);
+  justify-self: flex-start;
+}
+
+.footer-logo{
+  align-self: flex-start;
+  margin: 48px 5% 24px 5%;
+
+  @media (max-width:960px){
+    display: none;
+  }
+
+}
+
+.footer-logo img{
+  width: 196px;
+  height: 64px;  
+}
+
+.footer-infos{
+  width: 100%;
+  align-self: flex-start;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5% 24px 5%;
+
+  @media (max-width:960px){
+    flex-direction: column;
+    padding-top: 48px;
+  }
+}
+.footer-infos-links{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px 120px;
+  font-weight: bold;
+
+  @media (max-width:960px){
+    gap: 1rem 1rem;
+  }
+}
+
+.footer-infos-links a{
+  color: white;
   text-decoration: none;
-  color: #000;
+  font-family: "Poppins"; 
 }
 
-.v-list-item:hover a {
-  color: #ffff;
+.footer-infos-social-media{
+ color: white;
+ font-weight: bold;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ gap: 20px;
+ @media (max-width:960px){
+  gap: 0;
+  p{
+    display: none;    
+  }
+ }
+
 }
 
-.v-list-item:hover {
-  background-image: linear-gradient(45deg, #040c2d 40%, #002776, #ffff);
-  color: #ffff;
+.footer-infos-social-media div{
+  display: flex;
+  gap: 36px;
+
+  @media (max-width:960px){
+    margin-top: 20px;
+    img{
+      width: 35px;
+    }
+  }
 }
+.footer-creators{
+  width: 100%; 
+  color: white;
+}
+
+.footer-creators div{
+  border-top: 2px solid white;
+  margin: 30px 5%;
+  padding-top: 24px;
+  display: flex;
+  justify-content: center;
+  
+  @media (max-width:960px){
+    margin: 0 5%;
+    padding: 12px;
+  }
+}
+
 </style>
