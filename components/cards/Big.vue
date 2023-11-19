@@ -1,20 +1,20 @@
 <template>
   <v-card class="big-card" variant="flat">
-    <v-card-title>
+    <v-card-title class="title-big">
       <img
-        class="game-image"
+        class="game-image-big"
         :src="videoGameImage(matchInfo.videogame.name)"
         :alt="matchInfo.videogame.name"
       />
-      <div class="final-alert" v-if="matchInfo.name.includes('final')">
+      <div class="final-alert-big" v-if="matchInfo.name.includes('final')">
         <span class="ml-3 special-match-name">{{ specialMatchName }}</span>
-        <span class="special-match-countdown">{{
+        <span class="special-match-countdown" :class="mobile ? 'mr-1' : ''">{{
           specialMatchCountdown
         }}</span>
       </div>
     </v-card-title>
-    <v-card-text>
-      <div class="match-info d-flex flex-column">
+    <v-card-text class="">
+      <div class="match-info-big d-flex flex-column">
         <!-- NOME DA LIGA -->
         <span>{{ matchInfo.league.name }}</span>
         <!-- DATA E HORARIO DE INICIO -->
@@ -28,7 +28,10 @@
           <!-- LOGO -->
           <div class="team-logo">
             <img
-            v-if="matchInfo.opponents[0].opponent.image_url || matchInfo.opponents[0].opponent.location"
+              v-if="
+                matchInfo.opponents[0].opponent.image_url ||
+                matchInfo.opponents[0].opponent.location
+              "
               :src="
                 teamLogoThumb(
                   matchInfo.opponents[0].opponent.image_url,
@@ -42,7 +45,7 @@
             <p class="text-h4 pl-4 text--primary acronym">
               {{
                 matchInfo.opponents[0].opponent.acronym ||
-                matchInfo.opponents[0].opponent.name.substring(0,4)
+                matchInfo.opponents[0].opponent.name.substring(0, 4)
               }}
             </p>
           </div>
@@ -69,7 +72,7 @@
             <p class="text-h4 pl-4 text--primary acronym">
               {{
                 matchInfo.opponents[1].opponent.acronym ||
-                matchInfo.opponents[1].opponent.name.substring(0,4)
+                matchInfo.opponents[1].opponent.name.substring(0, 4)
               }}
             </p>
           </div>
@@ -105,8 +108,8 @@ onMounted(() => {
 /**
  * Retorna o tipo de partida no play-off
  * @returns {String}
- */ 
- const specialMatchName = computed(() => {
+ */
+const specialMatchName = computed(() => {
   if (props.matchInfo.name.includes("semifinal")) {
     return "Semifinal";
   } else if (props.matchInfo.name.includes("quarterfinal")) {
@@ -168,7 +171,7 @@ function formatDate(inputDate) {
 
 // @TODO fazer função amis maleavel na questão do fuso para atender internacionalização.
 /**
- * Countdown exibido na div final-alert
+ * Countdown exibido na div final-alert-big
  * @returns {String}
  */
 const specialMatchCountdown = computed(() => {
@@ -196,8 +199,8 @@ const specialMatchCountdown = computed(() => {
   width: 392px;
   height: 280px;
   @media (max-width: 960px) {
-    width: 120px;
-    height: 120px;
+    max-width: 100%;
+    max-height: 215px;
     .v-card-text {
       padding: 0px 0px 0px 0px;
       margin: 0px 0px 0px 0px;
@@ -208,12 +211,20 @@ const specialMatchCountdown = computed(() => {
 .v-card-title {
   height: 136px;
   padding: 0px;
-
-  .game-image {
-    position: relative;
+  @media (max-width: 960px) {
+    margin-bottom: -30px;
   }
 
-  .final-alert {
+  .game-image-big {
+    position: relative;
+    @media (max-width: 960px) {
+      width: 100%;
+      height: 80%;
+      object-fit: cover;
+    }
+  }
+
+  .final-alert-big {
     width: 100%;
     position: absolute;
     top: 104px;
@@ -221,6 +232,11 @@ const specialMatchCountdown = computed(() => {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
+    @media (max-width: 960px) {
+      top: 78px;
+      width: 100%;
+    }
 
     .special-match-name {
       margin: 0 auto;
@@ -234,7 +250,6 @@ const specialMatchCountdown = computed(() => {
     }
 
     .special-match-countdown {
-
       width: 70px;
       // Poppins nao é monospaced, entao o contador fica mudando de tamanho, tentar resolve de outra forma
       font-family: "Roboto";
@@ -250,10 +265,16 @@ const specialMatchCountdown = computed(() => {
   }
 }
 
-.match-info {
-  padding-top:10px;
+.match-info-big {
+  padding-top: 10px;
   width: 360px;
   height: 42px;
+
+  @media (max-width: 960px) {
+    width: 100%;
+    height: 100%;
+    padding-top: 4px;
+  }
 
   /* Desktop/Body 1 */
   font-family: "Poppins";
@@ -278,6 +299,7 @@ const specialMatchCountdown = computed(() => {
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
+  padding: 0px;
 }
 
 .team-logo {
