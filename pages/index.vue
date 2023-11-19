@@ -2,7 +2,7 @@
   <div class="home">
     <p>{{ $t("welcome") }}</p>
     <h1>Partidas ao vivo</h1>
-    <v-container  class="px-1">
+    <v-container class="px-1">
       <!-- VER ESPAÇAMENTO QUANDO TEM POUCOS CARDS -->
       <v-sheet color="#E4E7EC">
         <v-slide-group v-model="model" :show-arrows="!mobile">
@@ -24,8 +24,9 @@
         <v-col
           v-for="(upcomingMatch, index) in upcomingMatches"
           :key="index"
-          class="mt-1"
-          :cols="mobile ? 6 : 4"
+          xs="12"
+          sm="6"
+          :class="mobile ? 'px-1 py-1' : ''"
         >
         <CardsBig :class="mobile ? '' : 'mr-3'" :match-info="upcomingMatch" />
         </v-col>
