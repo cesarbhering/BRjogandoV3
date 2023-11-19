@@ -8,7 +8,7 @@
       />
       <div class="final-alert" v-if="matchInfo.name.includes('final')">
         <span class="ml-3 special-match-name">{{ specialMatchName }}</span>
-        <span class="mr-3 special-match-countdown">{{
+        <span class="special-match-countdown">{{
           specialMatchCountdown
         }}</span>
       </div>
@@ -28,6 +28,7 @@
           <!-- LOGO -->
           <div class="team-logo">
             <img
+            v-if="matchInfo.opponents[0].opponent.image_url || matchInfo.opponents[0].opponent.location"
               :src="
                 teamLogoThumb(
                   matchInfo.opponents[0].opponent.image_url,
@@ -41,7 +42,7 @@
             <p class="text-h4 pl-4 text--primary acronym">
               {{
                 matchInfo.opponents[0].opponent.acronym ||
-                matchInfo.opponents[0].opponent.name
+                matchInfo.opponents[0].opponent.name.substring(0,4)
               }}
             </p>
           </div>
@@ -68,7 +69,7 @@
             <p class="text-h4 pl-4 text--primary acronym">
               {{
                 matchInfo.opponents[1].opponent.acronym ||
-                matchInfo.opponents[1].opponent.name
+                matchInfo.opponents[1].opponent.name.substring(0,4)
               }}
             </p>
           </div>
@@ -195,7 +196,7 @@ const specialMatchCountdown = computed(() => {
   width: 392px;
   height: 280px;
   @media (max-width: 960px) {
-    width: 180px;
+    width: 120px;
     height: 120px;
     .v-card-text {
       padding: 0px 0px 0px 0px;
@@ -233,12 +234,12 @@ const specialMatchCountdown = computed(() => {
     }
 
     .special-match-countdown {
-      margin: 0 auto;
-      width: 70px;
 
-      font-family: "Poppins";
+      width: 70px;
+      // Poppins nao é monospaced, entao o contador fica mudando de tamanho, tentar resolve de outra forma
+      font-family: "Roboto";
       font-style: normal;
-      font-weight: 400;
+      font-weight: 700;
       font-size: 17px;
       color: #666666;
     }
