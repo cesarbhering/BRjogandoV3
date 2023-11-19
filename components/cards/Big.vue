@@ -13,7 +13,7 @@
         }}</span>
       </div>
     </v-card-title>
-    <v-card-text class="">
+    <v-card-text>
       <div class="match-info-big d-flex flex-column">
         <!-- NOME DA LIGA -->
         <span>{{ matchInfo.league.name }}</span>
@@ -155,7 +155,7 @@ function formatDate(inputDate) {
   const date = new Date(inputDate);
 
   // Adjust for GMT-3 - GMT-3 É O NOSSO TIME ZONE NO BRASIL, SEMPRE TER ISTO EM MENTE
-  date.setHours(date.getHours() - 3);
+  date.setHours(date.getHours());
 
   // Get day, month, hours, and minutes
   const day = date.getDate().toString().padStart(2, "0");
