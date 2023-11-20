@@ -31,7 +31,7 @@
     </template>
     <img src="../assets/image/Logo-Branca.png" alt="brjogando" />
   </v-app-bar>
-  <v-navigation-drawer app temporary v-model="drawer" location="right">
+  <v-navigation-drawer class="mobile-header-navigation" app temporary v-model="drawer" location="right">
     <v-list-item to="/">Início</v-list-item>
     <v-list-item to="/institutional/cronogram">Cronograma</v-list-item>
     <v-list-item to="/institutional/about">Sobre nós</v-list-item>
@@ -132,6 +132,9 @@ a{
   position: fixed !important;
 }
 
+.mobile-header-navigation{
+  position: fixed !important;
+}
 .v-navigation-drawer{
   margin-top: 16px;
 }
