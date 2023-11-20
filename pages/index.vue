@@ -42,11 +42,13 @@
           cols="4"
           sm="4"
         >
+        <CardsSmall :match-info="pastMatch"/>
+        <!--
           <v-card>
             <v-card-title>{{ pastMatch.name }}</v-card-title>
-            <!-- <v-card-subtitle>{{ pastMatch.begin_at }}</v-card-subtitle> -->
+             <v-card-subtitle>{{ pastMatch.begin_at }}</v-card-subtitle>
             <v-card-text>{{ pastMatch.videogame.name }}</v-card-text>
-          </v-card>
+          </v-card> -->
         </v-col>
       </v-row>
     </v-container>
