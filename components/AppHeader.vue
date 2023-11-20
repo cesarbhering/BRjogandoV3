@@ -25,7 +25,7 @@
   </v-toolbar>
 
   <!-- HEADER MOBILE -->
-  <v-app-bar v-else class="header">
+  <v-app-bar v-else class="header mobile-header">
     <template v-slot:append>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
     </template>
@@ -75,6 +75,9 @@ const drawer = ref(false);
   display: flex;
   flex-direction: row;
   align-items: center;
+  position: fixed;
+  top: 0;
+  z-index: 99;
 }
 
 /* MELHORAR ESTE SELETOR */
@@ -122,6 +125,11 @@ img {
 a{
   text-decoration: none;
   color: #ffff;
+}
+
+
+.mobile-header{
+  position: fixed !important;
 }
 
 .v-navigation-drawer{
