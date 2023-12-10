@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto medium-card" variant="flat">
+  <v-card class="mx-auto medium-card" variant="flat" @click="handleOpenMatchDialog">
     <v-card-title>
       <div class="upper-line" v-video-game-based-background></div>
     </v-card-title>
@@ -53,6 +53,11 @@
       </div>
     </v-card-text>
   </v-card>
+  <MatchDetailsDialog
+    v-model="showMatchDialog"
+    :match-info="matchInfo"
+    @close-match-dialog="showMatchDialog = false"
+  />
 </template>
 <script>
 export default {
@@ -61,6 +66,7 @@ export default {
 </script>
 <script setup>
 import { useDisplay } from "vuetify";
+import { useGamesStore } from "~/store/games";
 
 const props = defineProps({
   matchInfo: { type: Object, required: true },
@@ -100,6 +106,18 @@ function videoGameColor(videogameName) {
 const vVideoGameBasedBackground = {
   mounted: (el) =>
     (el.style.background = videoGameColor(props.matchInfo.videogame.name)),
+};
+
+let showMatchDialog = ref(false);
+
+const gamesStore = useGamesStore();
+
+const handleOpenMatchDialog = async () => {
+  await gamesStore.fetchSupabaseDataForMatch(props.matchInfo.id, 'running');
+  await gamesStore.fetchOdds1xBet(props.matchInfo.supabaseDataForMatch.url_1xbet, props.matchInfo.id, 'running');
+  showMatchDialog.value = true;
+
+
 };
 </script>
 
