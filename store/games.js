@@ -1,4 +1,3 @@
-// store/filters.ts
 import { defineStore } from "pinia";
 
 export const useGamesStore = defineStore({
@@ -11,7 +10,6 @@ export const useGamesStore = defineStore({
     };
   },
   actions: {
-
     fetchRunningMatches() {
       fetch('/.netlify/functions/fetchPandaScoreMatches?matchOccurrence=running')
         .then((res) => res.json())
@@ -34,6 +32,14 @@ export const useGamesStore = defineStore({
         .then((res) => {
           this.pastMatches = res.data;
         });
-    }
+    },
+
+    fetchSupabaseDataForMatch(pandaScoreMatchId, matchOccurrence) {
+      fetch(`/.netlify/functions/fetchSupabaseDataForMatch?pandaScoreMatchId=${pandaScoreMatchId}`)
+        .then((res) => res.json())
+        .then((res) => {
+          this.supabaseDataForMatch = res.data;
+        });
+    },
   },
 });
