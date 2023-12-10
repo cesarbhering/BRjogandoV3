@@ -1,13 +1,6 @@
-// Grab our credentials from a .env file or environment variables
-require('dotenv').config();
-const {
-  SUPABASE_URL,
-  SUPABASE_KEY
-} = process.env;
-
 // Connect to our database 
 const { createClient } = require('@supabase/supabase-js');
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
 exports.handler = async (event, context) => {
   const pandaScoreMatchId = event.queryStringParameters.pandaScoreMatchId;
