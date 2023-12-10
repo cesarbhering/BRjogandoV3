@@ -34,11 +34,29 @@ export const useGamesStore = defineStore({
         });
     },
 
-    fetchSupabaseDataForMatch(pandaScoreMatchId, matchOccurrence) {
-      fetch(`/.netlify/functions/fetchSupabaseDataForMatch?pandaScoreMatchId=${pandaScoreMatchId}`)
+    /**
+     * Faz a chamada no supabase para pegar dados adicionais de um jogo.
+     * @param {Number} pandaScoreMatchId 
+     * @param {String} matchOccurrence 
+     */
+    async fetchSupabaseDataForMatch(pandaScoreMatchId, matchOccurrence) {
+      try {
+        const response = await fetch(`/.netlify/functions/fetchSupabaseDataForMatch?pandaScoreMatchId=${pandaScoreMatchId}`);
+        const data = await response.json();
+
+        this[`${matchOccurrence}Matches`].find(match => match.id === pandaScoreMatchId).supabaseDataForMatch = data.data[0];
+      } catch (error) {
+        console.error('Error fetching Supabase data:', error);
+      }
+    },
+
+
+    fetchOdds1xBet(matchUrl1xBet, pandaScoreMatchId, matchOccurrence) {
+      fetch(`/.netlify/functions/fetchOdds1xBet?matchUrl1xBet=${matchUrl1xBet}`)
         .then((res) => res.json())
-        .then((res) => {
-          this.supabaseDataForMatch = res.data;
+        .then(async (res) => {
+          const match = this[`${matchOccurrence}Matches`].find(match => match.id === pandaScoreMatchId)
+          Object.assign(match, { odds: { odds1xBet: res.data } })
         });
     },
   },
