@@ -5,7 +5,8 @@
     >
       <v-card>
         <v-card-text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Odds 1XBET
+         {{ matchInfo.odds?.odds1xBet }}
         </v-card-text>
         <v-card-actions>
           <v-btn color="primary" block @click="dialog = false">Close Dialog</v-btn>
@@ -13,6 +14,11 @@
       </v-card>
     </v-dialog>
 </template>
+<script>
+export default {
+  name: "MatchDetailsDialog",
+};
+</script>
 <script setup>
-const props = defineProps({ modelValue: Boolean });
+const props = defineProps({ modelValue: Boolean, matchInfo: { type: Object, required: true } });
 </script>

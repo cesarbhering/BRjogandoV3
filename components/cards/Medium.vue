@@ -66,6 +66,7 @@ export default {
 </script>
 <script setup>
 import { useDisplay } from "vuetify";
+import { useGamesStore } from "~/store/games";
 
 const props = defineProps({
   matchInfo: { type: Object, required: true },
@@ -109,9 +110,13 @@ const vVideoGameBasedBackground = {
 
 let showMatchDialog = ref(false);
 
-const handleOpenMatchDialog = () => {
+const gamesStore = useGamesStore();
+
+const handleOpenMatchDialog = async () => {
+  await gamesStore.fetchSupabaseDataForMatch(props.matchInfo.id, 'running');
+  await gamesStore.fetchOdds1xBet(props.matchInfo.supabaseDataForMatch.url_1xbet, props.matchInfo.id, 'running');
   showMatchDialog.value = true;
-  console.log(showMatchDialog)
+
 
 };
 </script>

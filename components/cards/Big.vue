@@ -1,5 +1,5 @@
 <template>
-  <v-card class="big-card" variant="flat">
+  <v-card class="big-card" variant="flat" @click="handleOpenMatchDialog">
     <v-card-title class="title-big">
       <img
         class="game-image-big"
@@ -80,6 +80,11 @@
       </div>
     </v-card-actions>
   </v-card>
+  <MatchDetailsDialog
+    v-model="showMatchDialog"
+    :match-info="matchInfo"
+    @close-match-dialog="showMatchDialog = false"
+  />
 </template>
 <script>
 export default {
@@ -88,6 +93,7 @@ export default {
 </script>
 <script setup>
 import { useDisplay } from "vuetify";
+import { useGamesStore } from "~/store/games";
 
 const props = defineProps({
   matchInfo: { type: Object, required: true },
@@ -191,6 +197,15 @@ const specialMatchCountdown = computed(() => {
   // Remove 3grs da conta devido ao GMT-3, @TODO fazer função mais flexivel para internacionalização
   return `${hours}:${minutes}:${seconds}`;
 });
+
+let showMatchDialog = ref(false);
+const gamesStore = useGamesStore();
+
+const handleOpenMatchDialog = async () => {
+  await gamesStore.fetchSupabaseDataForMatch(props.matchInfo.id, 'upcoming');
+  await gamesStore.fetchOdds1xBet(props.matchInfo.supabaseDataForMatch.url_1xbet, props.matchInfo.id, 'upcoming');
+  showMatchDialog.value = true;
+};
 </script>
 
 <style lang="scss" scoped>
