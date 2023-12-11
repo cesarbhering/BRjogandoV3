@@ -5,11 +5,12 @@ exports.handler = async function (event, context) {
 
   try {
     const matchUrl = event.queryStringParameters.matchUrl1xBet;
+    const executablePath = await chromium.executablePath
 
     // Inicia o web scrapper
-    const browser = await puppeteer.launch({
+    const browser = await chromium.puppeteer.launch({
       args: chromium.args,
-      executablePath: process.env.DEV ? process.env.CHROME_EXECUTABLE_PATH : executablePath(),
+      executablePath: process.env.DEV === 'true' ? process.env.CHROME_EXECUTABLE_PATH : executablePath,
       headless: true,
     });
 
