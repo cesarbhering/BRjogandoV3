@@ -19,21 +19,19 @@ exports.handler = async function (event, context) {
 
     const page = await browser.newPage();
     await page.goto(matchUrl, { "waitUntil": "domcontentloaded" });
-    // print html of the page
-    const html = await page.content();
 
     // Pega a primeira referencia de aposta na página, geralmente quem ganha o jogo
-/*     const betGroupOdds = await page.$eval('.bet_group', (betGroup) => {
+    const betGroupOdds = await page.$eval('.bet_group', (betGroup) => {
       const koeffLabels = betGroup.querySelectorAll('.koeff__label');
       return Array.from(koeffLabels).map((label) => label.textContent.trim());
-    }); */
+    });
 
     await browser.close();
 
     return {
       statusCode: 200,
       body: JSON.stringify({
-        data: html
+        data: betGroupOdds
       })
     };
   } catch (error) {
