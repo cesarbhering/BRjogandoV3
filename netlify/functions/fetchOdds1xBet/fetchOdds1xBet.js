@@ -16,24 +16,25 @@ exports.handler = async function (event, context) {
       ignoreHTTPSErrors: true,
 
     });
-    console.log('cheguei aqui')
-   /*  const page = await browser.newPage();
+
+    const page = await browser.newPage();
     await page.goto(matchUrl, { "waitUntil": "domcontentloaded" });
-    console.log('cheguei aqui 2')
+
+    await page.waitForSelector('.bet_group')
 
     // Pega a primeira referencia de aposta na página, geralmente quem ganha o jogo
     const betGroupOdds = await page.$eval('.bet_group', (betGroup) => {
       const koeffLabels = betGroup.querySelectorAll('.koeff__label');
       return Array.from(koeffLabels).map((label) => label.textContent.trim());
-    }); */
-    console.log('cheguei aqui 3')
+    });
+
 
     await browser.close();
 
     return {
       statusCode: 200,
       body: JSON.stringify({
-        data: {['cleiton']: 'cleiton'}
+        data: betGroupOdds
       })
     };
   } catch (error) {
