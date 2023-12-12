@@ -5,7 +5,7 @@ exports.handler = async function (event, context) {
 
   try {
     const matchUrl = event.queryStringParameters.matchUrl1xBet;
-    const executablePath = await chromium.executablePath
+    console.log('cheguei aqui 0')
 
     // Inicia o web scrapper
     const browser = await puppeteer.launch({
@@ -16,15 +16,17 @@ exports.handler = async function (event, context) {
       ignoreHTTPSErrors: true,
 
     });
-
+    console.log('cheguei aqui')
     const page = await browser.newPage();
     await page.goto(matchUrl, { "waitUntil": "domcontentloaded" });
+    console.log('cheguei aqui 2')
 
     // Pega a primeira referencia de aposta na página, geralmente quem ganha o jogo
     const betGroupOdds = await page.$eval('.bet_group', (betGroup) => {
       const koeffLabels = betGroup.querySelectorAll('.koeff__label');
       return Array.from(koeffLabels).map((label) => label.textContent.trim());
     });
+    console.log('cheguei aqui 3')
 
     await browser.close();
 
