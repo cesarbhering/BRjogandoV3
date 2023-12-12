@@ -1,4 +1,4 @@
-const chromium = require('chrome-aws-lambda');
+const chromium = require("@sparticuz/chromium");
 const puppeteer = require('puppeteer-core');
 
 exports.handler = async function (event, context) {
@@ -8,10 +8,13 @@ exports.handler = async function (event, context) {
     const executablePath = await chromium.executablePath
 
     // Inicia o web scrapper
-    const browser = await chromium.puppeteer.launch({
+    const browser = await puppeteer.launch({
       args: chromium.args,
-      executablePath: process.env.DEV === 'true' ? process.env.CHROME_EXECUTABLE_PATH : executablePath,
-      headless: true,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: process.env.DEV === 'true' ?  process.env.CHROME_EXECUTABLE_PATH: await chromium.executablePath(),
+      headless: chromium.headless,
+      ignoreHTTPSErrors: true,
+
     });
 
     const page = await browser.newPage();

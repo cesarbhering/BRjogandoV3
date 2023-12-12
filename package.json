@@ -13,6 +13,7 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxtjs/i18n": "^8.0.0-rc.4",
+    "@sparticuz/chromium": "^119.0.0",
     "nuxt": "^3.7.3",
     "sass": "^1.68.0",
     "sass-loader": "^13.3.2"
@@ -20,11 +21,10 @@
   "dependencies": {
     "@mdi/font": "^7.2.96",
     "@pinia/nuxt": "^0.4.11",
+    "@sparticuz/chromium-min": "^119.0.0",
     "@supabase/supabase-js": "^2.38.5",
     "add": "^2.0.6",
     "axios": "^1.6.2",
-    "cheerio": "^1.0.0-rc.12",
-    "chrome-aws-lambda": "^10.1.0",
     "node-fetch": "^2.7.0",
     "puppeteer-core": "^21.5.2",
     "qs": "^6.11.2",
