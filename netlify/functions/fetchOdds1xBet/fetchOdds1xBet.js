@@ -18,7 +18,10 @@ exports.handler = async function (event, context) {
     });
 
     const page = await browser.newPage();
-    await page.goto(matchUrl, { "waitUntil": "domcontentloaded" });
+    await page.goto(matchUrl, { "waitUntil": "load" });
+    // print html of the page
+    const html = await page.content();
+
     // Pega a primeira referencia de aposta na página, geralmente quem ganha o jogo
     const betGroupOdds = await page.$eval('.bet_group', (betGroup) => {
       const koeffLabels = betGroup.querySelectorAll('.koeff__label');
@@ -30,7 +33,7 @@ exports.handler = async function (event, context) {
     return {
       statusCode: 200,
       body: JSON.stringify({
-        data: betGroupOdds
+        data: html
       })
     };
   } catch (error) {

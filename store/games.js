@@ -43,8 +43,6 @@ export const useGamesStore = defineStore({
       try {
         const response = await fetch(`/.netlify/functions/fetchSupabaseDataForMatch?pandaScoreMatchId=${pandaScoreMatchId}`);
         const data = await response.json();
-        console.log(data)
-        console.log(data.data[0])
         this[`${matchOccurrence}Matches`].find(match => match.id === pandaScoreMatchId).supabaseDataForMatch = data.data[0];
       } catch (error) {
         console.error('Error fetching Supabase data:', error);
