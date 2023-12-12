@@ -5,7 +5,7 @@ exports.handler = async function (event, context) {
 
   try {
     const matchUrl = event.queryStringParameters.matchUrl1xBet;
-    console.log('cheguei aqui 0')
+
 
     // Inicia o web scrapper
     const browser = await puppeteer.launch({
@@ -17,7 +17,7 @@ exports.handler = async function (event, context) {
 
     });
     console.log('cheguei aqui')
-    const page = await browser.newPage();
+   /*  const page = await browser.newPage();
     await page.goto(matchUrl, { "waitUntil": "domcontentloaded" });
     console.log('cheguei aqui 2')
 
@@ -25,7 +25,7 @@ exports.handler = async function (event, context) {
     const betGroupOdds = await page.$eval('.bet_group', (betGroup) => {
       const koeffLabels = betGroup.querySelectorAll('.koeff__label');
       return Array.from(koeffLabels).map((label) => label.textContent.trim());
-    });
+    }); */
     console.log('cheguei aqui 3')
 
     await browser.close();
@@ -33,7 +33,7 @@ exports.handler = async function (event, context) {
     return {
       statusCode: 200,
       body: JSON.stringify({
-        data: betGroupOdds
+        data: {['cleiton']: 'cleiton'}
       })
     };
   } catch (error) {
