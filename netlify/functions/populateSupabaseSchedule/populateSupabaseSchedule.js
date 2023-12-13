@@ -1,10 +1,9 @@
 const { schedule } = require('@netlify/functions')
 
 const handler = async function (event, context) {
-  console.log("Received event:", event)
   // call populateSupabaseSchedule-background function
   try {
-    fetch('/.netlify/functions/populateSupabaseSchedule-background');
+    fetch('http://localhost:8888/.netlify/functions/populateSupabaseSchedule-background');
     return {
       statusCode: 200,
     };
