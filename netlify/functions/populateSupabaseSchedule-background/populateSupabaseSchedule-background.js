@@ -37,7 +37,7 @@ const fetchOdds1xBet = async (matchUrl) => {
  * Faz o update das odds no supabase
  * @param {Object} liveInfos Objeto exemplo: { matchUrl: 'https://www.1xbet.com/pt/live/eSports/...', betGroupOdds: ['1.5', '2.5'] } 
  */
-const updateOdds1xBet = async (odd) => {
+const updateOdds1xBet = async (liveInfos) => {
   const { matchUrl, betGroupOdds } = liveInfos;
   try {
     await supabase
