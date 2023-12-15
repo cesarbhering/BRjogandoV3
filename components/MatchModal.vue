@@ -1,197 +1,105 @@
 <template>
-  <!--
-// v0 by Vercel.
-// https://v0.dev/t/Q8c8B1TKBVt
--->
-  <section
+ 
+  <v-card
     class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75"
   >
     <div
       class="bg-white dark:bg-zinc-950 rounded-lg shadow-xl w-4/5 md:w-1/2 lg:w-1/3"
     >
-      <h2 class="text-xl font-bold text-center p-4">Team Roster</h2>
-      <div class="grid grid-cols-2 divide-x">
+      <v-card-title class="text-xl font-bold text-center p-4">{{matchInfo.name}}</v-card-title>
+      <v-card-subtitle class="text-xl font-bold text-center p-4">{{ formatDate(matchInfo.begin_at) }}</v-card-subtitle>
+      <div v-for="(opponent, index) in matchInfo.opponents" class="grid grid-cols-2 divide-x">
         <div class="p-4">
-          <h3 class="text-lg font-semibold mb-2">Team A</h3>
-          <ul class="divide-y divide-gray-200">
-            <li class="flex items-center py-2">
+          <v-card-subtitle class="text-lg font-semibold mb-2">{{ opponent.opponent.name }}</v-card-subtitle>
+          <v-list class="divide-y divide-gray-200">
+            <v-list-item class="flex items-center py-2">
               <img
-                src="/placeholder.svg"
+                src="~/assets/image/br-flag.svg"
                 alt="Country Flag"
                 width="30"
                 height="20"
                 class="mr-2"
                 style="aspect-ratio: 30 / 20; object-fit: cover"
               /><span>Player 1</span>
-            </li>
-            <li class="flex items-center py-2">
-              <img
-                src="/placeholder.svg"
-                alt="Country Flag"
-                width="30"
-                height="20"
-                class="mr-2"
-                style="aspect-ratio: 30 / 20; object-fit: cover"
-              /><span>Player 2</span>
-            </li>
-            <li class="flex items-center py-2">
-              <img
-                src="/placeholder.svg"
-                alt="Country Flag"
-                width="30"
-                height="20"
-                class="mr-2"
-                style="aspect-ratio: 30 / 20; object-fit: cover"
-              /><span>Player 3</span>
-            </li>
-            <li class="flex items-center py-2">
-              <img
-                src="/placeholder.svg"
-                alt="Country Flag"
-                width="30"
-                height="20"
-                class="mr-2"
-                style="aspect-ratio: 30 / 20; object-fit: cover"
-              /><span>Player 4</span>
-            </li>
-            <li class="flex items-center py-2">
-              <img
-                src="/placeholder.svg"
-                alt="Country Flag"
-                width="30"
-                height="20"
-                class="mr-2"
-                style="aspect-ratio: 30 / 20; object-fit: cover"
-              /><span>Player 5</span>
-            </li>
-          </ul>
+            </v-list-item>
+          </v-list>
         </div>
-        <div class="p-4">
-          <h3 class="text-lg font-semibold mb-2">Team B</h3>
-          <ul class="divide-y divide-gray-200">
-            <li class="flex items-center py-2">
+        <!-- <div class="p-4">
+          <v-card-subtitle class="text-lg font-semibold mb-2">{{ matchInfo.opponents}}</v-card-subtitle>
+          <v-list class="divide-y divide-gray-200">
+            <v-list-item class="flex items-center py-2">
               <img
-                src="/placeholder.svg"
+                src="~/assets/image/br-flag.svg"
                 alt="Country Flag"
                 width="30"
                 height="20"
                 class="mr-2"
                 style="aspect-ratio: 30 / 20; object-fit: cover"
-              /><span>Player 1</span>
-            </li>
-            <li class="flex items-center py-2">
-              <img
-                src="/placeholder.svg"
-                alt="Country Flag"
-                width="30"
-                height="20"
-                class="mr-2"
-                style="aspect-ratio: 30 / 20; object-fit: cover"
-              /><span>Player 2</span>
-            </li>
-            <li class="flex items-center py-2">
-              <img
-                src="/placeholder.svg"
-                alt="Country Flag"
-                width="30"
-                height="20"
-                class="mr-2"
-                style="aspect-ratio: 30 / 20; object-fit: cover"
-              /><span>Player 3</span>
-            </li>
-            <li class="flex items-center py-2">
-              <img
-                src="/placeholder.svg"
-                alt="Country Flag"
-                width="30"
-                height="20"
-                class="mr-2"
-                style="aspect-ratio: 30 / 20; object-fit: cover"
-              /><span>Player 4</span>
-            </li>
-            <li class="flex items-center py-2">
-              <img
-                src="/placeholder.svg"
-                alt="Country Flag"
-                width="30"
-                height="20"
-                class="mr-2"
-                style="aspect-ratio: 30 / 20; object-fit: cover"
-              /><span>Player 5</span>
-            </li>
-          </ul>
-        </div>
+              />
+              <span>Player 1</span>
+            </v-list-item>
+          </v-list>
+        </div> -->
       </div>
       <div class="p-4">
-        <h3 class="text-lg font-semibold mb-2">Betting Odds</h3>
-        <ul class="divide-y divide-gray-200">
-          <li class="flex items-center justify-between py-2">
-            <span>Bookmaker 1</span><span>1.5 : 2.5</span>
-          </li>
-          <li class="flex items-center justify-between py-2">
-            <span>Bookmaker 2</span><span>1.7 : 2.3</span>
-          </li>
-          <li class="flex items-center justify-between py-2">
-            <span>Bookmaker 3</span><span>1.6 : 2.4</span>
-          </li>
-        </ul>
+        <v-card-subtitle class="text-lg font-semibold mb-2">Betting Odds</v-card-subtitle>
+        <v-list class="divide-y divide-gray-200">
+          <v-list-item class="flex items-center justify-center justify-between py-2">
+            <v-list-item-title>Bookmaker 1</v-list-item-title>
+            <v-list-item-subtitle class="d-flex items-center justify-center">1.5 : 2.5</v-list-item-subtitle>
+          </v-list-item>
+          <v-list-item class="flex items-center justify-center justify-between py-2">
+            <v-list-item-title>Bookmaker 1</v-list-item-title>
+            <v-list-item-subtitle class="d-flex items-center justify-center">1.5 : 2.5</v-list-item-subtitle>
+          </v-list-item>
+          <v-list-item class="flex items-center justify-center justify-between py-2">
+            <v-list-item-title>Bookmaker 1</v-list-item-title>
+            <v-list-item-subtitle class="d-flex items-center justify-center">1.5 : 2.5</v-list-item-subtitle>
+          </v-list-item>
+        </v-list>
       </div>
       <div class="p-4">
-        <h3 class="text-lg font-semibold mb-2">Relevant Links</h3>
-        <ul class="divide-y divide-gray-200">
-          <li class="flex items-center py-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="mr-2 text-gray-500"
-            >
-              <path
-                d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"
-              ></path>
-              <path
-                d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
-              ></path></svg
+        <v-card-subtitle class="text-lg font-semibold mb-2"></v-card-subtitle>
+        <v-list  v-for="(stream, index) in matchInfo.streams_list"  class="divide-y divide-gray-200">
+          <v-list-item class="flex items-center py-2">
             ><a
-              href="#"
+              :href="stream.raw_url"
               class="text-blue-600 hover:text-blue-800 visited:text-purple-600"
-              >Stream Page</a
+              >Stream Link {{ index+1 }}</a
             >
-          </li>
-          <li class="flex items-center py-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="mr-2 text-gray-500"
-            >
-              <path
-                d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"
-              ></path>
-              <path
-                d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
-              ></path>
-            </svg>
-          </li>
-        </ul>
+          </v-list-item>
+        </v-list>
       </div>
     </div>
-  </section>
+  </v-card>
 </template>
 
 <script setup>
+
+
+const { teamLogoThumb } = useLogos();
+const props = defineProps({
+  matchInfo: {type: Object, required: true}
+})
+console.log(props.matchInfo)
+function formatDate(inputDate) {
+  const date = new Date(inputDate);
+
+  // Adjust for GMT-3 - GMT-3 É O NOSSO TIME ZONE NO BRASIL, SEMPRE TER ISTO EM MENTE
+  date.setHours(date.getHours());
+
+  // Get day, month, hours, and minutes
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+
+  // Construct the formatted string
+  const formattedDate = `${day}/${month} ${hours}:${minutes}`;
+
+  return formattedDate;
+}
+
 </script>
 
 <style lang="scss" scoped>
