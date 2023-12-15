@@ -1,5 +1,8 @@
 <template>
-  <v-card class="mx-auto medium-card" variant="flat">
+  <v-card class="mx-auto medium-card" variant="flat" @click="dialog = true">
+    <v-dialog v-model="dialog">
+      <MatchModal :match-info="matchInfo"/>
+    </v-dialog>
     <v-card-title>
       <div class="upper-line" v-video-game-based-background></div>
     </v-card-title>
@@ -57,6 +60,11 @@
 <script>
 export default {
   name: "CardMedium",
+  data() {
+    return{
+      dialog: false,
+    }
+  }
 };
 </script>
 <script setup>
