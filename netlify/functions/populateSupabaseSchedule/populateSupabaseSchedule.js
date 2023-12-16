@@ -1,5 +1,5 @@
-const { schedule } = require('@netlify/functions')
-
+/* const { schedule } = require('@netlify/functions')
+ */
 const handler = async function (event, context) {
   // call populateSupabaseSchedule-background function
   try {
@@ -17,4 +17,5 @@ const handler = async function (event, context) {
   }
 };
 
-module.exports.handler = schedule("*/10 * * * *", handler);
+// module.exports.handler = schedule("*/10 * * * *", handler);
+module.exports = { handler };
