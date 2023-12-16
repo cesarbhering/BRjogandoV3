@@ -114,10 +114,7 @@ const gamesStore = useGamesStore();
 
 const handleOpenMatchDialog = async () => {
   await gamesStore.fetchSupabaseDataForMatch(props.matchInfo.id, 'running');
-  await gamesStore.fetchOdds1xBet(props.matchInfo.supabaseDataForMatch.url_1xbet, props.matchInfo.id, 'running');
   showMatchDialog.value = true;
-
-
 };
 </script>
 
