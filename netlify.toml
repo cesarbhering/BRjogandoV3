@@ -1,0 +1,2 @@
+[functions.populateSupabaseSchedule]
+  schedule = "*/10 * * * *"
