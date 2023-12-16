@@ -1,0 +1,11 @@
+{
+  "name": "brjogando-functions",
+  "version": "1.0.0",
+  "author": "Cesar Bhering",
+  "license": "MIT",
+  "dependencies": {
+    "@sparticuz/chromium": "^119.0.0",
+    "@supabase/supabase-js": "^2.38.5",
+    "puppeteer-core": "^21.5.2"
+  }
+}
