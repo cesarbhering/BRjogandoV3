@@ -10,10 +10,12 @@
             v-for="(runningMatch, index) in runningMatches"
             :key="index"
             v-slot="{ isSelected, toggle, selectedClass }"
-            class="mr-1"
+           
           >
+          <div class="mr-3">
             <!-- REATIVIDADE MOBILE VERIFICAR -->
-            <CardsMedium class="mr-3" :match-info="runningMatch" />
+            <CardsMedium :match-info="runningMatch" />
+          </div>
           </v-slide-group-item>
         </v-slide-group>
       </v-sheet>
@@ -28,7 +30,9 @@
           sm="6"
           :class="mobile ? 'px-1 py-1' : ''"
         >
-        <CardsBig :class="mobile ? '' : 'mr-3'" :match-info="upcomingMatch" />
+        <div :class="mobile ? '' : 'mr-3'">
+          <CardsBig  :match-info="upcomingMatch" />
+        </div>
         </v-col>
       </v-row>
     </v-container>
@@ -57,8 +61,9 @@
 <script setup>
 import { useDisplay } from "vuetify";
 import { useGamesStore } from "~/store/games";
+/* import { useOddsStore } from "~/store/odds"; */
 import { storeToRefs } from "pinia";
-import { useNuxtApp } from "nuxt/app";
+/* import { useNuxtApp } from "nuxt/app"; */
 
 const { mobile } = useDisplay();
 
@@ -67,17 +72,18 @@ const { upcomingMatches } = storeToRefs(gamesStore);
 const { runningMatches } = storeToRefs(gamesStore);
 const { pastMatches } = storeToRefs(gamesStore);
 
-const nuxtApp = useNuxtApp();
-
-// Para auxiliar o carrossel
-let model = null;
-
 onBeforeMount(async () => {
   // Carrega a informação das partidas na store
   gamesStore.fetchRunningMatches();
   gamesStore.fetchUpcomingMatches();
   gamesStore.fetchPastMatches();
 });
+
+/* const nuxtApp = useNuxtApp(); */
+
+// Para auxiliar o carrossel
+let model = null;
+
 
 /* onMounted(async () => {
   nuxtApp.$restCall.get("cleiton/mercearia", { coco: "coco" });
