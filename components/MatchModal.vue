@@ -45,8 +45,8 @@
         <v-card-subtitle class="text-lg font-semibold mb-2">Betting Odds</v-card-subtitle>
         <v-list class="divide-y divide-gray-200">
           <v-list-item class="flex items-center justify-center justify-between py-2">
-            <v-list-item-title>Bookmaker 1</v-list-item-title>
-            <v-list-item-subtitle class="d-flex items-center justify-center">1.5 : 2.5</v-list-item-subtitle>
+            <v-list-item-title>1xBet</v-list-item-title>
+            <v-list-item-subtitle class="d-flex items-center justify-center">{{props.matchInfo.supabaseDataForMatch.odds_1xbet}}</v-list-item-subtitle>
           </v-list-item>
           <v-list-item class="flex items-center justify-center justify-between py-2">
             <v-list-item-title>Bookmaker 1</v-list-item-title>
@@ -74,14 +74,26 @@
   </v-card>
 </template>
 
+<script>
+export default {
+  name: "MatchModal",
+};
+</script>
 <script setup>
+import { useGamesStore } from "~/store/games";
 
 
 const { teamLogoThumb } = useLogos();
 const props = defineProps({
   matchInfo: {type: Object, required: true}
 })
-console.log(props.matchInfo)
+
+const gamesStore = useGamesStore();
+onBeforeMount(async () => {
+  const teste = await gamesStore.fetchSupabaseDataForMatch(props.matchInfo.id, 'running');
+  console.log(teste);
+})
+
 function formatDate(inputDate) {
   const date = new Date(inputDate);
 
