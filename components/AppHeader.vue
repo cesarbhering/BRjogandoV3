@@ -25,13 +25,13 @@
   </v-toolbar>
 
   <!-- HEADER MOBILE -->
-  <v-app-bar v-else class="header">
+  <v-app-bar v-else class="header mobile-header">
     <template v-slot:append>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
     </template>
     <img src="../assets/image/Logo-Branca.png" alt="brjogando" />
   </v-app-bar>
-  <v-navigation-drawer app temporary v-model="drawer" location="right">
+  <v-navigation-drawer class="mobile-header-navigation" app temporary v-model="drawer" location="right">
     <v-list-item to="/">Início</v-list-item>
     <v-list-item to="/institutional/cronogram">Cronograma</v-list-item>
     <v-list-item to="/institutional/about">Sobre nós</v-list-item>
@@ -75,6 +75,9 @@ const drawer = ref(false);
   display: flex;
   flex-direction: row;
   align-items: center;
+  position: fixed;
+  top: 0;
+  z-index: 99;
 }
 
 /* MELHORAR ESTE SELETOR */
@@ -124,6 +127,14 @@ a{
   color: #ffff;
 }
 
+
+.mobile-header{
+  position: fixed !important;
+}
+
+.mobile-header-navigation{
+  position: fixed !important;
+}
 .v-navigation-drawer{
   margin-top: 16px;
 }

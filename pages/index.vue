@@ -108,7 +108,8 @@ let model = null;
 
 <style lang="scss" scoped>
 .home {
-  background-color: #E4E7EC
+  background-color: #E4E7EC;
+  margin-top: 80px;
 }
 
 </style>
