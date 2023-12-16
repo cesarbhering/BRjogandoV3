@@ -21,17 +21,17 @@
         <span>{{ formatDate(matchInfo.begin_at) }}</span>
       </div>
     </v-card-text>
-    <v-card-actions>
+    <v-card-actions v-if="matchInfo.opponents.length">
       <!-- LOGO/SIGLA TIME 0 -->
       <div class="opponent-actions">
         <div class="d-flex align-center">
           <!-- LOGO -->
-          <div class="team-logo">
-            <img
+          <div class="team-logo"   
               v-if="
                 matchInfo.opponents[0].opponent.image_url ||
                 matchInfo.opponents[0].opponent.location
-              "
+              ">
+            <img
               :src="
                 teamLogoThumb(
                   matchInfo.opponents[0].opponent.image_url,
@@ -45,7 +45,7 @@
             <p class="text-h4 pl-4 text--primary acronym">
               {{
                 matchInfo.opponents[0].opponent.acronym ||
-                matchInfo.opponents[0].opponent.name.substring(0, 4)
+                matchInfo.opponents[0].opponent.name
               }}
             </p>
           </div>
@@ -57,7 +57,7 @@
       <div class="opponent-actions">
         <div class="d-flex align-center">
           <!-- LOGO -->
-          <div class="team-logo">
+          <div class="team-logo" v-if="matchInfo.opponents.length > 1">
             <img
               :src="
                 teamLogoThumb(
@@ -68,11 +68,11 @@
             />
           </div>
           <!-- SIGLA -->
-          <div>
+          <div >
             <p class="text-h4 pl-4 text--primary acronym">
-              {{
+              {{matchInfo.opponents.length > 1 ?
                 matchInfo.opponents[1].opponent.acronym ||
-                matchInfo.opponents[1].opponent.name.substring(0, 4)
+                matchInfo.opponents[1].opponent.name :  'TBD'
               }}
             </p>
           </div>
