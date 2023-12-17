@@ -80,11 +80,6 @@
       </div>
     </v-card-actions>
   </v-card>
-  <MatchDetailsDialog
-    v-model="showMatchDialog"
-    :match-info="matchInfo"
-    @close-match-dialog="showMatchDialog = false"
-  />
 </template>
 <script>
 export default {
