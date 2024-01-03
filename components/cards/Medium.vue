@@ -1,7 +1,7 @@
 <template>
   <v-card class="mx-auto medium-card" variant="flat" @click="dialog = true">
     <v-dialog v-model="dialog">
-      <MatchModal :match-info="matchInfo"/>
+      <MatchModal :match-info="matchInfo" :match-ocurrance="'running'" />
     </v-dialog>
 
     <v-card-title>
@@ -70,7 +70,6 @@ export default {
 </script>
 <script setup>
 import { useDisplay } from "vuetify";
-import { useGamesStore } from "~/store/games";
 
 const props = defineProps({
   matchInfo: { type: Object, required: true },

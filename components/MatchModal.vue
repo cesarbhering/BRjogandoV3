@@ -3,6 +3,7 @@
   <v-card
     class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75"
   >
+  {{ gameRosters }}
     <div
       class="bg-white dark:bg-zinc-950 rounded-lg shadow-xl w-4/5 md:w-1/2 lg:w-1/3"
     >
@@ -20,7 +21,11 @@
                 height="20"
                 class="mr-2"
                 style="aspect-ratio: 30 / 20; object-fit: cover"
-              /><span>Player 1</span>
+              />
+              <span>
+                cleiton
+                
+              </span>
             </v-list-item>
           </v-list>
         </div>
@@ -46,7 +51,7 @@
         <v-list class="divide-y divide-gray-200">
           <v-list-item class="flex items-center justify-center justify-between py-2">
             <v-list-item-title>1xBet</v-list-item-title>
-            <v-list-item-subtitle class="d-flex items-center justify-center">{{props.matchInfo.supabaseDataForMatch.odds_1xbet}}</v-list-item-subtitle>
+            <v-list-item-subtitle class="d-flex items-center justify-center">{{props.matchInfo.supabaseDataForMatch?.odds_1xbet}}</v-list-item-subtitle>
           </v-list-item>
           <v-list-item class="flex items-center justify-center justify-between py-2">
             <v-list-item-title>Bookmaker 1</v-list-item-title>
@@ -80,18 +85,26 @@ export default {
 };
 </script>
 <script setup>
+import { storeToRefs } from "pinia";
 import { useGamesStore } from "~/store/games";
-
+import { useGameDetailsStore } from "~/store/gameDetails";
 
 const { teamLogoThumb } = useLogos();
 const props = defineProps({
-  matchInfo: {type: Object, required: true}
+  matchInfo: {type: Object, required: true},
+  matchOcurrance: {type: String, required: true}
 })
 
+
+const { gameRosters } = storeToRefs(useGameDetailsStore);
+
+
 const gamesStore = useGamesStore();
+const gameDetailsStore = useGameDetailsStore();
+
 onBeforeMount(async () => {
-  const teste = await gamesStore.fetchSupabaseDataForMatch(props.matchInfo.id, 'running');
-  console.log(teste);
+  await gamesStore.fetchSupabaseDataForMatch(props.matchInfo.id, props.matchOcurrance);
+  await gameDetailsStore.fetchGameRosters(props.matchInfo);
 })
 
 function formatDate(inputDate) {

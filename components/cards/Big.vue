@@ -1,5 +1,9 @@
 <template>
-  <v-card class="big-card" variant="flat" @click="handleOpenMatchDialog">
+  <v-card class="big-card" variant="flat" @click="dialog =true">
+    <v-dialog v-model="dialog">
+      <MatchModal :match-info="matchInfo" :match-ocurrance="'running'" />
+    </v-dialog>
+
     <v-card-title class="title-big">
       <img
         class="game-image-big"
@@ -80,11 +84,6 @@
       </div>
     </v-card-actions>
   </v-card>
-  <MatchDetailsDialog
-    v-model="showMatchDialog"
-    :match-info="matchInfo"
-    @close-match-dialog="showMatchDialog = false"
-  />
 </template>
 <script>
 export default {
