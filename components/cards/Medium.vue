@@ -40,7 +40,7 @@
           </div>
           <!-- SIGLA -->
           <p class="text-h4 pl-4 text--primary acronym">
-            {{ opponent.opponent.acronym || opponent.opponent.name }}
+            {{ opponent.opponent.acronym || opponent.opponent.name.substring(0, 6) }}
           </p>
         </div>
         <div>
