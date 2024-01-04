@@ -1,8 +1,7 @@
 {
-  "name": "nuxt-app",
+  "name": "brjogando_v3",
+  "description": "BRjogando",
   "private": true,
-  "type": "module",
-  "types": "module",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
