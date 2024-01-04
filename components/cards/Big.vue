@@ -115,13 +115,13 @@ onMounted(() => {
  * @returns {String}
  */
 const specialMatchName = computed(() => {
-  if (props.matchInfo.name.includes("semifinal")) {
+  if (props.matchInfo.name.toLowerCase().includes("semifinal")) {
     return "Semifinal";
-  } else if (props.matchInfo.name.includes("quarterfinal")) {
+  } else if (props.matchInfo.name.toLowerCase().includes("quarterfinal")) {
     return "Quartas de Final";
-  } else if (props.matchInfo.name.includes("playoffs")) {
+  } else if (props.matchInfo.name.toLowerCase().includes("playoffs")) {
     return "Playoffs";
-  } else if (props.matchInfo.name.includes("final")) {
+  } else if (props.matchInfo.name.toLowerCase().includes("final")) {
     return "Final";
   }
 });
