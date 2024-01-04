@@ -103,7 +103,7 @@ const gamesStore = useGamesStore();
 const gameDetailsStore = useGameDetailsStore();
 
 onBeforeMount(async () => {
-  await gamesStore.fetchSupabaseDataForMatch(props.matchInfo.id, props.matchOcurrance);
+  await gamesStore.fetchSupabaseDataForMatch(props.matchInfo.id, props.matchOcurrance, props.matchInfo.serie_id);
   await gameDetailsStore.fetchGameRosters(props.matchInfo);
 })
 

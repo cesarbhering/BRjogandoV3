@@ -4,11 +4,20 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY
 
 exports.handler = async (event, context) => {
   const pandaScoreMatchId = event.queryStringParameters.pandaScoreMatchId;
+  const pandaScoreSerieId = event.queryStringParameters.pandaScoreSerieId;
   try {
-  let { data, error } = await supabase
+
+  const matchData = await supabase
   .from('infos-adicionais-jogos')
   .select('*')
   .eq('id_pandascore', pandaScoreMatchId)
+
+  const serieData = await supabase
+  .from('infos-adicionais-series')
+  .select('*')
+  .eq('serie_pandascore_id', pandaScoreSerieId)
+
+  const data = [...matchData.data, ...serieData.data]
 
   return {
     statusCode: 200,

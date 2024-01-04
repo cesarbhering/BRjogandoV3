@@ -1,7 +1,7 @@
 <template>
   <v-card class="big-card" variant="flat" @click="dialog =true">
     <v-dialog v-model="dialog">
-      <MatchModal :match-info="matchInfo" :match-ocurrance="'running'" />
+      <MatchModal :match-info="matchInfo" :match-ocurrance="'upcoming'" />
     </v-dialog>
 
     <v-card-title class="title-big">
@@ -88,11 +88,16 @@
 <script>
 export default {
   name: "CardBig",
+  data() {
+    return{
+      dialog: false,
+    }
+  }
 };
 </script>
 <script setup>
 import { useDisplay } from "vuetify";
-import { useGamesStore } from "~/store/games";
+
 
 const props = defineProps({
   matchInfo: { type: Object, required: true },
@@ -197,14 +202,6 @@ const specialMatchCountdown = computed(() => {
   return `${hours}:${minutes}:${seconds}`;
 });
 
-let showMatchDialog = ref(false);
-const gamesStore = useGamesStore();
-
-const handleOpenMatchDialog = async () => {
-  await gamesStore.fetchSupabaseDataForMatch(props.matchInfo.id, 'upcoming');
-  await gamesStore.fetchOdds1xBet(props.matchInfo.supabaseDataForMatch.url_1xbet, props.matchInfo.id, 'upcoming');
-  showMatchDialog.value = true;
-};
 </script>
 
 <style lang="scss" scoped>
