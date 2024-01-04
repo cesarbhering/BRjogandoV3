@@ -55,7 +55,7 @@ const updateOdds1xBet = async (liveInfos) => {
 }
 
 
-export default async (req, context) => {
+exports.handler = async (req, context) => {
   try {
     // Faz o fetch das urls dos jogos
     let { data, errorGet } = await supabase

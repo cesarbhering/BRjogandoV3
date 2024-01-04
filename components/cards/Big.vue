@@ -49,7 +49,7 @@
             <p class="text-h4 pl-4 text--primary acronym">
               {{
                 matchInfo.opponents[0].opponent.acronym ||
-                matchInfo.opponents[0].opponent.name
+                matchInfo.opponents[0].opponent.name.substring(0, 6)
               }}
             </p>
           </div>
@@ -74,9 +74,9 @@
           <!-- SIGLA -->
           <div >
             <p class="text-h4 pl-4 text--primary acronym">
-              {{matchInfo.opponents.length > 1 ?
+              {{
                 matchInfo.opponents[1].opponent.acronym ||
-                matchInfo.opponents[1].opponent.name :  'TBD'
+                matchInfo.opponents[1].opponent.name.substring(0, 6)
               }}
             </p>
           </div>
@@ -115,13 +115,13 @@ onMounted(() => {
  * @returns {String}
  */
 const specialMatchName = computed(() => {
-  if (props.matchInfo.name.includes("semifinal")) {
+  if (props.matchInfo.name.toLowerCase().includes("semifinal")) {
     return "Semifinal";
-  } else if (props.matchInfo.name.includes("quarterfinal")) {
+  } else if (props.matchInfo.name.toLowerCase().includes("quarterfinal")) {
     return "Quartas de Final";
-  } else if (props.matchInfo.name.includes("playoffs")) {
+  } else if (props.matchInfo.name.toLowerCase().includes("playoffs")) {
     return "Playoffs";
-  } else if (props.matchInfo.name.includes("final")) {
+  } else if (props.matchInfo.name.toLowerCase().includes("final")) {
     return "Final";
   }
 });

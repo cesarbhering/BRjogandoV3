@@ -47,7 +47,7 @@ const handler = async function (event) {
     // usar filter[opponents_filled]=true ?
     const matchOccurrence = event.queryStringParameters.matchOccurrence;
     const response = await fetch(
-      `https://api.pandascore.co/matches/${matchOccurrence}`,
+      `https://api.pandascore.co/matches/${matchOccurrence}?filter[opponents_filled]=true`,
       {
         headers: {
           accept: "application/json",
