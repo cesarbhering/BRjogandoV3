@@ -26,8 +26,9 @@
         <v-col
           v-for="(upcomingMatch, index) in upcomingMatches"
           :key="index"
-          xs="12"
-          sm="6"
+          :sm="6"
+          :lg="4"
+          :xl="3"
           :class="mobile ? 'px-1 py-1' : ''"
         >
         <div :class="mobile ? '' : 'mr-3'">
@@ -43,8 +44,9 @@
           v-for="(pastMatch, index) in pastMatches"
           :key="index"
           class="mt-1"
-          cols="4"
-          sm="4"
+          :sm="4"
+          :lg="3"
+          :xl="2"
         >
         <CardsSmall :match-info="pastMatch"/>
         <!--

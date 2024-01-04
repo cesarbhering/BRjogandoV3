@@ -71,7 +71,7 @@ function formatDate(inputDate) {
 <style lang="scss" scoped>
 
     .v-card{
-        width: 344px;
+        width: 250px;
         height: 148.75px;
         display: flex;
         flex-direction: column;
