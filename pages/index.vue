@@ -44,8 +44,9 @@
           v-for="(pastMatch, index) in pastMatches"
           :key="index"
           class="mt-1"
-          cols="4"
-          sm="4"
+          :sm="4"
+          :lg="3"
+          :xl="2"
         >
         <CardsSmall :match-info="pastMatch"/>
         <!--
