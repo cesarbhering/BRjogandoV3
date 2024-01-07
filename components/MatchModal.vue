@@ -95,12 +95,11 @@ const props = defineProps({
   matchOcurrance: {type: String, required: true}
 })
 
+const gameDetailsStore = useGameDetailsStore();
 
-const { gameRosters } = storeToRefs(useGameDetailsStore);
-
+const { gameRosters } = storeToRefs(gameDetailsStore);
 
 const gamesStore = useGamesStore();
-const gameDetailsStore = useGameDetailsStore();
 
 onBeforeMount(async () => {
   await gamesStore.fetchSupabaseDataForMatch(props.matchInfo.id, props.matchOcurrance, props.matchInfo.serie_id);
