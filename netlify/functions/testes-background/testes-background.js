@@ -34,22 +34,38 @@ const fetchOdds1xBetLive = async () => {
 /*   const teste = await page.$$('.c-events-scoreboard__wrap') */
 
 
-  const teste = await page.$$eval('.c-events-scoreboard__wrap', (jogosAoVivo) => {
-    return jogosAoVivo.map((element) => {
-      const nomesTimes = element.querySelectorAll('.c-events__team');
-      const timesPartida = Array.from(nomesTimes).map((time) => time.textContent.trim());
-      const linkPartida = element.querySelector('.c-events__name').getAttribute('href')
-/*       const oddsTime1 = element.querySelectorAll('span[title="V1"]')
-      const oddsTime2 = element.querySelectorAll('span[title="V2"]')  */
-      return { timesPartida, linkPartida, /* timesPartida, */ /* odds: [oddsTime1 *//* [0].textContent *//* , oddsTime2 *//* [0].textContent *//* ] */ }
-    })
- /*   const nomesTimes = jogosAoVivo.querySelectorAll('.c-events__team');
-    const timesPartida = Array.from(nomesTimes).map((time) => time.textContent.trim());
-    const linkPartida = jogosAoVivo.querySelector('.c-events__name').getAttribute('href')
-    const oddsTime1 = jogosAoVivo.querySelectorAll('span[title="V1"]')
-    const oddsTime2 = jogosAoVivo.querySelectorAll('span[title="V2"]')
-    return {jogosAoVivo} ; */ 
-  }) 
+const teste = await page.$$eval('.c-events-scoreboard__wrap', (jogosAoVivo) => {
+  return jogosAoVivo.map((element) => {
+    const nomesTimes = element.querySelectorAll('.c-events__team');
+    const timesPartida = Array.from(nomesTimes).map((time) => ({
+      team: time.textContent.trim(),
+      odds: null, // Initialize odds to null
+    }));
+    const linkPartida = element.querySelector('.c-events__name').getAttribute('href');
+
+    // Use a conditional check to handle cases where the element may not exist
+    const oddsTime1Element = element.querySelector('span[title="V1"]');
+    const oddsTime1 = oddsTime1Element ? oddsTime1Element.textContent.trim() : null;
+
+    // Adjust selector if needed for oddsTime2
+    const oddsTime2Element = element.querySelector('span[title="V2"]');
+    const oddsTime2 = oddsTime2Element ? oddsTime2Element.textContent.trim() : null;
+
+    // Assign odds to the corresponding team in timesPartida
+    if (timesPartida.length >= 2) {
+      timesPartida[0].odds = oddsTime1;
+      timesPartida[1].odds = oddsTime2;
+    }
+
+    // Use JSON.stringify to display objects in a readable format
+    const teamsFormatted = timesPartida.map(team => JSON.stringify(team));
+
+    return { teams: teamsFormatted, linkPartida };
+  });
+});
+
+
+  
 
   console.log(teste)
 
