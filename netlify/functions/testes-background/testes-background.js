@@ -25,20 +25,12 @@ const fetchOdds1xBetLive = async () => {
   await page.goto('https://br.1xbet.com/live/esports', { "waitUntil": "domcontentloaded" });
   await page.waitForSelector('#games_content')
 
-/*   const test = await page.$eval('.c-events-scoreboard__wrap', (element) => {
-    const childElement = element.querySelector('.c-events__team').innerHTML;
-    const childElement2 = Array.from(childElement).map((time) => time.textContent.trim());
-    return { childElement2 } ;
-  }) */
- 
-/*   const teste = await page.$$('.c-events-scoreboard__wrap') */
 
-
-const teste = await page.$$eval('.c-events-scoreboard__wrap', (jogosAoVivo) => {
+const jogosAoVivoOdds = await page.$$eval('.c-events-scoreboard__wrap', (jogosAoVivo) => {
   return jogosAoVivo.map((element) => {
     const nomesTimes = element.querySelectorAll('.c-events__team');
     const timesPartida = Array.from(nomesTimes).map((time) => ({
-      team: time.textContent.trim(),
+      nome: time.textContent.trim(),
       odds: null, // Initialize odds to null
     }));
     const linkPartida = element.querySelector('.c-events__name').getAttribute('href');
@@ -52,43 +44,43 @@ const teste = await page.$$eval('.c-events-scoreboard__wrap', (jogosAoVivo) => {
     const oddsTime2 = oddsTime2Element ? oddsTime2Element.textContent.trim() : null;
 
     // Assign odds to the corresponding team in timesPartida
-    if (timesPartida.length >= 2) {
+     if (timesPartida.length >= 2) {
       timesPartida[0].odds = oddsTime1;
       timesPartida[1].odds = oddsTime2;
-    }
+    } 
 
-    // Use JSON.stringify to display objects in a readable format
-    const teamsFormatted = timesPartida.map(team => JSON.stringify(team));
-
-    return { teams: teamsFormatted, linkPartida };
+    return { time0: timesPartida[0], time1: timesPartida[1] , linkPartida, ocorrencia: 'live' };
   });
 });
 
 
-  
+return jogosAoVivoOdds
 
-  console.log(teste)
-
- /*  await browser.close(); */
- /* page.close() */
 } catch (error) {
   console.error(error);
-/*   page.close() */
-  /* await browser.close(); */
 }
 }
 
 /**
- * Faz o update das odds no supabase
+ * Faz o update das odds no supabase na tabela infos-adicionais-odds
  * @param {Object} liveInfos Objeto exemplo: { matchUrl: 'https://www.1xbet.com/pt/live/eSports/...', betGroupOdds: ['1.5', '2.5'] } 
  */
-const updateOdds1xBet = async (liveInfos) => {
-  const { matchUrl, betGroupOdds } = liveInfos;
+const updateOdds1xBet = async (oddsPartida1xbet) => {
+  console.log('oddsPartida1xbet', oddsPartida1xbet)
+  const { time0, time1, linkPartida, ocorrencia } = oddsPartida1xbet;
   try {
     await supabase
-      .from('infos-adicionais-jogos')
-      .update({ odds_1xbet: betGroupOdds })
-      .eq('url_1xbet', matchUrl)
+      .from('infos-adicionais-odds')
+      .upsert([
+        { 
+          link: linkPartida, 
+          time0: time0.nome, 
+          time1: time1.nome, 
+          odds0: time0.odds, 
+          odds1: time1.odds, 
+          ocorrencia 
+        }
+      ], { onConflict: ['link'] })
       .then(({ data, error }) => {
         if (error) {
           console.error(error);
@@ -102,8 +94,11 @@ const updateOdds1xBet = async (liveInfos) => {
 
 exports.handler = async (req, context) => {
   try {
-    fetchOdds1xBetLive()
-
+   const infos = await fetchOdds1xBetLive()
+   /* console.log('infos', infos) */
+   infos.forEach(async (info) => {
+      await updateOdds1xBet(info)
+    })
   } catch (error) {
     console.error(error);
   }
