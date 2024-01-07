@@ -1,2 +1,2 @@
 [functions.populateSupabaseSchedule-background]
-  schedule = "*/1 * * * *"
+  schedule = "*/2 * * * *"
