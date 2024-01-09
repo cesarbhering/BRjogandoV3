@@ -5,7 +5,6 @@ exports.handler = async (event, context) => {
   const videoGameId = querystring.videoGameId;
   const opponentOneId = querystring.opponentOneId;
   const opponentTwoId = querystring.opponentTwoId;
-  console.log(videoGameId, opponentOneId, opponentTwoId)
   try {
     const response = await fetch(`https://api.pandascore.co/teams?filter[id]=${opponentOneId},${opponentTwoId}&filter[videogame_id]=${videoGameId}&sort=&page=1&per_page=50`,
       {

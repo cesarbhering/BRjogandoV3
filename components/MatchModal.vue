@@ -3,13 +3,12 @@
   <v-card
     class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75"
   >
-  {{ gameRosters }}
     <div
       class="bg-white dark:bg-zinc-950 rounded-lg shadow-xl w-4/5 md:w-1/2 lg:w-1/3"
     >
       <v-card-title class="text-xl font-bold text-center p-4">{{matchInfo.name}}</v-card-title>
       <v-card-subtitle class="text-xl font-bold text-center p-4">{{ formatDate(matchInfo.begin_at) }}</v-card-subtitle>
-      <div v-for="(opponent, index) in matchInfo.opponents" class="grid grid-cols-2 divide-x">
+      <div v-for="(opponent, index) in matchInfo.opponents" class="grid grid-cols-2 divide-x" :key="index">
         <div class="p-4">
           <v-card-subtitle class="text-lg font-semibold mb-2">{{ opponent.opponent.name }}</v-card-subtitle>
           <v-list class="divide-y divide-gray-200">
@@ -102,7 +101,8 @@ const { gameRosters } = storeToRefs(gameDetailsStore);
 const gamesStore = useGamesStore();
 
 onBeforeMount(async () => {
-  await gamesStore.fetchSupabaseDataForMatch(props.matchInfo.id, props.matchOcurrance, props.matchInfo.serie_id);
+  const teamNames = [props.matchInfo.opponents[0].opponent.name, props.matchInfo.opponents[1].opponent.name]
+  await gamesStore.fetchSupabaseDataForMatch(props.matchInfo.id, props.matchOcurrance, props.matchInfo.serie_id, teamNames);
   await gameDetailsStore.fetchGameRosters(props.matchInfo);
 })
 
