@@ -39,9 +39,9 @@ export const useGamesStore = defineStore({
      * @param {Number} pandaScoreMatchId 
      * @param {String} matchOccurrence 
      */
-    async fetchSupabaseDataForMatch(pandaScoreMatchId, matchOccurrence, pandaScoreSerieId) {
+    async fetchSupabaseDataForMatch(pandaScoreMatchId, matchOccurrence, pandaScoreSerieId, teamNames) {
       try {
-        const response = await fetch(`/.netlify/functions/fetchSupabaseDataForMatch?pandaScoreMatchId=${pandaScoreMatchId}&pandaScoreSerieId=${pandaScoreSerieId}`);
+        const response = await fetch(`/.netlify/functions/fetchSupabaseDataForMatch?matchOccurrence=${matchOccurrence}&pandaScoreSerieId=${pandaScoreSerieId}&teamNames=${teamNames}`);
         const data = await response.json();
         this[`${matchOccurrence}Matches`].find(match => match.id === pandaScoreMatchId).supabaseDataForMatch = data.data[0];
       } catch (error) {
