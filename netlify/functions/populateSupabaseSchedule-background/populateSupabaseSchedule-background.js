@@ -9,7 +9,8 @@ const supabase = createClient(
 
 /**
  * Faz uma busca no site da 1xBet e retorna as odds de cada jogo ao vivo
- * @returns {Array<Object>} Array de objetos com as odds de cada jogo ao vivo. Exemplo: { time0: { team: 'Time 1', odds: '1.5' }, time1: { team: 'Time 2', odds: '2.5' }, linkPartida: 'https://www.1xbet.com/pt/live/eSports/...'
+ * @returns {Array<Object>} Array de objetos com as odds de cada jogo ao vivo. 
+ * Exemplo: { time0: { team: 'Time 1', odds: '1.5' }, time1: { team: 'Time 2', odds: '2.5' }, linkPartida: 'https://www.1xbet.com/pt/live/eSports/...'
  */
 const fetchOdds1xBetLive = async () => {
   // Inicia o browser
@@ -81,7 +82,8 @@ const fetchOdds1xBetLive = async () => {
 
 /**
  * Faz uma busca no site da 1xBet e retorna as odds de cada jogo que ainda vai acontecer
- * @returns {Array<Object>} Array de objetos com as odds de cada jogo que ainda vai acontecer. Exemplo: { time0: { team: 'Time 1', odds: '1.5' }, time1: { team: 'Time 2', odds: '2.5' }, linkPartida: 'https://www.1xbet.com/pt/live/eSports/...'
+ * @returns {Array<Object>} Array de objetos com as odds de cada jogo que ainda vai acontecer. 
+ * Exemplo: { time0: { team: 'Time 1', odds: '1.5' }, time1: { team: 'Time 2', odds: '2.5' }, linkPartida: 'https://www.1xbet.com/pt/live/eSports/...'
  */
 const fetchOdds1xBetUpcoming = async () => {
   // Inicia o browser
@@ -155,7 +157,8 @@ const fetchOdds1xBetUpcoming = async () => {
 
 /**
  * Faz o update das odds no supabase na tabela infos-adicionais-odds
- * @param {Object} oddsPartida1xbet Objeto exemplo: 
+ * @param {Object} oddsPartida1xbet Objeto 
+ * Exemplo: 
  * {
     time0: { nome: 'DRX', odds: '1.488' },
     time1: { nome: 'NS RedForce', odds: '2.705' },
