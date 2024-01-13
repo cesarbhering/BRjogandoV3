@@ -1,8 +1,7 @@
 <template>
   <div class="home">
-    <p>{{ $t("welcome") }}</p>
-    <h1>Partidas ao vivo</h1>
     <v-container class="px-1">
+      <div class="container-title">Partidas ao vivo</div>
       <!-- VER ESPAÇAMENTO QUANDO TEM POUCOS CARDS -->
       <v-sheet color="#E4E7EC">
         <v-slide-group v-model="model" :show-arrows="!mobile">
@@ -10,35 +9,46 @@
             v-for="(runningMatch, index) in runningMatches"
             :key="index"
             v-slot="{ isSelected, toggle, selectedClass }"
-           
           >
-          <div class="mr-3">
-            <!-- REATIVIDADE MOBILE VERIFICAR -->
-            <CardsMedium :match-info="runningMatch" />
-          </div>
+            <div class="mr-3">
+              <!-- REATIVIDADE MOBILE VERIFICAR -->
+              <CardsMedium :match-info="runningMatch" />
+            </div>
           </v-slide-group-item>
         </v-slide-group>
       </v-sheet>
     </v-container>
-    <h1>Próximas Partidas</h1>
     <v-container>
+      <div class="container-title">Próximas Partidas</div>
       <v-row>
-        <v-col
-          v-for="(upcomingMatch, index) in upcomingMatches"
-          :key="index"
-          :sm="6"
-          :lg="4"
-          :xl="3"
-          :class="mobile ? 'px-1 py-1' : ''"
-        >
-        <div :class="mobile ? '' : 'mr-3'">
-          <CardsBig  :match-info="upcomingMatch" />
-        </div>
+        <v-col :cols="mobile ? 12 : 9" class="d-flex flex-wrap">
+          <CardsBig
+            v-for="(upcomingMatch, index) in upcomingMatches"
+            :key="index"
+            class="ma-2"
+            :match-info="upcomingMatch"
+          />
+        </v-col>
+        <v-col v-if="!mobile">
+          <CardsSmall
+            v-for="(pastMatch, index) in pastMatches"
+            :key="index"
+            :match-info="pastMatch"
+          />
         </v-col>
       </v-row>
+      <!--  <v-row no-gutters>
+        <v-col cols="8">
+          <v-sheet class="pa-2 ma-2"> .v-col-2 </v-sheet>
+        </v-col>
+        <v-col>
+          <v-sheet class="pa-2 ma-2"> .v-col-auto </v-sheet>
+        </v-col>
+      </v-row> -->
     </v-container>
-    <h1>Últimas Partidas</h1>
-    <v-container>
+
+    <v-container v-if="mobile">
+      <h1>Últimas Partidas</h1>
       <v-row>
         <v-col
           v-for="(pastMatch, index) in pastMatches"
@@ -48,13 +58,7 @@
           :lg="3"
           :xl="2"
         >
-        <CardsSmall :match-info="pastMatch"/>
-        <!--
-          <v-card>
-            <v-card-title>{{ pastMatch.name }}</v-card-title>
-             <v-card-subtitle>{{ pastMatch.begin_at }}</v-card-subtitle>
-            <v-card-text>{{ pastMatch.videogame.name }}</v-card-text>
-          </v-card> -->
+          <CardsSmall :match-info="pastMatch" />
         </v-col>
       </v-row>
     </v-container>
@@ -86,7 +90,6 @@ onBeforeMount(async () => {
 // Para auxiliar o carrossel
 let model = null;
 
-
 /* onMounted(async () => {
   nuxtApp.$restCall.get("cleiton/mercearia", { coco: "coco" });
   nuxtApp.$restCall.put(
@@ -110,8 +113,21 @@ let model = null;
 
 <style lang="scss" scoped>
 .home {
-  background-color: #E4E7EC;
+  background-color: #e4e7ec;
   margin-top: 80px;
 }
 
+.container-title {
+  /* Desktop/Hero */
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 900;
+  font-size: 46px;
+  line-height: 69px;
+  /* identical to box height */
+  text-align: center;
+
+  /* Flag/Blue */
+  color: #002776;
+}
 </style>
