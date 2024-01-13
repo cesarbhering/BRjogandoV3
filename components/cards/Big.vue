@@ -1,5 +1,5 @@
 <template>
-  <v-card class="big-card" variant="flat" @click="dialog =true">
+  <v-card class="big-card" :width="width" variant="flat" @click="dialog =true">
     <v-dialog v-model="dialog">
       <MatchModal :match-info="matchInfo" :match-ocurrance="'upcoming'" />
     </v-dialog>
@@ -46,7 +46,7 @@
           </div>
           <!-- SIGLA -->
           <div>
-            <p class="text-h4 pl-4 text--primary acronym">
+            <p class="text-h4 pl-0 text--primary acronym">
               {{
                 matchInfo.opponents[0].opponent.acronym ||
                 matchInfo.opponents[0].opponent.name.substring(0, 6)
@@ -73,7 +73,7 @@
           </div>
           <!-- SIGLA -->
           <div >
-            <p class="text-h4 pl-4 text--primary acronym">
+            <p class="text-h4 pl-1 text--primary acronym">
               {{
                 matchInfo.opponents[1].opponent.acronym ||
                 matchInfo.opponents[1].opponent.name.substring(0, 6)
@@ -103,10 +103,12 @@ const props = defineProps({
   matchInfo: { type: Object, required: true },
 });
 
-const { mobile } = useDisplay();
+const { mobile, name } = useDisplay();
 const { teamLogoThumb } = useLogos();
 
 let now = ref(Date.now());
+
+
 
 onMounted(() => {
   // Para atualizar a função specialMatchCountdown
@@ -202,12 +204,23 @@ const specialMatchCountdown = computed(() => {
   return `${hours}:${minutes}:${seconds}`;
 });
 
+const width = computed(() => {
+    switch (name.value) {
+      case 'xs': return 3
+      case 'sm': return 333
+      case 'md': return 333
+      case 'lg': return 392
+      case 'xl': return 392
+      case 'xxl': return 392
+      default: return 392
+    }
+  })
+
 </script>
 
 <style lang="scss" scoped>
 .big-card {
   border-radius: 8px;
-  width: 392px;
   height: 280px;
   @media (max-width: 960px) {
     max-width: 100%;
