@@ -47,12 +47,16 @@ const handler = async function (event) {
     // usar filter[opponents_filled]=true ?
     const matchOccurrence = event.queryStringParameters.matchOccurrence;
     const response = await fetch(
-      `https://api.pandascore.co/matches/${matchOccurrence}?filter[opponents_filled]=true`,
+      `https://api.pandascore.co/matches/${matchOccurrence}?filter[opponents_filled]=true${matchOccurrence === 'past' ? '&page=1&per_page=5' : ''}`,
       {
         headers: {
           accept: "application/json",
           authorization: `Bearer ${process.env.API_PANDASCORE_TOKEN}`,
         },
+        params: {
+          page: '1',
+          per_page: '5'
+        }
       }
     );
     if (!response.ok) {
