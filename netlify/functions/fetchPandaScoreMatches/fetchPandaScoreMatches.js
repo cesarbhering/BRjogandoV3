@@ -52,10 +52,6 @@ const handler = async function (event) {
         headers: {
           accept: "application/json",
           authorization: `Bearer ${process.env.API_PANDASCORE_TOKEN}`,
-        },
-        params: {
-          page: '1',
-          per_page: '5'
         }
       }
     );
