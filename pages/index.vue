@@ -1,44 +1,47 @@
 <template>
   <div class="home">
-    <p>{{ $t("welcome") }}</p>
-    <h1>Partidas ao vivo</h1>
     <v-container class="px-1">
-      <!-- VER ESPAÇAMENTO QUANDO TEM POUCOS CARDS -->
+      <div class="container-title">Partidas ao vivo</div>
+      {{ name.value }}
+
       <v-sheet color="#E4E7EC">
         <v-slide-group v-model="model" :show-arrows="!mobile">
           <v-slide-group-item
             v-for="(runningMatch, index) in runningMatches"
             :key="index"
             v-slot="{ isSelected, toggle, selectedClass }"
-           
           >
-          <div class="mr-3">
-            <!-- REATIVIDADE MOBILE VERIFICAR -->
-            <CardsMedium :match-info="runningMatch" />
-          </div>
+            <div class="mr-3">
+              <!-- REATIVIDADE MOBILE VERIFICAR -->
+              <CardsMedium :match-info="runningMatch" />
+            </div>
           </v-slide-group-item>
         </v-slide-group>
       </v-sheet>
     </v-container>
-    <h1>Próximas Partidas</h1>
     <v-container>
+      <div class="container-title">Próximas Partidas</div>
       <v-row>
-        <v-col
-          v-for="(upcomingMatch, index) in upcomingMatches"
-          :key="index"
-          :sm="6"
-          :lg="4"
-          :xl="3"
-          :class="mobile ? 'px-1 py-1' : ''"
-        >
-        <div :class="mobile ? '' : 'mr-3'">
-          <CardsBig  :match-info="upcomingMatch" />
-        </div>
+        <v-col :cols="colsNum" class="d-flex flex-wrap">
+          <CardsBig
+            v-for="(upcomingMatch, index) in upcomingMatches"
+            :key="index"
+            class="ma-2"
+            :match-info="upcomingMatch"
+          />
+        </v-col>
+        <v-col v-if="!mobile">
+          <CardsSmall
+            v-for="(pastMatch, index) in pastMatches"
+            :key="index"
+            :match-info="pastMatch"
+          />
         </v-col>
       </v-row>
     </v-container>
-    <h1>Últimas Partidas</h1>
-    <v-container>
+
+    <v-container v-if="mobile">
+      <h1>Últimas Partidas</h1>
       <v-row>
         <v-col
           v-for="(pastMatch, index) in pastMatches"
@@ -48,13 +51,7 @@
           :lg="3"
           :xl="2"
         >
-        <CardsSmall :match-info="pastMatch"/>
-        <!--
-          <v-card>
-            <v-card-title>{{ pastMatch.name }}</v-card-title>
-             <v-card-subtitle>{{ pastMatch.begin_at }}</v-card-subtitle>
-            <v-card-text>{{ pastMatch.videogame.name }}</v-card-text>
-          </v-card> -->
+          <CardsSmall :match-info="pastMatch" />
         </v-col>
       </v-row>
     </v-container>
@@ -63,11 +60,7 @@
 <script setup>
 import { useDisplay } from "vuetify";
 import { useGamesStore } from "~/store/games";
-/* import { useOddsStore } from "~/store/odds"; */
 import { storeToRefs } from "pinia";
-/* import { useNuxtApp } from "nuxt/app"; */
-
-const { mobile } = useDisplay();
 
 const gamesStore = useGamesStore();
 const { upcomingMatches } = storeToRefs(gamesStore);
@@ -81,37 +74,48 @@ onBeforeMount(async () => {
   gamesStore.fetchPastMatches();
 });
 
-/* const nuxtApp = useNuxtApp(); */
-
 // Para auxiliar o carrossel
 let model = null;
 
+const { mobile, name } = useDisplay();
 
-/* onMounted(async () => {
-  nuxtApp.$restCall.get("cleiton/mercearia", { coco: "coco" });
-  nuxtApp.$restCall.put(
-    "cleiton/mercearia",
-    { coco: "coco" },
-    { cleber: "cleber" }
-  );
-
-  nuxtApp.$restCall.patch(
-    "cleiton/mercearia",
-    { coco: "coco" },
-    { cleber: "cleber" }
-  );
-  nuxtApp.$restCall.delete(
-    "cleiton/mercearia",
-    { coco: "coco" },
-    { cleber: "cleber" }
-  );
-}); */
+const colsNum = computed(() => {
+  switch (name.value) {
+    case "xs":
+      return 12;
+    case "sm":
+      return 12;
+    case "md":
+      return 9;
+    case "lg":
+      return 9;
+    case "xl":
+      return 10;
+    case "xxl":
+      return 9;
+    default:
+      return 9;
+  }
+});
 </script>
 
 <style lang="scss" scoped>
 .home {
-  background-color: #E4E7EC;
+  background-color: #e4e7ec;
   margin-top: 80px;
 }
 
+.container-title {
+  /* Desktop/Hero */
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 900;
+  font-size: 46px;
+  line-height: 69px;
+  /* identical to box height */
+  text-align: center;
+
+  /* Flag/Blue */
+  color: #002776;
+}
 </style>
