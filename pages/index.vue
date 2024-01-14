@@ -2,7 +2,8 @@
   <div class="home">
     <v-container class="px-1">
       <div class="container-title">Partidas ao vivo</div>
-      <!-- VER ESPAÇAMENTO QUANDO TEM POUCOS CARDS -->
+      {{ name.value }}
+
       <v-sheet color="#E4E7EC">
         <v-slide-group v-model="model" :show-arrows="!mobile">
           <v-slide-group-item
@@ -21,7 +22,7 @@
     <v-container>
       <div class="container-title">Próximas Partidas</div>
       <v-row>
-        <v-col :cols="mobile ? 12 : 9" class="d-flex flex-wrap">
+        <v-col :cols="colsNum" class="d-flex flex-wrap">
           <CardsBig
             v-for="(upcomingMatch, index) in upcomingMatches"
             :key="index"
@@ -37,14 +38,6 @@
           />
         </v-col>
       </v-row>
-      <!--  <v-row no-gutters>
-        <v-col cols="8">
-          <v-sheet class="pa-2 ma-2"> .v-col-2 </v-sheet>
-        </v-col>
-        <v-col>
-          <v-sheet class="pa-2 ma-2"> .v-col-auto </v-sheet>
-        </v-col>
-      </v-row> -->
     </v-container>
 
     <v-container v-if="mobile">
@@ -67,11 +60,7 @@
 <script setup>
 import { useDisplay } from "vuetify";
 import { useGamesStore } from "~/store/games";
-/* import { useOddsStore } from "~/store/odds"; */
 import { storeToRefs } from "pinia";
-/* import { useNuxtApp } from "nuxt/app"; */
-
-const { mobile } = useDisplay();
 
 const gamesStore = useGamesStore();
 const { upcomingMatches } = storeToRefs(gamesStore);
@@ -85,30 +74,29 @@ onBeforeMount(async () => {
   gamesStore.fetchPastMatches();
 });
 
-/* const nuxtApp = useNuxtApp(); */
-
 // Para auxiliar o carrossel
 let model = null;
 
-/* onMounted(async () => {
-  nuxtApp.$restCall.get("cleiton/mercearia", { coco: "coco" });
-  nuxtApp.$restCall.put(
-    "cleiton/mercearia",
-    { coco: "coco" },
-    { cleber: "cleber" }
-  );
+const { mobile, name } = useDisplay();
 
-  nuxtApp.$restCall.patch(
-    "cleiton/mercearia",
-    { coco: "coco" },
-    { cleber: "cleber" }
-  );
-  nuxtApp.$restCall.delete(
-    "cleiton/mercearia",
-    { coco: "coco" },
-    { cleber: "cleber" }
-  );
-}); */
+const colsNum = computed(() => {
+  switch (name.value) {
+    case "xs":
+      return 12;
+    case "sm":
+      return 12;
+    case "md":
+      return 9;
+    case "lg":
+      return 9;
+    case "xl":
+      return 10;
+    case "xxl":
+      return 9;
+    default:
+      return 9;
+  }
+});
 </script>
 
 <style lang="scss" scoped>

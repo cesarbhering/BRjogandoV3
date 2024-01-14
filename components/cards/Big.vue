@@ -103,7 +103,6 @@ const props = defineProps({
   matchInfo: { type: Object, required: true },
 });
 
-const { mobile, name } = useDisplay();
 const { teamLogoThumb } = useLogos();
 
 let now = ref(Date.now());
@@ -203,6 +202,9 @@ const specialMatchCountdown = computed(() => {
   // Remove 3grs da conta devido ao GMT-3, @TODO fazer função mais flexivel para internacionalização
   return `${hours}:${minutes}:${seconds}`;
 });
+
+
+const { mobile, name } = useDisplay();
 
 const width = computed(() => {
     switch (name.value) {
