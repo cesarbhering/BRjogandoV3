@@ -103,7 +103,6 @@ const props = defineProps({
   matchInfo: { type: Object, required: true },
 });
 
-const { mobile, name } = useDisplay();
 const { teamLogoThumb } = useLogos();
 
 let now = ref(Date.now());
@@ -204,9 +203,12 @@ const specialMatchCountdown = computed(() => {
   return `${hours}:${minutes}:${seconds}`;
 });
 
+
+const { mobile, name } = useDisplay();
+
 const width = computed(() => {
     switch (name.value) {
-      case 'xs': return 3
+      case 'xs': return 333
       case 'sm': return 333
       case 'md': return 333
       case 'lg': return 392

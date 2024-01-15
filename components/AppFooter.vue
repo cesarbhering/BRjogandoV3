@@ -5,10 +5,9 @@
               <h2>Apostas com Segurança</h2>
             </div>            
             <p>A prática de apostas com segurança é fundamental para garantir uma experiência positiva e responsável no mundo do entretenimento de jogos de azar. Ao adotar medidas prudentes, como definir limites de apostas, entender as regras dos jogos e escolher plataformas confiáveis, os apostadores podem minimizar os riscos financeiros e aproveitar a diversão de forma mais controlada.</p>
-            <!-- <v-btn rounded="lg">Ver todas as Partidas</v-btn> -->
           </div>          
     </div>    
-    <v-footer app>     
+    <v-footer :app="mobile? false: true ">     
       <div class="top-line"></div>
       <div class="footer-logo">
         <img src="../assets/image/Logo-Branca.png" alt="">
@@ -44,11 +43,7 @@
 
 <script setup>
 import { useDisplay } from "vuetify";
-
-
-
 const { mobile } = useDisplay();
-
 </script>
 
 <style lang="scss" scoped>

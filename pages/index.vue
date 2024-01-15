@@ -2,6 +2,8 @@
   <div class="home">
     <v-container class="px-1">
       <div class="container-title">Partidas ao vivo</div>
+      {{ name.value }}
+
       <!-- VER ESPAÇAMENTO QUANDO TEM POUCOS CARDS -->
       <v-sheet color="#E4E7EC">
         <v-slide-group v-model="model" :show-arrows="!mobile">
@@ -18,48 +20,52 @@
         </v-slide-group>
       </v-sheet>
     </v-container>
-    <v-container>
-      <div class="container-title">Próximas Partidas</div>
-      <v-row>
-        <v-col :cols="mobile ? 12 : 9" class="d-flex flex-wrap">
-          <CardsBig
-            v-for="(upcomingMatch, index) in upcomingMatches"
-            :key="index"
-            class="ma-2"
-            :match-info="upcomingMatch"
-          />
+    <v-container class="mb-3">
+      <v-row class="justify-center">
+        <v-col :cols="mobile ? 12 : 9" class="d-flex flex-wrap justify-center">
+          <v-row class="justify-center">
+            <span class="container-title">Próximas Partidas</span>
+          </v-row>
+          <v-row class="justify-center">
+            <CardsBig
+              v-for="(upcomingMatch, index) in upcomingMatches"
+              :key="index"
+              class="ma-2"
+              :match-info="upcomingMatch"
+            />
+          </v-row>
         </v-col>
         <v-col v-if="!mobile">
-          <CardsSmall
-            v-for="(pastMatch, index) in pastMatches"
-            :key="index"
-            :match-info="pastMatch"
-          />
+          <v-row class="mt-15 ml-6 last-matches">
+            <span>Últimas Partidas</span>
+          </v-row>
+          <v-row>
+            <CardsSmall
+              v-for="(pastMatch, index) in pastMatches"
+              :key="index"
+              :match-info="pastMatch"
+            />
+          </v-row>
         </v-col>
       </v-row>
-      <!--  <v-row no-gutters>
-        <v-col cols="8">
-          <v-sheet class="pa-2 ma-2"> .v-col-2 </v-sheet>
-        </v-col>
-        <v-col>
-          <v-sheet class="pa-2 ma-2"> .v-col-auto </v-sheet>
-        </v-col>
-      </v-row> -->
     </v-container>
-
+    <!-- ULTIMAS PARTIDAS MOBILE -->
     <v-container v-if="mobile">
-      <h1>Últimas Partidas</h1>
-      <v-row>
-        <v-col
-          v-for="(pastMatch, index) in pastMatches"
-          :key="index"
-          class="mt-1"
-          :sm="4"
-          :lg="3"
-          :xl="2"
-        >
-          <CardsSmall :match-info="pastMatch" />
-        </v-col>
+      <v-row class="mb-2">
+        <v-row class="justify-center">
+          <div class="last-matches">
+            <span>Últimas Partidas</span>
+          </div>
+        </v-row>
+        <v-row>
+          <v-col
+            class="d-flex flex-wrap justify-center pa-0"
+            v-for="(pastMatch, index) in pastMatches"
+            :key="index"
+          >
+            <CardsSmall :match-info="pastMatch" />
+          </v-col>
+        </v-row>
       </v-row>
     </v-container>
   </div>
@@ -67,11 +73,7 @@
 <script setup>
 import { useDisplay } from "vuetify";
 import { useGamesStore } from "~/store/games";
-/* import { useOddsStore } from "~/store/odds"; */
 import { storeToRefs } from "pinia";
-/* import { useNuxtApp } from "nuxt/app"; */
-
-const { mobile } = useDisplay();
 
 const gamesStore = useGamesStore();
 const { upcomingMatches } = storeToRefs(gamesStore);
@@ -85,30 +87,29 @@ onBeforeMount(async () => {
   gamesStore.fetchPastMatches();
 });
 
-/* const nuxtApp = useNuxtApp(); */
-
 // Para auxiliar o carrossel
 let model = null;
 
-/* onMounted(async () => {
-  nuxtApp.$restCall.get("cleiton/mercearia", { coco: "coco" });
-  nuxtApp.$restCall.put(
-    "cleiton/mercearia",
-    { coco: "coco" },
-    { cleber: "cleber" }
-  );
+const { mobile, name, lgAndUp } = useDisplay();
 
-  nuxtApp.$restCall.patch(
-    "cleiton/mercearia",
-    { coco: "coco" },
-    { cleber: "cleber" }
-  );
-  nuxtApp.$restCall.delete(
-    "cleiton/mercearia",
-    { coco: "coco" },
-    { cleber: "cleber" }
-  );
-}); */
+const colsNum = computed(() => {
+  switch (name.value) {
+    case "xs":
+      return 3;
+    case "sm":
+      return 333;
+    case "md":
+      return 333;
+    case "lg":
+      return 392;
+    case "xl":
+      return 392;
+    case "xxl":
+      return 392;
+    default:
+      return 392;
+  }
+});
 </script>
 
 <style lang="scss" scoped>
@@ -122,12 +123,22 @@ let model = null;
   font-family: "Poppins";
   font-style: normal;
   font-weight: 900;
-  font-size: 46px;
+  font-size: 3vw;
   line-height: 69px;
-  /* identical to box height */
   text-align: center;
-
   /* Flag/Blue */
   color: #002776;
+  @media (max-width: 960px) {
+    font-size: 2rem;
+  }
+}
+
+.last-matches {
+  /* Desktop/H2 */
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #000000;
 }
 </style>
