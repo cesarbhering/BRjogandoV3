@@ -1,5 +1,6 @@
 <template>
   <v-row class="d-flex align-center justify-center">
+    <!-- {{ gameRosters }} -->
     <v-card height="90vh" class="w-75">
       <v-row>
         <v-spacer></v-spacer>
@@ -23,6 +24,61 @@
           </v-col>
         </v-row>
       </v-card-subtitle>
+      <v-card-text>
+        <!-- LOGO/SIGLA/SCORE -->
+        <v-row>
+          <v-col v-for="(opponent, index) in matchInfo.opponents" :key="index">
+            <v-row v-if="index === 0" class="d-flex align-center ml-5">
+              <!-- LOGO -->
+              <v-col>
+                <img
+                  :src="
+                    teamLogoThumb(
+                      opponent.opponent.image_url,
+                      opponent.opponent.location
+                    )
+                  "
+                />
+              </v-col>
+              <v-col>
+                <!-- SIGLA -->
+                <p class="text-h4 pl-4 text--primary acronym">
+                  {{ opponent.opponent.name }}
+                </p>
+              </v-col>
+            </v-row>
+            <v-row v-if="index === 1" class="d-flex align-center ml-5">
+              <!-- LOGO -->
+              <v-col>
+                <!-- SIGLA -->
+                <p class="text-h4 pl-4 text--primary acronym">
+                  {{ opponent.opponent.name }}
+                </p>
+              </v-col>
+              <v-col>
+                <img
+                  :src="
+                    teamLogoThumb(
+                      opponent.opponent.image_url,
+                      opponent.opponent.location
+                    )
+                  "
+                />
+              </v-col>
+            </v-row>
+          </v-col>
+          <!-- SCORE -->
+          <!--           <div>
+            <p class="text-h4 text--primary mr-5 score text-center">
+              {{ matchInfo.results[index].score }}
+            </p>
+          </div> -->
+        </v-row>
+        <!-- AO VIVO SVG -->
+        <!--         <div class="live text-center">
+          <img src="../../assets/image/aovivo.svg" alt="Live game" />
+        </div> -->
+      </v-card-text>
     </v-card>
   </v-row>
 </template>
@@ -83,4 +139,34 @@ function formatDate(inputDate) {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.opponent-line {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  @media (max-width: 960px) {
+    margin: 0px 0px 0px 0px;
+    height: 30px;
+  }
+
+  .acronym {
+    font-family: "Poppins";
+    font-weight: bold;
+    font-size: 25px !important;
+    @media (max-width: 960px) {
+      font-size: 18px !important;
+    }
+  }
+
+  .score {
+    font-family: "Poppins";
+    font-weight: bold;
+    font-size: 20px !important;
+    color: #002776;
+    @media (max-width: 960px) {
+      font-size: 14px !important;
+    }
+  }
+}
+</style>
