@@ -1,9 +1,5 @@
 <template>
   <v-card class="mx-auto medium-card" variant="flat" @click="dialog = true">
-    <v-dialog v-model="dialog">
-      <MatchModal :match-info="matchInfo" :match-ocurrance="'running'" />
-    </v-dialog>
-
     <v-card-title>
       <div class="upper-line" v-video-game-based-background></div>
     </v-card-title>
@@ -40,7 +36,10 @@
           </div>
           <!-- SIGLA -->
           <p class="text-h4 pl-4 text--primary acronym">
-            {{ opponent.opponent.acronym || opponent.opponent.name.substring(0, 10) }}
+            {{
+              opponent.opponent.acronym ||
+              opponent.opponent.name.substring(0, 10)
+            }}
           </p>
         </div>
         <div>
@@ -57,15 +56,18 @@
       </div>
     </v-card-text>
   </v-card>
+  <v-dialog v-model="dialog">
+    <MatchModal @closeModal="dialog = false" :match-info="matchInfo" :match-ocurrance="'running'" />
+  </v-dialog>
 </template>
 <script>
 export default {
   name: "CardMedium",
   data() {
-    return{
+    return {
       dialog: false,
-    }
-  }
+    };
+  },
 };
 </script>
 <script setup>
@@ -110,7 +112,6 @@ const vVideoGameBasedBackground = {
   mounted: (el) =>
     (el.style.background = videoGameColor(props.matchInfo.videogame.name)),
 };
-
 </script>
 
 <style lang="scss" scoped>
@@ -204,5 +205,9 @@ const vVideoGameBasedBackground = {
       max-width: 51px;
     }
   }
+}
+
+.custom-dialog .v-dialog__content {
+  padding-top: 40px; /* Adjust the value as needed */
 }
 </style>

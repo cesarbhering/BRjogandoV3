@@ -1,81 +1,30 @@
 <template>
- 
-  <v-card
-    class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75"
-  >
-    <div
-      class="bg-white dark:bg-zinc-950 rounded-lg shadow-xl w-4/5 md:w-1/2 lg:w-1/3"
-    >
-      <v-card-title class="text-xl font-bold text-center p-4">{{matchInfo.name}}</v-card-title>
-      <v-card-subtitle class="text-xl font-bold text-center p-4">{{ formatDate(matchInfo.begin_at) }}</v-card-subtitle>
-      <div v-for="(opponent, index) in matchInfo.opponents" class="grid grid-cols-2 divide-x" :key="index">
-        <div class="p-4">
-          <v-card-subtitle class="text-lg font-semibold mb-2">{{ opponent.opponent.name }}</v-card-subtitle>
-          <v-list class="divide-y divide-gray-200">
-            <v-list-item class="flex items-center py-2">
-              <img
-                src="~/assets/image/br-flag.svg"
-                alt="Country Flag"
-                width="30"
-                height="20"
-                class="mr-2"
-                style="aspect-ratio: 30 / 20; object-fit: cover"
-              />
-              <span>
-                cleiton
-                
-              </span>
-            </v-list-item>
-          </v-list>
-        </div>
-        <!-- <div class="p-4">
-          <v-card-subtitle class="text-lg font-semibold mb-2">{{ matchInfo.opponents}}</v-card-subtitle>
-          <v-list class="divide-y divide-gray-200">
-            <v-list-item class="flex items-center py-2">
-              <img
-                src="~/assets/image/br-flag.svg"
-                alt="Country Flag"
-                width="30"
-                height="20"
-                class="mr-2"
-                style="aspect-ratio: 30 / 20; object-fit: cover"
-              />
-              <span>Player 1</span>
-            </v-list-item>
-          </v-list>
-        </div> -->
-      </div>
-      <div class="p-4">
-        <v-card-subtitle class="text-lg font-semibold mb-2">Betting Odds</v-card-subtitle>
-        <v-list class="divide-y divide-gray-200">
-          <v-list-item class="flex items-center justify-center justify-between py-2">
-            <v-list-item-title>1xBet</v-list-item-title>
-            <v-list-item-subtitle class="d-flex items-center justify-center">{{props.matchInfo.supabaseDataForMatch?.odds_1xbet}}</v-list-item-subtitle>
-          </v-list-item>
-          <v-list-item class="flex items-center justify-center justify-between py-2">
-            <v-list-item-title>Bookmaker 1</v-list-item-title>
-            <v-list-item-subtitle class="d-flex items-center justify-center">1.5 : 2.5</v-list-item-subtitle>
-          </v-list-item>
-          <v-list-item class="flex items-center justify-center justify-between py-2">
-            <v-list-item-title>Bookmaker 1</v-list-item-title>
-            <v-list-item-subtitle class="d-flex items-center justify-center">1.5 : 2.5</v-list-item-subtitle>
-          </v-list-item>
-        </v-list>
-      </div>
-      <div class="p-4">
-        <v-card-subtitle class="text-lg font-semibold mb-2"></v-card-subtitle>
-        <v-list  v-for="(stream, index) in matchInfo.streams_list"  class="divide-y divide-gray-200">
-          <v-list-item class="flex items-center py-2">
-            ><a
-              :href="stream.raw_url"
-              class="text-blue-600 hover:text-blue-800 visited:text-purple-600"
-              >Stream Link {{ index+1 }}</a
-            >
-          </v-list-item>
-        </v-list>
-      </div>
-    </div>
-  </v-card>
+  <v-row class="d-flex align-center justify-center">
+    <v-card height="90vh" class="w-75">
+      <v-row>
+        <v-spacer></v-spacer>
+        <v-col cols="auto"
+          ><v-icon @click="$emit('closeModal')" class="ma-2"
+            >mdi-close</v-icon
+          ></v-col
+        >
+      </v-row>
+
+      <v-card-subtitle class="text-xl font-bold text-center">
+        <v-row>
+          <v-col class="pb-0 pt-2"> {{ matchInfo.league.name }}</v-col>
+        </v-row>
+        <v-row>
+          <v-col class="pa-0"> {{ matchInfo.serie.name }}</v-col>
+        </v-row>
+        <v-row>
+          <v-col class="pt-0">
+            {{ formatDate(matchInfo.begin_at) }}
+          </v-col>
+        </v-row>
+      </v-card-subtitle>
+    </v-card>
+  </v-row>
 </template>
 
 <script>
@@ -90,9 +39,9 @@ import { useGameDetailsStore } from "~/store/gameDetails";
 
 const { teamLogoThumb } = useLogos();
 const props = defineProps({
-  matchInfo: {type: Object, required: true},
-  matchOcurrance: {type: String, required: true}
-})
+  matchInfo: { type: Object, required: true },
+  matchOcurrance: { type: String, required: true },
+});
 
 const gameDetailsStore = useGameDetailsStore();
 
@@ -100,11 +49,20 @@ const { gameRosters } = storeToRefs(gameDetailsStore);
 
 const gamesStore = useGamesStore();
 
+const teamNames = [
+  props.matchInfo.opponents[0].opponent.name,
+  props.matchInfo.opponents[1].opponent.name,
+];
+
 onBeforeMount(async () => {
-  const teamNames = [props.matchInfo.opponents[0].opponent.name, props.matchInfo.opponents[1].opponent.name]
-  await gamesStore.fetchSupabaseDataForMatch(props.matchInfo.id, props.matchOcurrance, props.matchInfo.serie_id, teamNames);
+  await gamesStore.fetchSupabaseDataForMatch(
+    props.matchInfo.id,
+    props.matchOcurrance,
+    props.matchInfo.serie_id,
+    teamNames
+  );
   await gameDetailsStore.fetchGameRosters(props.matchInfo);
-})
+});
 
 function formatDate(inputDate) {
   const date = new Date(inputDate);
@@ -123,8 +81,6 @@ function formatDate(inputDate) {
 
   return formattedDate;
 }
-
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
