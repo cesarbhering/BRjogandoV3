@@ -12,57 +12,66 @@
       </v-row>
 
       <v-card-subtitle class="text-xl font-bold text-center">
+        <!-- NOME DA LIGA -->
         <v-row>
           <v-col class="pb-0 pt-2"> {{ matchInfo.league.name }}</v-col>
         </v-row>
+        <!-- NOME DA SERIE -->
         <v-row>
           <v-col class="pa-0"> {{ matchInfo.serie.name }}</v-col>
         </v-row>
         <v-row>
+          <!-- HORARIO QUE COMEÇOU -->
           <v-col class="pt-0">
             {{ formatDate(matchInfo.begin_at) }}
           </v-col>
         </v-row>
       </v-card-subtitle>
       <v-card-text>
-        <!-- LOGO/SIGLA/SCORE -->
-        <v-row>
+        <v-row class="d-flex align-center justify-center">
           <v-col v-for="(opponent, index) in matchInfo.opponents" :key="index">
             <v-row v-if="index === 0" class="d-flex align-center ml-5">
+              <!-- LOGO/SIGLA/SCORE TIME 0 -->
+              <!-- BANDEIRA DA ORG -->
+              <v-col cols="3">
+                <v-img
+                  max-width="75px"
+                  :src="teamLogoThumb(false, opponent.opponent.location)"
+                />
+              </v-col>
               <!-- LOGO -->
-              <v-col>
-                <img
-                  :src="
-                    teamLogoThumb(
-                      opponent.opponent.image_url,
-                      opponent.opponent.location
-                    )
-                  "
+              <v-col cols="3" class="pa-0">
+                <v-img
+                  max-width="75px"
+                  :src="teamLogoThumb(opponent.opponent.image_url, false)"
                 />
               </v-col>
               <v-col>
                 <!-- SIGLA -->
-                <p class="text-h4 pl-4 text--primary acronym">
+                <p class="text-h3 text-left text--primary acronym">
                   {{ opponent.opponent.name }}
                 </p>
               </v-col>
             </v-row>
             <v-row v-if="index === 1" class="d-flex align-center ml-5">
+              <!-- LOGO/SIGLA/SCORE TIME 1 -->
               <!-- LOGO -->
               <v-col>
                 <!-- SIGLA -->
-                <p class="text-h4 pl-4 text--primary acronym">
+                <p class="text-h3 text-right text--primary acronym">
                   {{ opponent.opponent.name }}
                 </p>
               </v-col>
+              <v-col class="pa-0">
+                <v-img
+                  max-width="75px"
+                  :src="teamLogoThumb(opponent.opponent.image_url, false)"
+                />
+              </v-col>
               <v-col>
-                <img
-                  :src="
-                    teamLogoThumb(
-                      opponent.opponent.image_url,
-                      opponent.opponent.location
-                    )
-                  "
+                <v-img
+                  max-width="75px"
+                  :src="teamLogoThumb(false, opponent.opponent.location)"
                 />
               </v-col>
             </v-row>
@@ -154,6 +163,9 @@ function formatDate(inputDate) {
     font-family: "Poppins";
     font-weight: bold;
     font-size: 25px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     @media (max-width: 960px) {
       font-size: 18px !important;
     }
