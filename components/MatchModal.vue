@@ -4,11 +4,7 @@
     <v-card height="90vh" class="w-75">
       <v-row>
         <v-spacer></v-spacer>
-        <v-col cols="auto"
-          ><v-icon @click="$emit('closeModal')" class="ma-2"
-            >mdi-close</v-icon
-          ></v-col
-        >
+        <v-col cols="auto"><v-icon @click="$emit('closeModal')" class="ma-2">mdi-close</v-icon></v-col>
       </v-row>
 
       <v-card-subtitle class="text-xl font-bold text-center">
@@ -33,46 +29,40 @@
             <v-row v-if="index === 0" class="d-flex align-center ml-5">
               <!-- LOGO/SIGLA/SCORE TIME 0 -->
               <!-- BANDEIRA DA ORG -->
-              <v-col cols="3">
-                <v-img
-                  max-width="75px"
-                  :src="teamLogoThumb(false, opponent.opponent.location)"
-                />
+              <v-col cols="3" class="d-flex justify-center">
+                <v-img class="elevation-1" max-width="6vw" :src="teamLogoThumb(false, opponent.opponent.location)" />
               </v-col>
               <!-- LOGO -->
-              <v-col cols="3" class="pa-0">
-                <v-img
-                  max-width="75px"
-                  :src="teamLogoThumb(opponent.opponent.image_url, false)"
-                />
+              <v-col cols="3" class="pa-0 d-flex justify-end">
+                <v-img max-width="6vw" :src="teamLogoThumb(opponent.opponent.image_url, false)" />
               </v-col>
               <v-col>
                 <!-- SIGLA -->
-                <p class="text-h3 text-left text--primary acronym">
+                <h1 class="text-left acronym">
                   {{ opponent.opponent.name }}
-                </p>
+                </h1>
               </v-col>
+
             </v-row>
-            <v-row v-if="index === 1" class="d-flex align-center ml-5">
+            <v-row v-if="index === 1" class="d-flex align-center mr-5">
               <!-- LOGO/SIGLA/SCORE TIME 1 -->
               <!-- LOGO -->
               <v-col>
                 <!-- SIGLA -->
-                <p class="text-h3 text-right text--primary acronym">
+
+                <h1 class="text-right acronym">
                   {{ opponent.opponent.name }}
-                </p>
+                </h1>
+
               </v-col>
-              <v-col class="pa-0">
-                <v-img
-                  max-width="75px"
-                  :src="teamLogoThumb(opponent.opponent.image_url, false)"
-                />
+              <!-- LOGO -->
+              <v-col cols="3" class="pa-0 d-flex justify-start">
+                <v-img max-width="6vw" :src="teamLogoThumb(opponent.opponent.image_url, false)" />
               </v-col>
-              <v-col>
-                <v-img
-                  max-width="75px"
-                  :src="teamLogoThumb(false, opponent.opponent.location)"
-                />
+              <!-- BANDEIRA DA ORG -->
+              <v-col cols="3" class="d-flex justify-center">
+                <v-img max-width="6vw" :src="teamLogoThumb(false, opponent.opponent.location)"
+                  :alt="opponent.opponent.location + ' flag'" />
               </v-col>
             </v-row>
           </v-col>
@@ -149,36 +139,28 @@ function formatDate(inputDate) {
 </script>
 
 <style lang="scss" scoped>
-.opponent-line {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
+.acronym {
+  font-family: "Poppins";
+  font-weight: bold;
+  color: #000000;
+  font-size: 25px !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
   @media (max-width: 960px) {
-    margin: 0px 0px 0px 0px;
-    height: 30px;
+    font-size: 21px !important;
   }
+}
 
-  .acronym {
-    font-family: "Poppins";
-    font-weight: bold;
-    font-size: 25px !important;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    @media (max-width: 960px) {
-      font-size: 18px !important;
-    }
-  }
+.score {
+  font-family: "Poppins";
+  font-weight: bold;
+  font-size: 20px !important;
+  color: #002776;
 
-  .score {
-    font-family: "Poppins";
-    font-weight: bold;
-    font-size: 20px !important;
-    color: #002776;
-    @media (max-width: 960px) {
-      font-size: 14px !important;
-    }
+  @media (max-width: 960px) {
+    font-size: 14px !important;
   }
 }
 </style>

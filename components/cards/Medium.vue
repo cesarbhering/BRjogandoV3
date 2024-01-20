@@ -6,11 +6,10 @@
     <v-card-subtitle class="d-flex flex-column text-center match-infos">
       <span>{{ matchInfo.videogame.name }}</span>
       <span>
-        {{ matchInfo.league.name }} -
+        {{ matchInfo.league.name }}
+        -
         {{
-          mobile
-            ? `Md ${matchInfo.games.length}`
-            : `Melhor de ${matchInfo.games.length}`
+         `Md ${matchInfo.games.length}`
         }}
       </span>
     </v-card-subtitle>
@@ -25,7 +24,8 @@
         <div class="d-flex align-center ml-5">
           <!-- LOGO -->
           <div class="team-logo">
-            <img
+            <v-img
+            :class="opponent.opponent.img_url === null ? 'elevation-1' : ''"
               :src="
                 teamLogoThumb(
                   opponent.opponent.image_url,
@@ -52,7 +52,7 @@
       </div>
       <!-- AO VIVO SVG -->
       <div class="live text-center">
-        <img src="../../assets/image/aovivo.svg" alt="Live game" />
+        <v-img src="../../assets/image/aovivo.svg" alt="Live game" />
       </div>
     </v-card-text>
   </v-card>
