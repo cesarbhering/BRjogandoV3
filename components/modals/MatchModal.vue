@@ -24,7 +24,7 @@
         </v-row>
       </v-card-subtitle>
       <v-card-text>
-        <v-row class="d-flex align-center justify-center">
+        <v-row class="d-flex align-center justify-center bg-red">
           <v-col v-for="(opponent, index) in matchInfo.opponents" :key="index">
             <v-row v-if="index === 0" class="d-flex align-center ml-5">
               <!-- LOGO/SIGLA/SCORE TIME 0 -->
@@ -42,7 +42,6 @@
                   {{ opponent.opponent.name }}
                 </h1>
               </v-col>
-
             </v-row>
             <v-row v-if="index === 1" class="d-flex align-center mr-5">
               <!-- LOGO/SIGLA/SCORE TIME 1 -->
@@ -61,7 +60,7 @@
               </v-col>
               <!-- BANDEIRA DA ORG -->
               <v-col cols="3" class="d-flex justify-center">
-                <v-img max-width="6vw" :src="teamLogoThumb(false, opponent.opponent.location)"
+                <v-img class="elevation-1" max-width="6vw" :src="teamLogoThumb(false, opponent.opponent.location)"
                   :alt="opponent.opponent.location + ' flag'" />
               </v-col>
             </v-row>
@@ -77,6 +76,14 @@
         <!--         <div class="live text-center">
           <img src="../../assets/image/aovivo.svg" alt="Live game" />
         </div> -->
+        <v-row class="d-flex align-center">
+          <v-col>
+            <!-- <ModalsRosters :gameRosters="gameRosters[0].players" /> -->
+          </v-col>
+          <v-col>
+            <!-- <ModalsRosters :gameRosters="gameRosters[1].players" /> -->
+          </v-col>
+        </v-row>
       </v-card-text>
     </v-card>
   </v-row>
@@ -88,19 +95,13 @@ export default {
 };
 </script>
 <script setup>
-import { storeToRefs } from "pinia";
 import { useGamesStore } from "~/store/games";
-import { useGameDetailsStore } from "~/store/gameDetails";
 
 const { teamLogoThumb } = useLogos();
 const props = defineProps({
   matchInfo: { type: Object, required: true },
-  matchOcurrance: { type: String, required: true },
+  matchOccurrence: { type: String, required: true },
 });
-
-const gameDetailsStore = useGameDetailsStore();
-
-const { gameRosters } = storeToRefs(gameDetailsStore);
 
 const gamesStore = useGamesStore();
 
@@ -112,11 +113,13 @@ const teamNames = [
 onBeforeMount(async () => {
   await gamesStore.fetchSupabaseDataForMatch(
     props.matchInfo.id,
-    props.matchOcurrance,
+    props.matchOccurrence,
     props.matchInfo.serie_id,
     teamNames
   );
-  await gameDetailsStore.fetchGameRosters(props.matchInfo);
+  console.log('matchOccurrence', props.matchOccurrence)
+  debugger
+  await gamesStore.fetchGameRosters(props.matchInfo, props.matchOccurrence);
 });
 
 function formatDate(inputDate) {
