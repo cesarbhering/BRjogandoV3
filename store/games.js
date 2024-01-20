@@ -73,5 +73,24 @@ export const useGamesStore = defineStore({
           Object.assign(match, { odds: { odds1xBet: res.data } });
         });
     },
+
+    fetchGameRosters(matchDetails, matchOccurrence) {
+      debugger
+      const videoGameId = matchDetails.videogame.id
+      const opponentOneId = matchDetails.opponents[0].opponent.id
+      const opponentTwoId = matchDetails.opponents[1].opponent.id
+      fetch(`/.netlify/functions/fetchGameRosters?videoGameId=${videoGameId}&opponentOneId=${opponentOneId}&opponentTwoId=${opponentTwoId}`)
+        .then((res) => res.json())
+        .then((res) => {
+          debugger
+          const match = this[`${matchOccurrence}Matches`].find(
+            (match) => match.id === matchDetails.id
+          );
+          console.log(match)
+          console.log(res.data)
+          debugger
+          Object.assign(match, { rosters: res.data });
+        });
+    }
   },
 });

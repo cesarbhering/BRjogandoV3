@@ -56,8 +56,8 @@
       </div>
     </v-card-text>
   </v-card>
-  <v-dialog v-model="dialog">
-    <MatchModal @closeModal="dialog = false" :match-info="matchInfo" :match-ocurrance="'running'" />
+  <v-dialog v-model="dialog">                                               
+    <ModalsMatchModal @closeModal="dialog = false" :match-info="matchInfo" :match-occurrence="'running'" />
   </v-dialog>
 </template>
 <script>

@@ -1,7 +1,7 @@
 <template>
   <v-card class="big-card" :width="width" variant="flat" @click="dialog = true">
     <v-dialog v-model="dialog">
-      <MatchModal :match-info="matchInfo" :match-ocurrance="'upcoming'" />
+      <ModalsMatchModal :match-info="matchInfo" :match-ocurrence="'upcoming'" />
     </v-dialog>
 
     <v-card-title class="title-big">
@@ -29,8 +29,7 @@
           <div class="team-logo" v-if="matchInfo.opponents[0].opponent.image_url ||
             matchInfo.opponents[0].opponent.location
             ">
-            <v-img :class="matchInfo.opponents[0].opponent.image_url === null ? 'elevation-1' : ''" 
-            :src="teamLogoThumb(
+            <v-img :class="matchInfo.opponents[0].opponent.image_url === null ? 'elevation-1' : ''" :src="teamLogoThumb(
               matchInfo.opponents[0].opponent.image_url,
               matchInfo.opponents[0].opponent.location
             )
@@ -54,8 +53,7 @@
         <div class="d-flex align-center">
           <!-- LOGO -->
           <div class="team-logo" v-if="matchInfo.opponents.length > 1">
-            <v-img :class="matchInfo.opponents[1].opponent.image_url === null ? 'elevation-1' : ''" 
-            :src="teamLogoThumb(
+            <v-img :class="matchInfo.opponents[1].opponent.image_url === null ? 'elevation-1' : ''" :src="teamLogoThumb(
               matchInfo.opponents[1].opponent.image_url,
               matchInfo.opponents[1].opponent.location
             )
