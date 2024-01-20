@@ -1,15 +1,11 @@
 <template>
-  <v-card class="big-card" :width="width" variant="flat" @click="dialog =true">
+  <v-card class="big-card" :width="width" variant="flat" @click="dialog = true">
     <v-dialog v-model="dialog">
       <MatchModal :match-info="matchInfo" :match-ocurrance="'upcoming'" />
     </v-dialog>
 
     <v-card-title class="title-big">
-      <img
-        class="game-image-big"
-        :src="videoGameImage(matchInfo.videogame.name)"
-        :alt="matchInfo.videogame.name"
-      />
+      <img class="game-image-big" :src="videoGameImage(matchInfo.videogame.name)" :alt="matchInfo.videogame.name" />
       <div class="final-alert-big" v-if="matchInfo.name.includes('final')">
         <span class="ml-3 special-match-name">{{ specialMatchName }}</span>
         <span class="special-match-countdown" :class="mobile ? 'mr-1' : ''">{{
@@ -30,19 +26,15 @@
       <div class="opponent-actions">
         <div class="d-flex align-center">
           <!-- LOGO -->
-          <div class="team-logo"   
-              v-if="
-                matchInfo.opponents[0].opponent.image_url ||
-                matchInfo.opponents[0].opponent.location
-              ">
-            <img
-              :src="
-                teamLogoThumb(
-                  matchInfo.opponents[0].opponent.image_url,
-                  matchInfo.opponents[0].opponent.location
-                )
-              "
-            />
+          <div class="team-logo" v-if="matchInfo.opponents[0].opponent.image_url ||
+            matchInfo.opponents[0].opponent.location
+            ">
+            <v-img :class="matchInfo.opponents[0].opponent.image_url === null ? 'elevation-1' : ''" 
+            :src="teamLogoThumb(
+              matchInfo.opponents[0].opponent.image_url,
+              matchInfo.opponents[0].opponent.location
+            )
+              " />
           </div>
           <!-- SIGLA -->
           <div>
@@ -62,17 +54,15 @@
         <div class="d-flex align-center">
           <!-- LOGO -->
           <div class="team-logo" v-if="matchInfo.opponents.length > 1">
-            <img
-              :src="
-                teamLogoThumb(
-                  matchInfo.opponents[1].opponent.image_url,
-                  matchInfo.opponents[1].opponent.location
-                )
-              "
-            />
+            <v-img :class="matchInfo.opponents[1].opponent.image_url === null ? 'elevation-1' : ''" 
+            :src="teamLogoThumb(
+              matchInfo.opponents[1].opponent.image_url,
+              matchInfo.opponents[1].opponent.location
+            )
+              " />
           </div>
           <!-- SIGLA -->
-          <div >
+          <div>
             <p class="text-h4 pl-1 text--primary acronym">
               {{
                 matchInfo.opponents[1].opponent.acronym ||
@@ -89,7 +79,7 @@
 export default {
   name: "CardBig",
   data() {
-    return{
+    return {
       dialog: false,
     }
   }
@@ -207,16 +197,16 @@ const specialMatchCountdown = computed(() => {
 const { mobile, name } = useDisplay();
 
 const width = computed(() => {
-    switch (name.value) {
-      case 'xs': return 333
-      case 'sm': return 333
-      case 'md': return 333
-      case 'lg': return 392
-      case 'xl': return 392
-      case 'xxl': return 392
-      default: return 392
-    }
-  })
+  switch (name.value) {
+    case 'xs': return 333
+    case 'sm': return 333
+    case 'md': return 333
+    case 'lg': return 392
+    case 'xl': return 392
+    case 'xxl': return 392
+    default: return 392
+  }
+})
 
 </script>
 
@@ -224,9 +214,11 @@ const width = computed(() => {
 .big-card {
   border-radius: 8px;
   height: 280px;
+
   @media (max-width: 960px) {
     max-width: 100%;
     max-height: 215px;
+
     .v-card-text {
       padding: 0px 0px 0px 0px;
       margin: 0px 0px 0px 0px;
@@ -237,12 +229,14 @@ const width = computed(() => {
 .v-card-title {
   height: 136px;
   padding: 0px;
+
   @media (max-width: 960px) {
     margin-bottom: -30px;
   }
 
   .game-image-big {
     position: relative;
+
     @media (max-width: 960px) {
       width: 100%;
       height: 80%;
@@ -335,6 +329,7 @@ const width = computed(() => {
   img {
     max-height: 41px;
     max-width: 36px;
+
     @media (max-width: 960px) {
       max-width: 25px;
     }
