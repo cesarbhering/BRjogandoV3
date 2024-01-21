@@ -56,7 +56,7 @@
       </div>
     </v-card-text>
   </v-card>
-  <v-dialog v-model="dialog">                                               
+  <v-dialog :fullscreen="mobile ? true: false" v-model="dialog">                                               
     <ModalsMatchModal @closeModal="dialog = false" :match-info="matchInfo" :match-occurrence="'running'" />
   </v-dialog>
 </template>
