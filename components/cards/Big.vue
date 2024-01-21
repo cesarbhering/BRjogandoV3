@@ -1,9 +1,5 @@
 <template>
-  <v-card class="big-card" :width="width" variant="flat" @click="dialog = true">
-    <v-dialog v-model="dialog">
-      <ModalsMatchModal :match-info="matchInfo" :match-ocurrence="'upcoming'" />
-    </v-dialog>
-
+  <v-card class="big-card ma-2" :width="width" variant="flat" @click="dialog = true">
     <v-card-title class="title-big">
       <img class="game-image-big" :src="videoGameImage(matchInfo.videogame.name)" :alt="matchInfo.videogame.name" />
       <div class="final-alert-big" v-if="matchInfo.name.includes('final')">
@@ -72,6 +68,9 @@
       </div>
     </v-card-actions>
   </v-card>
+  <v-dialog v-model="dialog">
+    <ModalsMatchModal :match-info="matchInfo" :match-occurrence="'upcoming'" />
+  </v-dialog>
 </template>
 <script>
 export default {

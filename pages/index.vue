@@ -30,7 +30,6 @@
             <CardsBig
               v-for="(upcomingMatch, index) in upcomingMatches"
               :key="index"
-              class="ma-2"
               :match-info="upcomingMatch"
             />
           </v-row>
