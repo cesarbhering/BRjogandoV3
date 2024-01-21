@@ -1,20 +1,18 @@
 <template>
-  <div class="bg-blue text-center">
-
-    <v-row v-for="(player, index) in props.gameRosters" :key="index">
-      <v-col> {{ player.name }}</v-col>
-      <v-col>
+ 
+    <v-row v-for="(player, index) in props.teamRoster" :key="index">
+      <v-col  class="d-flex align-center pa-1 rounded-xl justify-center"> 
+        <span class="pa-2">{{ player.name }}</span>
         <v-img class="elevation-1" max-width="2vw" :src="teamLogoThumb(false, player.nationality)" />
       </v-col>
-    </v-row>
+    </v-row> 
 
-  </div>
 </template>
 
 <script setup>
 
 const props = defineProps({
-  gameRosters: { type: Object, required: true, default: [] },
+  teamRoster: { type: Array, default: [] },
 });
 
 
