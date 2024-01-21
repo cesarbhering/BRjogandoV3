@@ -1,6 +1,6 @@
 <template>
-  <v-row class="d-flex align-center justify-center">
-    <!-- {{ gameRosters }} -->
+  <!-- DESKTOP -->
+  <v-row class="d-flex align-center justify-center" v-if="!mobile">
     <v-card height="90vh" class="w-75">
       <v-row>
         <v-spacer></v-spacer>
@@ -24,60 +24,10 @@
         </v-row>
       </v-card-subtitle>
       <v-card-text>
-        <v-row class="d-flex align-center justify-center">
-          <v-col v-for="(opponent, index) in matchInfo.opponents" :key="index">
-            <v-row v-if="index === 0" class="d-flex align-center ml-5">
-              <!-- LOGO/SIGLA/SCORE TIME 0 -->
-              <!-- BANDEIRA DA ORG -->
-              <v-col cols="3" class="d-flex justify-center">
-                <v-img class="elevation-1" max-width="6vw" :src="teamLogoThumb(false, opponent.opponent.location)" />
-              </v-col>
-              <!-- LOGO -->
-              <v-col cols="3" class="pa-0 d-flex justify-end">
-                <v-img max-width="6vw" :src="teamLogoThumb(opponent.opponent.image_url, false)" />
-              </v-col>
-              <v-col>
-                <!-- SIGLA -->
-                <span class="text-left acronym">
-                  {{ opponent.opponent.name }}
-                </span>
-              </v-col>
-            </v-row>
-            <v-row v-if="index === 1" class="d-flex align-center mr-5">
-              <!-- LOGO/SIGLA/SCORE TIME 1 -->
-              <!-- LOGO -->
-              <v-col class="text-right">
-                <!-- SIGLA -->
-
-                <span class="acronym">
-                  {{ opponent.opponent.name }}
-                </span>
-
-              </v-col>
-              <!-- LOGO -->
-              <v-col cols="3" class="pa-0 d-flex justify-start">
-                <v-img max-width="6vw" :src="teamLogoThumb(opponent.opponent.image_url, false)" />
-              </v-col>
-              <!-- BANDEIRA DA ORG -->
-              <v-col cols="3" class="d-flex justify-center">
-                <v-img class="elevation-1" max-width="6vw" :src="teamLogoThumb(false, opponent.opponent.location)"
-                  :alt="opponent.opponent.location + ' flag'" />
-              </v-col>
-            </v-row>
-          </v-col>
-          <!-- SCORE -->
-          <!--           <div>
-            <p class="text-h4 text--primary mr-5 score text-center">
-              {{ matchInfo.results[index].score }}
-            </p>
-          </div> -->
-        </v-row>
-        <!-- AO VIVO SVG -->
-        <!--         <div class="live text-center">
-          <img src="../../assets/image/aovivo.svg" alt="Live game" />
-        </div> -->
+        <ModalsTeams :opponents-info="props.matchInfo.opponents" />
         <v-row class="rosters mt-5">
-          <v-progress-circular v-if="!props.matchInfo.rosters" :size="50" color="primary" indeterminate></v-progress-circular>
+          <v-progress-circular v-if="!props.matchInfo.rosters" :size="50" color="primary" class="mx-auto"
+            indeterminate></v-progress-circular>
           <v-col>
             <ModalsRosters :team-roster="props.matchInfo.rosters[0].players" v-if="props.matchInfo.rosters" />
           </v-col>
@@ -88,6 +38,42 @@
       </v-card-text>
     </v-card>
   </v-row>
+  <!-- MOBILE -->
+  <v-card>
+    <v-row>
+      <v-spacer></v-spacer>
+      <v-col><v-icon @click="$emit('closeModal')" class="ma-2">mdi-close</v-icon></v-col>
+    </v-row>
+    <v-card-subtitle class="text-xl font-bold text-center">
+      <!-- NOME DA LIGA -->
+      <v-row>
+        <v-col class="pb-0 pt-2"> {{ matchInfo.league.name }}</v-col>
+      </v-row>
+      <!-- NOME DA SERIE -->
+      <v-row>
+        <v-col class="pa-0"> {{ matchInfo.serie.name }}</v-col>
+      </v-row>
+      <v-row>
+        <!-- HORARIO QUE COMEÇOU -->
+        <v-col class="pt-0">
+          {{ formatDate(matchInfo.begin_at) }}
+        </v-col>
+      </v-row>
+    </v-card-subtitle>
+    <v-card-text>
+      <ModalsTeams :opponents-info="props.matchInfo.opponents" />
+      <v-row class="rosters mt-5">
+        <v-progress-circular v-if="!props.matchInfo.rosters" :size="75" color="primary" class="mx-auto"
+          indeterminate></v-progress-circular>
+        <v-col class="w-50">
+          <ModalsRosters :team-roster="props.matchInfo.rosters[0].players" v-if="props.matchInfo.rosters" />
+        </v-col>
+        <v-col class="w-50">
+          <ModalsRosters :team-roster="props.matchInfo.rosters[1].players" v-if="props.matchInfo.rosters" />
+        </v-col>
+      </v-row>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>
@@ -96,13 +82,15 @@ export default {
 };
 </script>
 <script setup>
+import { useDisplay } from "vuetify";
 import { useGamesStore } from "~/store/games";
 
-const { teamLogoThumb } = useLogos();
 const props = defineProps({
   matchInfo: { type: Object, required: true },
   matchOccurrence: { type: String, required: true },
 });
+
+const { mobile } = useDisplay();
 
 const gamesStore = useGamesStore();
 
@@ -141,36 +129,8 @@ function formatDate(inputDate) {
 </script>
 
 <style lang="scss" scoped>
-.acronym {
-  font-family: "Poppins";
-  font-weight: bold;
-  color: #000000;
-  font-size: 25px !important;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  @media (max-width: 960px) {
-    font-size: 21px !important;
-  }
-}
-
-.score {
-  font-family: "Poppins";
-  font-weight: bold;
-  font-size: 20px !important;
-  color: #002776;
-
-  @media (max-width: 960px) {
-    font-size: 14px !important;
-  }
-}
-
 .rosters {
   border-bottom: 1px solid #E6E6E6;
-  margin: 0 50px;
   min-height: 30dvh;
-
-
 }
 </style>
