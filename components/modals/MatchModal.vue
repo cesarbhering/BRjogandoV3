@@ -24,7 +24,7 @@
         </v-row>
       </v-card-subtitle>
       <v-card-text>
-        <v-row class="d-flex align-center justify-center bg-red">
+        <v-row class="d-flex align-center justify-center">
           <v-col v-for="(opponent, index) in matchInfo.opponents" :key="index">
             <v-row v-if="index === 0" class="d-flex align-center ml-5">
               <!-- LOGO/SIGLA/SCORE TIME 0 -->
@@ -76,12 +76,13 @@
         <!--         <div class="live text-center">
           <img src="../../assets/image/aovivo.svg" alt="Live game" />
         </div> -->
-        <v-row class="d-flex align-center">
+        <v-row class="d-flex align-start">
+          <v-progress-circular v-if="!props.matchInfo.rosters" :size="50" color="primary" indeterminate></v-progress-circular>
           <v-col>
-            <!-- <ModalsRosters :gameRosters="gameRosters[0].players" /> -->
+            <ModalsRosters :team-roster="props.matchInfo.rosters[0].players" v-if="props.matchInfo.rosters" />
           </v-col>
           <v-col>
-            <!-- <ModalsRosters :gameRosters="gameRosters[1].players" /> -->
+            <ModalsRosters :team-roster="props.matchInfo.rosters[1].players" v-if="props.matchInfo.rosters" />
           </v-col>
         </v-row>
       </v-card-text>
@@ -117,8 +118,6 @@ onBeforeMount(async () => {
     props.matchInfo.serie_id,
     teamNames
   );
-  console.log('matchOccurrence', props.matchOccurrence)
-  debugger
   await gamesStore.fetchGameRosters(props.matchInfo, props.matchOccurrence);
 });
 
