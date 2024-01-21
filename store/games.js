@@ -75,18 +75,15 @@ export const useGamesStore = defineStore({
     },
 
     fetchGameRosters(matchDetails, matchOccurrence) {
-
       const videoGameId = matchDetails.videogame.id
       const opponentOneId = matchDetails.opponents[0].opponent.id
       const opponentTwoId = matchDetails.opponents[1].opponent.id
       fetch(`/.netlify/functions/fetchGameRosters?videoGameId=${videoGameId}&opponentOneId=${opponentOneId}&opponentTwoId=${opponentTwoId}`)
         .then((res) => res.json())
         .then((res) => {
-
           const match = this[`${matchOccurrence}Matches`].find(
             (match) => match.id === matchDetails.id
           );
-
           Object.assign(match, { rosters: res.data });
         });
     }

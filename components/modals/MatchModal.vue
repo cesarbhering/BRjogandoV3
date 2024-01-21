@@ -38,20 +38,20 @@
               </v-col>
               <v-col>
                 <!-- SIGLA -->
-                <h1 class="text-left acronym">
+                <span class="text-left acronym">
                   {{ opponent.opponent.name }}
-                </h1>
+                </span>
               </v-col>
             </v-row>
             <v-row v-if="index === 1" class="d-flex align-center mr-5">
               <!-- LOGO/SIGLA/SCORE TIME 1 -->
               <!-- LOGO -->
-              <v-col>
+              <v-col class="text-right">
                 <!-- SIGLA -->
 
-                <h1 class="text-right acronym">
+                <span class="acronym">
                   {{ opponent.opponent.name }}
-                </h1>
+                </span>
 
               </v-col>
               <!-- LOGO -->
@@ -76,7 +76,7 @@
         <!--         <div class="live text-center">
           <img src="../../assets/image/aovivo.svg" alt="Live game" />
         </div> -->
-        <v-row class="d-flex align-start">
+        <v-row class="rosters mt-5">
           <v-progress-circular v-if="!props.matchInfo.rosters" :size="50" color="primary" indeterminate></v-progress-circular>
           <v-col>
             <ModalsRosters :team-roster="props.matchInfo.rosters[0].players" v-if="props.matchInfo.rosters" />
@@ -164,5 +164,13 @@ function formatDate(inputDate) {
   @media (max-width: 960px) {
     font-size: 14px !important;
   }
+}
+
+.rosters {
+  border-bottom: 1px solid #E6E6E6;
+  margin: 0 50px;
+  min-height: 30dvh;
+
+
 }
 </style>

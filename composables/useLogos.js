@@ -18,7 +18,7 @@ export const useLogos = () => {
     }
     // Quando for BR importar o br-flag.svg que já temos no assets, pra economizar tempo de download.
     if (nationality) {
-      return `https://flagcdn.com/${nationality.toLowerCase()}.svg`
+      return `https://flagcdn.com/w160/${nationality.toLowerCase()}.webp`
     }
     
   };
