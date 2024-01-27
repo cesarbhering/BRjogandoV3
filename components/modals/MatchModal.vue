@@ -26,7 +26,7 @@
       <v-card-text>
         <ModalsTeams :opponents-info="props.matchInfo.opponents" />
         <v-row class="rosters mt-5">
-          <v-progress-circular v-if="!props.matchInfo.rosters" :size="50" color="primary" class="mx-auto"
+          <v-progress-circular v-if="!props.matchInfo.rosters" :size="50" color="primary" class="justify-center mx-auto"
             indeterminate></v-progress-circular>
           <v-col>
             <ModalsRosters :team-roster="props.matchInfo.rosters[0].players" v-if="props.matchInfo.rosters" />
@@ -35,14 +35,22 @@
             <ModalsRosters :team-roster="props.matchInfo.rosters[1].players" v-if="props.matchInfo.rosters" />
           </v-col>
         </v-row>
+        <v-row>
+          <v-col v-if="props.matchInfo.supabaseDataForMatch">
+            <span>Odds</span>
+            {{ props.matchInfo.supabaseDataForMatch.link }}
+            {{ props.matchInfo.supabaseDataForMatch.odds0 }}
+            {{ props.matchInfo.supabaseDataForMatch.odds1 }}
+
+          </v-col>
+        </v-row>
       </v-card-text>
     </v-card>
   </v-row>
   <!-- MOBILE -->
-  <v-card>
-    <v-row>
-      <v-spacer></v-spacer>
-      <v-col><v-icon @click="$emit('closeModal')" class="ma-2">mdi-close</v-icon></v-col>
+  <v-card v-if="mobile">
+    <v-row class="close-header">
+      <v-col class="d-flex justify-end"><v-icon @click="$emit('closeModal')" class="ma-2">mdi-close</v-icon></v-col>
     </v-row>
     <v-card-subtitle class="text-xl font-bold text-center">
       <!-- NOME DA LIGA -->
@@ -71,6 +79,7 @@
         <v-col class="w-50">
           <ModalsRosters :team-roster="props.matchInfo.rosters[1].players" v-if="props.matchInfo.rosters" />
         </v-col>
+        <div class="line-bottom"></div>
       </v-row>
     </v-card-text>
   </v-card>
@@ -132,5 +141,13 @@ function formatDate(inputDate) {
 .rosters {
   border-bottom: 1px solid #E6E6E6;
   min-height: 30dvh;
+
+  @media screen and (min-width: 960px) {
+    margin: 0 50px;
+  }
+}
+
+.close-header {
+  max-height: 7vh;
 }
 </style>

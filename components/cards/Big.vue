@@ -268,10 +268,9 @@ const width = computed(() => {
 
     .special-match-countdown {
       width: 70px;
-      // Poppins nao é monospaced, entao o contador fica mudando de tamanho, tentar resolve de outra forma
-      font-family: "Roboto";
-      font-style: normal;
-      font-weight: 700;
+      font-family: "Fira Code";
+      font-style: bold;
+      font-weight: 900;
       font-size: 17px;
       color: #666666;
     }

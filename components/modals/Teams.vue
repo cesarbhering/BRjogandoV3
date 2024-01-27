@@ -1,17 +1,17 @@
 <template>
-  <v-row>
+  <v-row class="d-flex justify-space-between">
     <v-col v-for="(opponent, index) in props.opponentsInfo" :key="index">
-      <v-row v-if="index === 0" class="d-flex  justify-center align-center mx-auto ml-5">
+      <v-row v-if="index === 0" class="d-flex align-center ml-5">
         <!-- LOGO/SIGLA/SCORE TIME 0 -->
         <!-- BANDEIRA DA ORG -->
-        <v-col  class="d-flex justify-center">
+        <v-col  class="d-flex justify-center ">
           <v-img class="elevation-1" max-width="6vw" :src="teamLogoThumb(false, opponent.opponent.location)" />
         </v-col>
         <!-- LOGO -->
         <v-col  class="pa-0 d-flex justify-end">
           <v-img max-width="6vw" :src="teamLogoThumb(opponent.opponent.image_url, false)" />
         </v-col>
-        <v-col>
+        <v-col >
           <!-- SIGLA -->
           <span class="text-left acronym">
             {{ opponent.opponent.name }}
