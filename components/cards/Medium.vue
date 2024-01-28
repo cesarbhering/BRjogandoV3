@@ -1,20 +1,15 @@
 <template>
   <v-card class="mx-auto medium-card" variant="flat" @click="dialog = true">
-    <v-dialog v-model="dialog">
-      <MatchModal :match-info="matchInfo" :match-ocurrance="'running'" />
-    </v-dialog>
-
     <v-card-title>
       <div class="upper-line" v-video-game-based-background></div>
     </v-card-title>
     <v-card-subtitle class="d-flex flex-column text-center match-infos">
       <span>{{ matchInfo.videogame.name }}</span>
       <span>
-        {{ matchInfo.league.name }} -
+        {{ matchInfo.league.name }}
+        -
         {{
-          mobile
-            ? `Md ${matchInfo.games.length}`
-            : `Melhor de ${matchInfo.games.length}`
+         `Md ${matchInfo.games.length}`
         }}
       </span>
     </v-card-subtitle>
@@ -29,7 +24,8 @@
         <div class="d-flex align-center ml-5">
           <!-- LOGO -->
           <div class="team-logo">
-            <img
+            <v-img
+            :class="opponent.opponent.img_url === null ? 'elevation-1' : ''"
               :src="
                 teamLogoThumb(
                   opponent.opponent.image_url,
@@ -40,7 +36,10 @@
           </div>
           <!-- SIGLA -->
           <p class="text-h4 pl-4 text--primary acronym">
-            {{ opponent.opponent.acronym || opponent.opponent.name.substring(0, 10) }}
+            {{
+              opponent.opponent.acronym ||
+              opponent.opponent.name.substring(0, 10)
+            }}
           </p>
         </div>
         <div>
@@ -53,19 +52,22 @@
       </div>
       <!-- AO VIVO SVG -->
       <div class="live text-center">
-        <img src="../../assets/image/aovivo.svg" alt="Live game" />
+        <v-img src="../../assets/image/aovivo.svg" alt="Live game" />
       </div>
     </v-card-text>
   </v-card>
+  <v-dialog :fullscreen="mobile ? true: false" v-model="dialog">                                               
+    <ModalsMatchModal @closeModal="dialog = false" :match-info="matchInfo" :match-occurrence="'running'" />
+  </v-dialog>
 </template>
 <script>
 export default {
   name: "CardMedium",
   data() {
-    return{
+    return {
       dialog: false,
-    }
-  }
+    };
+  },
 };
 </script>
 <script setup>
@@ -110,7 +112,6 @@ const vVideoGameBasedBackground = {
   mounted: (el) =>
     (el.style.background = videoGameColor(props.matchInfo.videogame.name)),
 };
-
 </script>
 
 <style lang="scss" scoped>
@@ -204,5 +205,9 @@ const vVideoGameBasedBackground = {
       max-width: 51px;
     }
   }
+}
+
+.custom-dialog .v-dialog__content {
+  padding-top: 40px; /* Adjust the value as needed */
 }
 </style>
