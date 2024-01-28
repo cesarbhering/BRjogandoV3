@@ -1,11 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  ssr: false,
+  /* ssr: false, */
 
   runtimeConfig: {
     public: {
-      gtagId: 'G-24H7QSPX4G',
+      gtagId: 'G-54X94ZFNWQ',
     }
   },
 
