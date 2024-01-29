@@ -7,11 +7,8 @@
       <!-- VER ESPAÇAMENTO QUANDO TEM POUCOS CARDS -->
       <v-sheet color="#E4E7EC">
         <v-slide-group v-model="model" :show-arrows="!mobile">
-          <v-slide-group-item
-            v-for="(runningMatch, index) in runningMatches"
-            :key="index"
-            v-slot="{ isSelected, toggle, selectedClass }"
-          >
+          <v-slide-group-item v-for="(runningMatch, index) in runningMatches" :key="index"
+            v-slot="{ isSelected, toggle, selectedClass }">
             <div class="mr-3">
               <!-- REATIVIDADE MOBILE VERIFICAR -->
               <CardsMedium :match-info="runningMatch" />
@@ -27,11 +24,7 @@
             <span class="container-title">Próximas Partidas</span>
           </v-row>
           <v-row class="justify-center">
-            <CardsBig
-              v-for="(upcomingMatch, index) in upcomingMatches"
-              :key="index"
-              :match-info="upcomingMatch"
-            />
+            <CardsBig v-for="(upcomingMatch, index) in upcomingMatches" :key="index" :match-info="upcomingMatch" />
           </v-row>
         </v-col>
         <v-col v-if="!mobile">
@@ -39,11 +32,7 @@
             <span>Últimas Partidas</span>
           </v-row>
           <v-row>
-            <CardsSmall
-              v-for="(pastMatch, index) in pastMatches"
-              :key="index"
-              :match-info="pastMatch"
-            />
+            <CardsSmall v-for="(pastMatch, index) in pastMatches" :key="index" :match-info="pastMatch" />
           </v-row>
         </v-col>
       </v-row>
@@ -57,11 +46,7 @@
           </div>
         </v-row>
         <v-row>
-          <v-col
-            class="d-flex flex-wrap justify-center pa-0"
-            v-for="(pastMatch, index) in pastMatches"
-            :key="index"
-          >
+          <v-col class="d-flex flex-wrap justify-center pa-0" v-for="(pastMatch, index) in pastMatches" :key="index">
             <CardsSmall :match-info="pastMatch" />
           </v-col>
         </v-row>
@@ -84,8 +69,25 @@ useSeoMeta({
   ogTitle: 'BRjogando',
   description: 'Jogos que importam, na hora que importam.',
   ogDescription: 'Jogos que importam, na hora que importam.',
-  ogImage: '/og-image.png',
-  twitterCard: '/og-image.png',
+  ogImage: '/Logo-Default.png',
+  ogUrl: 'brjogando.com.br',
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'BRjogando',
+  twitterDescription: 'Jogos que importam, na hora que importam',
+  twitterImage: '/Logo-Default.png'
+})
+
+useHead({
+  htmlAttrs: {
+    lang: 'pt-BR'
+  },
+  link: [
+    {
+      rel: 'icon',
+      type: 'image/png',
+      href: '/favicon.png'
+    }
+  ]
 })
 
 onBeforeMount(async () => {
@@ -136,6 +138,7 @@ const colsNum = computed(() => {
   text-align: center;
   /* Flag/Blue */
   color: #002776;
+
   @media (max-width: 960px) {
     font-size: 2rem;
   }
