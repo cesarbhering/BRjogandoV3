@@ -34,6 +34,12 @@
           <v-row>
             <CardsSmall v-for="(pastMatch, index) in pastMatches" :key="index" :match-info="pastMatch" />
           </v-row>
+          <v-row class="mt-15">
+            <a target="_blank"
+              href="https://www.amazon.com.br/b?_encoding=UTF8&tag=brjogando-20&linkCode=ur2&linkId=bd4eb4dac09bc4d3474f21381ef8299a&camp=1789&creative=9325&node=16243794011">
+              <img width="250" src="../assets/image/amazon-notebook.jpg" />
+            </a>
+          </v-row>
         </v-col>
       </v-row>
     </v-container>
@@ -96,6 +102,13 @@ onBeforeMount(async () => {
   gamesStore.fetchUpcomingMatches();
   gamesStore.fetchPastMatches();
 });
+
+// computed that returns new URL("~/assets/image/valorantBg.png", import.meta.url)
+const amaoznAds = computed(() => {
+  return new URL("~/assets/image/amazon-notebook.jpg", import.meta.url);
+});
+
+
 
 // Para auxiliar o carrossel
 let model = null;
