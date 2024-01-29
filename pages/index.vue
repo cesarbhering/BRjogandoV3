@@ -79,6 +79,15 @@ const { upcomingMatches } = storeToRefs(gamesStore);
 const { runningMatches } = storeToRefs(gamesStore);
 const { pastMatches } = storeToRefs(gamesStore);
 
+useSeoMeta({
+  title: 'BRjogando',
+  ogTitle: 'BRjogando',
+  description: 'Jogos que importam, na hora que importam.',
+  ogDescription: 'Jogos que importam, na hora que importam.',
+  ogImage: '/og-image.png',
+  twitterCard: '/og-image.png',
+})
+
 onBeforeMount(async () => {
   // Carrega a informação das partidas na store
   gamesStore.fetchRunningMatches();
