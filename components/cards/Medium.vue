@@ -1,19 +1,20 @@
 <template>
   <v-card class="mx-auto medium-card" variant="flat" @click="dialog = true">
-    <v-card-title>
+    <v-card-title class="pb-0">
       <div class="upper-line" v-video-game-based-background></div>
     </v-card-title>
     <v-card-subtitle class="d-flex flex-column text-center match-infos">
-      <span>{{ matchInfo.videogame.name }}</span>
-      <span>
+      <p>{{ matchInfo.videogame.name }}</p>
+      <p :class="mobile ? 'mt-n2':''">
         {{ matchInfo.league.name }}
         -
         {{
          `Md ${matchInfo.games.length}`
         }}
-      </span>
+      </p>
+      <p v-if="!mobile" class="d-inline-block text-truncate">{{ matchInfo.serie.name || matchInfo.serie.full_name }}</p>
     </v-card-subtitle>
-    <v-card-text>
+    <v-card-text class="pt-0">
       <!-- LOGO/SIGLA/SCORE -->
       <div
         v-for="(opponent, index) in matchInfo.opponents"
@@ -23,9 +24,9 @@
       >
         <div class="d-flex align-center ml-5">
           <!-- LOGO -->
-          <div class="team-logo">
-            <v-img
-            :class="opponent.opponent.img_url === null ? 'elevation-1' : ''"
+          <div class="team-logo" v-if="opponent.opponent.image_url || opponent.opponent.location" >
+            <img
+            :class="opponent.opponent.image_url === null ? 'elevation-1' : ''"
               :src="
                 teamLogoThumb(
                   opponent.opponent.image_url,
@@ -35,7 +36,7 @@
             />
           </div>
           <!-- SIGLA -->
-          <p class="text-h4 pl-4 text--primary acronym">
+          <p class="text-h4 text--primary acronym" :class="mobile ? 'pl-0' : 'pl-4'">
             {{
               opponent.opponent.acronym ||
               opponent.opponent.name.substring(0, 10)
@@ -51,8 +52,12 @@
         </div>
       </div>
       <!-- AO VIVO SVG -->
-      <div class="live text-center">
-        <v-img src="../../assets/image/aovivo.svg" alt="Live game" />
+       <!-- AO VIVO SVG -->
+       <div v-if="!mobile" class="live text-center">
+        <img src="../../assets/image/aovivo.svg" alt="Live game" />
+      </div>
+      <div v-else class="match-infos text-center">
+        <p>{{ matchInfo.serie.name || matchInfo.serie.full_name }}</p>
       </div>
     </v-card-text>
   </v-card>
@@ -143,6 +148,7 @@ const vVideoGameBasedBackground = {
 }
 
 .match-infos {
+  color: #666666;
   @media (max-width: 960px) {
     display: inline;
     padding: 0;
