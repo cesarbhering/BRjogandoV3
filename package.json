@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --host",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
@@ -12,8 +12,7 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxtjs/i18n": "^8.0.0-rc.4",
-    "@sparticuz/chromium": "^119.0.0",
-    "nuxt": "^3.7.3",
+    "nuxt": "^3.10.0",
     "sass": "^1.68.0",
     "sass-loader": "^13.3.2"
   },
@@ -21,11 +20,9 @@
     "@mdi/font": "^7.2.96",
     "@netlify/functions": "^2.4.1",
     "@pinia/nuxt": "^0.4.11",
-    "@sparticuz/chromium-min": "^119.0.0",
     "@supabase/supabase-js": "^2.38.5",
     "axios": "^1.6.2",
     "node-fetch": "^2.7.0",
-    "puppeteer-core": "^21.5.2",
     "vuetify": "^3.4.0-alpha.1"
   }
 }
