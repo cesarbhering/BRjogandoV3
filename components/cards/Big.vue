@@ -48,7 +48,7 @@
       <div class="opponent-actions">
         <div class="d-flex align-center">
           <!-- LOGO -->
-          <div class="team-logo" v-if="matchInfo.opponents.length > 1">
+          <div class="team-logo" v-if="matchInfo.opponents[1].opponent.image_url || matchInfo.opponents[1].opponent.location">
             <v-img :class="matchInfo.opponents[1].opponent.image_url === null ? 'elevation-1' : ''" :src="teamLogoThumb(
               matchInfo.opponents[1].opponent.image_url,
               matchInfo.opponents[1].opponent.location
