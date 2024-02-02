@@ -89,18 +89,6 @@ useSeoMeta({
   twitterImage: '/Logo-Default.png'
 })
 
-useHead({
-  htmlAttrs: {
-    lang: 'pt-BR'
-  },
-  link: [
-    {
-      rel: 'icon',
-      type: 'image/png',
-      href: '/favicon.png'
-    }
-  ]
-})
 
 onBeforeMount(async () => {
   // Carrega a informação das partidas na store
