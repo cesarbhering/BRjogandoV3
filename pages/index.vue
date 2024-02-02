@@ -2,15 +2,16 @@
   <div class="home">
     <v-container class="px-1">
       <div class="container-title">Partidas ao vivo</div>
-      {{ name.value }}
-
-      <!-- VER ESPAÇAMENTO QUANDO TEM POUCOS CARDS -->
+      <v-row v-if="!runningMatches.length">
+        <v-col v-for="index in new Array(2)">
+          <v-skeleton-loader :width="mobile ? '180' : '280'" type="image"></v-skeleton-loader>
+        </v-col>
+      </v-row>
       <v-sheet color="#E4E7EC">
         <v-slide-group v-model="model" :show-arrows="!mobile">
           <v-slide-group-item v-for="(runningMatch, index) in runningMatches" :key="index"
             v-slot="{ isSelected, toggle, selectedClass }">
             <div class="mr-3">
-              <!-- REATIVIDADE MOBILE VERIFICAR -->
               <CardsMedium :match-info="runningMatch" />
             </div>
           </v-slide-group-item>
@@ -19,9 +20,14 @@
     </v-container>
     <v-container class="mb-3">
       <v-row class="justify-center">
-        <v-col :cols="mobile ? 12 : 9" class="d-flex flex-wrap justify-center">
+        <v-col :cols="mobile ? 12 : 9" class="d-flex flex-wrap justify-start">
           <v-row class="justify-center">
             <span class="container-title">Próximas Partidas</span>
+          </v-row>
+          <v-row v-if="!upcomingMatches.length">
+            <v-col v-for="index in new Array(14)">
+              <v-skeleton-loader width="380" type="image"></v-skeleton-loader>
+            </v-col>
           </v-row>
           <v-row class="justify-center">
             <CardsBig v-for="(upcomingMatch, index) in upcomingMatches" :key="index" :match-info="upcomingMatch" />
@@ -83,18 +89,6 @@ useSeoMeta({
   twitterImage: '/Logo-Default.png'
 })
 
-useHead({
-  htmlAttrs: {
-    lang: 'pt-BR'
-  },
-  link: [
-    {
-      rel: 'icon',
-      type: 'image/png',
-      href: '/favicon.png'
-    }
-  ]
-})
 
 onBeforeMount(async () => {
   // Carrega a informação das partidas na store
