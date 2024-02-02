@@ -23,6 +23,6 @@
     "@supabase/supabase-js": "^2.38.5",
     "axios": "^1.6.2",
     "node-fetch": "^2.7.0",
-    "vuetify": "^3.4.0-alpha.1"
+    "vuetify": "^3.5.0"
   }
 }
