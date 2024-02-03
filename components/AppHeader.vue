@@ -25,7 +25,7 @@
   </v-toolbar>
 
   <!-- HEADER MOBILE -->
-  <v-app-bar v-else class="header mobile-header">
+  <v-app-bar v-else class="header mobile-header pl-0">
     <template v-slot:append>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
     </template>
