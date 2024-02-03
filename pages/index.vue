@@ -132,7 +132,10 @@ const colsNum = computed(() => {
 <style lang="scss" scoped>
 .home {
   background-color: #e4e7ec;
-  margin-top: 80px;
+  @media (max-width: 960px) {
+    padding: 0px;
+      margin-top:78px;
+  }
 }
 
 .container-title {

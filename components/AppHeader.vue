@@ -2,7 +2,7 @@
   <!-- HEADER DESKTOP -->
   <v-toolbar v-if="!mobile" class="header">
     <img src="../assets/image/Logo-Branca.png" alt="brjogando" />
-    <NuxtLink to="/"> Início </NuxtLink>      
+    <!-- <NuxtLink to="/"> Início </NuxtLink>      
     
     <v-menu>
       <template v-slot:activator="{ props }">
@@ -21,7 +21,7 @@
 
     <NuxtLink :to="{ name: 'institutional-cronogram' }"> Cronograma </NuxtLink>
     <NuxtLink :to="{ name: 'institutional-about' }"> Sobre nós </NuxtLink>
-    <NuxtLink :to="{ name: 'institutional-support' }"> Suporte </NuxtLink>
+    <NuxtLink :to="{ name: 'institutional-support' }"> Suporte </NuxtLink> -->
   </v-toolbar>
 
   <!-- HEADER MOBILE -->
@@ -31,7 +31,7 @@
     </template>
     <img src="../assets/image/Logo-Branca.png" alt="brjogando" />
   </v-app-bar>
-  <v-navigation-drawer class="mobile-header-navigation" app temporary v-model="drawer" location="right">
+  <!-- <v-navigation-drawer class="mobile-header-navigation" app temporary v-model="drawer" location="right">
     <v-list-item to="/">Início</v-list-item>
     <v-list-item to="/institutional/cronogram">Cronograma</v-list-item>
     <v-list-item to="/institutional/about">Sobre nós</v-list-item>
@@ -44,7 +44,7 @@
         }}</NuxtLink>
       </v-list-item>
     </v-list>
-  </v-navigation-drawer>
+  </v-navigation-drawer> -->
   <div class="nation-colors-line"></div>
 </template>
   
@@ -68,6 +68,7 @@ const drawer = ref(false);
 </script>
 
 <style lang="scss" scoped>
+
 .v-toolbar {
   height: 80px;
   width: 100vw;
@@ -75,16 +76,14 @@ const drawer = ref(false);
   display: flex;
   flex-direction: row;
   align-items: center;
-  position: fixed;
+  position: sticky;
   top: 0;
   z-index: 99;
 }
 
 /* MELHORAR ESTE SELETOR */
 #__nuxt > div > div > div > div > header {
-  @media (max-width: 960px) {
-    padding: 0px;
-  }
+
 }
 
 .v-toolbar *{

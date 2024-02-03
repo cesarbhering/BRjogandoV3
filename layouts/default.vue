@@ -1,13 +1,16 @@
 <template>
   <v-app>
-    <AppHeader />
+    <AppHeader /> 
     <slot />
-    <AppFooter />
+     <AppFooter /> 
   </v-app>
 </template>
 
 <script setup>
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss">
+body,
+html {
+  overflow-x: hidden;
+}</style>
