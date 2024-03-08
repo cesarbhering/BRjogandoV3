@@ -2,14 +2,14 @@
   <div class="home">
     <v-container class="px-1">
       <div class="container-title">Partidas ao vivo</div>
-      <v-row v-if="!runningMatches.length">
+      <v-row v-if="!gamesStore.runningMatches.length">
         <v-col v-for="index in new Array(2)">
           <v-skeleton-loader :width="mobile ? '180' : '280'" type="image"></v-skeleton-loader>
         </v-col>
       </v-row>
       <v-sheet color="#E4E7EC">
         <v-slide-group v-model="model" :show-arrows="!mobile">
-          <v-slide-group-item v-for="(runningMatch, index) in runningMatches" :key="index"
+          <v-slide-group-item v-for="(runningMatch, index) in gamesStore.runningMatches" :key="index"
             v-slot="{ isSelected, toggle, selectedClass }">
             <div class="mr-3">
               <CardsMedium :match-info="runningMatch" />
@@ -24,13 +24,13 @@
           <v-row class="justify-center">
             <span class="container-title">Próximas Partidas</span>
           </v-row>
-          <v-row v-if="!upcomingMatches.length">
+          <v-row v-if="!gamesStore.upcomingMatches.length">
             <v-col v-for="index in new Array(14)">
               <v-skeleton-loader width="380" type="image"></v-skeleton-loader>
             </v-col>
           </v-row>
           <v-row class="justify-center">
-            <CardsBig v-for="(upcomingMatch, index) in upcomingMatches" :key="index" :match-info="upcomingMatch" />
+            <CardsBig v-for="(upcomingMatch, index) in gamesStore.upcomingMatches" :key="index" :match-info="upcomingMatch" />
           </v-row>
         </v-col>
         <v-col v-if="!mobile">
@@ -38,7 +38,7 @@
             <span>Últimas Partidas</span>
           </v-row>
           <v-row>
-            <CardsSmall v-for="(pastMatch, index) in pastMatches" :key="index" :match-info="pastMatch" />
+            <CardsSmall v-for="(pastMatch, index) in gamesStore.pastMatches" :key="index" :match-info="pastMatch" />
           </v-row>
           <v-row class="mt-15">
             <a target="_blank"
@@ -58,7 +58,7 @@
           </div>
         </v-row>
         <v-row>
-          <v-col class="d-flex flex-wrap justify-center pa-0" v-for="(pastMatch, index) in pastMatches" :key="index">
+          <v-col class="d-flex flex-wrap justify-center pa-0" v-for="(pastMatch, index) in gamesStore.pastMatches" :key="index">
             <CardsSmall :match-info="pastMatch" />
           </v-col>
         </v-row>
@@ -66,15 +66,16 @@
     </v-container>
   </div>
 </template>
+<script>
+export default {
+  name: "GamesHome",
+};
+</script>
 <script setup>
 import { useDisplay } from "vuetify";
 import { useGamesStore } from "~/store/games";
-import { storeToRefs } from "pinia";
 
 const gamesStore = useGamesStore();
-const { upcomingMatches } = storeToRefs(gamesStore);
-const { runningMatches } = storeToRefs(gamesStore);
-const { pastMatches } = storeToRefs(gamesStore);
 
 useSeoMeta({
   title: 'BRjogando',
@@ -97,36 +98,12 @@ onBeforeMount(async () => {
   gamesStore.fetchPastMatches();
 });
 
-// computed that returns new URL("~/assets/image/valorantBg.png", import.meta.url)
-const amaoznAds = computed(() => {
-  return new URL("~/assets/image/amazon-notebook.jpg", import.meta.url);
-});
-
-
 
 // Para auxiliar o carrossel
 let model = null;
 
-const { mobile, name, lgAndUp } = useDisplay();
+const { mobile } = useDisplay();
 
-const colsNum = computed(() => {
-  switch (name.value) {
-    case "xs":
-      return 3;
-    case "sm":
-      return 333;
-    case "md":
-      return 333;
-    case "lg":
-      return 392;
-    case "xl":
-      return 392;
-    case "xxl":
-      return 392;
-    default:
-      return 392;
-  }
-});
 </script>
 
 <style lang="scss" scoped>
