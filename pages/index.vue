@@ -38,7 +38,7 @@
             <span>Últimas Partidas</span>
           </v-row>
           <v-row>
-            <CardsSmall v-for="(pastMatch, index) in gamesStore.pastMatches" :key="index" :match-info="pastMatch" />
+            <CardsSmall v-for="(pastMatch, index) in gamesStore.pastMatches.slice(1)" :key="index" :match-info="pastMatch" />
           </v-row>
           <v-row class="mt-15">
             <a target="_blank"

@@ -3,7 +3,7 @@
     <div class="title-card">
       <v-card-text>{{ matchInfo.videogame.name }}</v-card-text>
       <v-card-text class="d-flex justify-end">{{
-        formatDate(matchInfo.serie.begin_at)
+        formatDate(matchInfo.end_at)
       }}</v-card-text>
     </div>
     <div
