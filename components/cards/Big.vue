@@ -4,7 +4,7 @@
       <img class="game-image-big" :src="videoGameImage(matchInfo.videogame.name)" :alt="matchInfo.videogame.name" />
       <div class="final-alert-big" v-if="matchInfo.name.includes('final')">
         <span class="ml-3 special-match-name">{{ specialMatchName }}</span>
-        <span class="special-match-countdown" :class="mobile ? 'mr-1' : ''">{{
+        <span class="special-match-countdown" :class="mobile ? 'mr-1' : 'mr-3'">{{
           specialMatchCountdown
         }}</span>
       </div>
@@ -248,7 +248,7 @@ const width = computed(() => {
     background: #ffdf00;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-evenly;
 
     @media (max-width: 960px) {
       top: 78px;

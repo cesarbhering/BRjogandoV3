@@ -1,6 +1,6 @@
 <template>
-  <div class="roster-container">
-    <div v-for="(player, index) in teamRosterActivePlayers" :key="index" class="player-row">
+  <div class="roster-list">
+    <div v-for="(player, index) in teamRosterActivePlayers" :key="index" class="player-item">
       <span class="player-name">{{ player.name }}</span>
       <v-img class="player-flag" :src="teamLogoThumb(false, player.nationality)" />
     </div>
@@ -24,40 +24,35 @@ const teamRosterActivePlayers = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-.roster-container {
+.roster-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  
-  @media (max-width: 960px) {
-    gap: 6px;
-  }
+  gap: 6px;
 }
 
-.player-row {
+.player-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 12px;
-  background-color: white;
-  border-radius: 6px;
-  border: 1px solid #e9ecef;
+  padding: 6px 8px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
   transition: background-color 0.2s;
   
   &:hover {
-    background-color: #f8f9fa;
+    background-color: #e9ecef;
   }
   
   @media (max-width: 960px) {
-    padding: 6px 10px;
+    padding: 5px 6px;
   }
 }
 
 .player-name {
   font-family: "Poppins";
   font-weight: 500;
-  font-size: 14px;
-  color: #2c3e50;
+  font-size: 13px;
+  color: #333;
   flex: 1;
   white-space: nowrap;
   overflow: hidden;
@@ -65,20 +60,19 @@ const teamRosterActivePlayers = computed(() => {
   margin-right: 8px;
   
   @media (max-width: 960px) {
-    font-size: 13px;
+    font-size: 12px;
   }
 }
 
 .player-flag {
-  width: 24px;
-  height: 18px;
+  width: 20px;
+  height: 15px;
   border-radius: 2px;
   flex-shrink: 0;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   
   @media (max-width: 960px) {
-    width: 20px;
-    height: 15px;
+    width: 18px;
+    height: 13px;
   }
 }
 </style>

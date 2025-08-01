@@ -1,14 +1,11 @@
 <template>
   <!-- DESKTOP -->
   <v-row class="d-flex align-center justify-center" v-if="!mobile">
-    <v-card height="90vh" class="w-75 modal-card">
+    <v-card height="90vh" width="800px" class="modal-card">
       <!-- Close Button -->
-      <v-row class="close-header">
-        <v-spacer></v-spacer>
-        <v-col cols="auto">
-          <v-icon @click="$emit('closeModal')" class="ma-3 close-button">mdi-close</v-icon>
-        </v-col>
-      </v-row>
+      <div class="close-header">
+        <v-icon @click="$emit('closeModal')" class="close-button">mdi-close</v-icon>
+      </div>
 
       <!-- Tournament Header -->
       <div class="tournament-header">
@@ -16,68 +13,89 @@
         <p class="tournament-date">{{ formatDate(matchInfo.begin_at) }}</p>
       </div>
 
-      <!-- Teams VS Section -->
-      <div class="teams-vs-section">
-        <ModalsTeams :opponents-info="props.matchInfo.opponents" />
+      <!-- Teams Horizontal Layout -->
+      <div class="teams-horizontal-section">
+        <div class="team-lineup">
+          <!-- Team 1 Flag -->
+          <v-img class="country-flag" :src="teamLogoThumb(false, props.matchInfo.opponents[0].opponent.location)" />
+          
+          <!-- Team 1 Logo -->
+          <v-img class="team-logo-small" :src="teamLogoThumb(props.matchInfo.opponents[0].opponent.image_url, false)" />
+          
+          <!-- Team Names -->
+          <div class="team-names">
+            <span class="team-name-text">{{ props.matchInfo.opponents[0].opponent.name }}</span>
+            <v-icon class="vs-icon">mdi-close</v-icon>
+            <span class="team-name-text">{{ props.matchInfo.opponents[1].opponent.name }}</span>
+          </div>
+          
+          <!-- Team 2 Logo -->
+          <v-img class="team-logo-small" :src="teamLogoThumb(props.matchInfo.opponents[1].opponent.image_url, false)" />
+          
+          <!-- Team 2 Flag -->
+          <v-img class="country-flag" :src="teamLogoThumb(false, props.matchInfo.opponents[1].opponent.location)" />
+        </div>
       </div>
 
-      <v-card-text class="modal-content">
-        <v-row>
+      <!-- Main Content -->
+      <div class="modal-content">
+        <v-row class="main-row">
           <!-- Left Column - Team Members -->
-          <v-col cols="8">
-            <div class="section-title">Integrantes do time</div>
-            <v-row class="team-members-section">
-              <v-progress-circular v-if="!props.matchInfo.rosters" :size="50" color="primary" 
-                class="justify-center mx-auto" indeterminate></v-progress-circular>
-              <v-col cols="6" v-if="props.matchInfo.rosters">
-                <div class="team-column">
-                  <ModalsRosters :team-roster="props.matchInfo.rosters[0].players" />
-                </div>
+          <v-col cols="8" class="team-members-col">
+            <h3 class="section-title">Integrantes do time</h3>
+            
+            <div v-if="!props.matchInfo.rosters" class="loading-container">
+              <v-progress-circular :size="40" color="primary" indeterminate></v-progress-circular>
+            </div>
+            
+            <v-row v-if="props.matchInfo.rosters" class="team-rosters">
+              <v-col cols="6" class="roster-col">
+                <ModalsRosters :team-roster="props.matchInfo.rosters[0].players" />
               </v-col>
-              <v-col cols="6" v-if="props.matchInfo.rosters">
-                <div class="team-column">
-                  <ModalsRosters :team-roster="props.matchInfo.rosters[1].players" />
-                </div>
+              <v-col cols="6" class="roster-col">
+                <ModalsRosters :team-roster="props.matchInfo.rosters[1].players" />
               </v-col>
             </v-row>
           </v-col>
 
           <!-- Right Column - Betting Odds -->
-          <v-col cols="4">
-            <div class="section-title">Betting odds</div>
-            <div class="betting-section" v-if="props.matchInfo.supabaseDataForMatch">
-              <div class="betting-site">
-                <div class="betting-logo-text rivalry">RIVALRY</div>
-                <div class="odds">
-                  <span>{{ props.matchInfo.supabaseDataForMatch.odds0 || '2.8' }}</span>
-                  <span>:</span>
-                  <span>{{ props.matchInfo.supabaseDataForMatch.odds1 || '2.8' }}</span>
+          <v-col cols="4" class="betting-col">
+            <h3 class="section-title">Betting odds</h3>
+            <div class="betting-odds-container">
+              <div class="betting-card rivalry-card">
+                <div class="betting-brand">RIVALRY</div>
+                <div class="odds-display">
+                  <span class="odd">{{ props.matchInfo.supabaseDataForMatch?.odds0 || '2.8' }}</span>
+                  <span class="separator">:</span>
+                  <span class="odd">{{ props.matchInfo.supabaseDataForMatch?.odds1 || '2.8' }}</span>
                 </div>
               </div>
-              <div class="betting-site">
-                <div class="betting-logo-text betway">betway</div>
-                <div class="odds">
-                  <span>2.8</span>
-                  <span>:</span>
-                  <span>2.8</span>
+              
+              <div class="betting-card betway-card">
+                <div class="betting-brand">betway</div>
+                <div class="odds-display">
+                  <span class="odd">2.8</span>
+                  <span class="separator">:</span>
+                  <span class="odd">2.8</span>
                 </div>
               </div>
-              <div class="betting-site">
-                <div class="betting-logo-text ggbet">GGBET</div>
-                <div class="odds">
-                  <span>2.8</span>
-                  <span>:</span>
-                  <span>2.8</span>
+              
+              <div class="betting-card ggbet-card">
+                <div class="betting-brand">GGBET</div>
+                <div class="odds-display">
+                  <span class="odd">2.8</span>
+                  <span class="separator">:</span>
+                  <span class="odd">2.8</span>
                 </div>
               </div>
             </div>
           </v-col>
         </v-row>
 
-        <!-- Relevant Links Section -->
+        <!-- Links Section -->
         <div class="links-section">
-          <div class="section-title">Links Relevantes</div>
-          <div class="links-list">
+          <h3 class="section-title">Links Relevantes</h3>
+          <div class="links-container">
             <div class="link-item">
               <span class="link-number">1.</span>
               <a href="#" class="link-text">Stream - Twitch</a>
@@ -96,48 +114,45 @@
             </div>
           </div>
         </div>
-      </v-card-text>
+      </div>
     </v-card>
   </v-row>
 
   <!-- MOBILE -->
   <v-card v-if="mobile" class="mobile-modal">
-    <v-row class="close-header">
-      <v-col class="d-flex justify-end">
-        <v-icon @click="$emit('closeModal')" class="ma-2 close-button">mdi-close</v-icon>
-      </v-col>
-    </v-row>
+    <div class="close-header mobile">
+      <v-icon @click="$emit('closeModal')" class="close-button">mdi-close</v-icon>
+    </div>
     
-    <!-- Mobile Tournament Header -->
     <div class="tournament-header mobile">
       <h3 class="tournament-title">{{ matchInfo.league.name }}</h3>
-      <h4 class="tournament-subtitle">{{ matchInfo.serie.name }}</h4>
       <p class="tournament-date">{{ formatDate(matchInfo.begin_at) }}</p>
     </div>
 
-    <!-- Mobile Teams -->
-    <div class="teams-vs-section mobile">
-      <ModalsTeams :opponents-info="props.matchInfo.opponents" />
+    <div class="teams-horizontal-section mobile">
+      <div class="team-lineup mobile">
+        <v-img class="country-flag" :src="teamLogoThumb(false, props.matchInfo.opponents[0].opponent.location)" />
+        <span class="team-name-text">{{ props.matchInfo.opponents[0].opponent.name }}</span>
+        <v-icon class="vs-icon">mdi-close</v-icon>
+        <span class="team-name-text">{{ props.matchInfo.opponents[1].opponent.name }}</span>
+        <v-img class="country-flag" :src="teamLogoThumb(false, props.matchInfo.opponents[1].opponent.location)" />
+      </div>
     </div>
 
-    <!-- Mobile Team Members -->
-    <v-card-text class="modal-content mobile">
-      <div class="section-title">Integrantes do time</div>
-      <v-row class="team-members-section mobile">
-        <v-progress-circular v-if="!props.matchInfo.rosters" :size="40" color="primary" 
-          class="mx-auto" indeterminate></v-progress-circular>
-        <v-col cols="6" v-if="props.matchInfo.rosters">
+    <div class="modal-content mobile">
+      <h3 class="section-title">Integrantes do time</h3>
+      <v-row v-if="props.matchInfo.rosters" class="team-rosters mobile">
+        <v-col cols="6">
           <ModalsRosters :team-roster="props.matchInfo.rosters[0].players" />
         </v-col>
-        <v-col cols="6" v-if="props.matchInfo.rosters">
+        <v-col cols="6">
           <ModalsRosters :team-roster="props.matchInfo.rosters[1].players" />
         </v-col>
       </v-row>
       
-      <!-- Mobile Links -->
       <div class="links-section mobile">
-        <div class="section-title">Links Relevantes</div>
-        <div class="links-list mobile">
+        <h3 class="section-title">Links Relevantes</h3>
+        <div class="links-container mobile">
           <div class="link-item">
             <span class="link-number">1.</span>
             <a href="#" class="link-text">Stream - Twitch</a>
@@ -148,7 +163,7 @@
           </div>
         </div>
       </div>
-    </v-card-text>
+    </div>
   </v-card>
 </template>
 
@@ -206,70 +221,70 @@ function formatDate(inputDate) {
 
 <style lang="scss" scoped>
 .modal-card {
-  padding: 0;
   overflow: hidden;
+  background: white;
+  position: relative;
 }
 
 .close-header {
-  padding: 8px 16px;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #e9ecef;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+  
+  &.mobile {
+    top: 8px;
+    right: 8px;
+  }
 }
 
 .close-button {
+  color: #666;
   cursor: pointer;
-  transition: opacity 0.2s;
+  font-size: 24px;
   
   &:hover {
-    opacity: 0.7;
+    color: #333;
   }
 }
 
 .tournament-header {
   text-align: center;
-  padding: 20px 24px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  padding: 20px 24px 16px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
   
   &.mobile {
-    padding: 16px 20px;
+    padding: 16px 20px 12px;
   }
 
   .tournament-title {
     font-family: "Poppins";
-    font-weight: bold;
-    font-size: 24px;
-    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 20px;
+    color: #333;
+    margin: 0 0 4px 0;
     
     @media (max-width: 960px) {
-      font-size: 18px;
-      margin-bottom: 4px;
+      font-size: 16px;
     }
-  }
-
-  .tournament-subtitle {
-    font-family: "Poppins";
-    font-weight: 500;
-    font-size: 16px;
-    margin-bottom: 8px;
-    opacity: 0.9;
   }
 
   .tournament-date {
     font-family: "Poppins";
-    font-size: 16px;
-    opacity: 0.8;
+    font-size: 14px;
+    color: #666;
     margin: 0;
     
     @media (max-width: 960px) {
-      font-size: 14px;
+      font-size: 12px;
     }
   }
 }
 
-.teams-vs-section {
+.teams-horizontal-section {
   padding: 20px 24px;
-  background-color: #f8f9fa;
+  background: white;
   border-bottom: 1px solid #e9ecef;
   
   &.mobile {
@@ -277,106 +292,180 @@ function formatDate(inputDate) {
   }
 }
 
+.team-lineup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  
+  &.mobile {
+    gap: 12px;
+  }
+}
+
+.country-flag {
+  width: 32px;
+  height: 24px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  
+  @media (max-width: 960px) {
+    width: 24px;
+    height: 18px;
+  }
+}
+
+.team-logo-small {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  
+  @media (max-width: 960px) {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.team-names {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 8px;
+}
+
+.team-name-text {
+  font-family: "Poppins";
+  font-weight: 600;
+  font-size: 18px;
+  color: #333;
+  white-space: nowrap;
+  
+  @media (max-width: 960px) {
+    font-size: 14px;
+  }
+}
+
+.vs-icon {
+  color: #666;
+  font-size: 16px;
+  transform: rotate(45deg);
+}
+
 .modal-content {
-  padding: 24px;
+  padding: 20px 24px;
   
   &.mobile {
     padding: 16px 20px;
   }
+}
+
+.main-row {
+  margin-bottom: 24px;
 }
 
 .section-title {
   font-family: "Poppins";
-  font-weight: bold;
-  font-size: 18px;
-  color: #2c3e50;
+  font-weight: 600;
+  font-size: 16px;
+  color: #333;
   margin-bottom: 16px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid #3498db;
   
   @media (max-width: 960px) {
-    font-size: 16px;
+    font-size: 14px;
     margin-bottom: 12px;
   }
 }
 
-.team-members-section {
-  margin-bottom: 32px;
-  
-  &.mobile {
-    margin-bottom: 24px;
-  }
-}
-
-.team-column {
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  padding: 16px;
+.team-members-col {
+  padding-right: 16px;
   
   @media (max-width: 960px) {
-    padding: 12px;
+    padding-right: 0;
   }
 }
 
-.betting-section {
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  padding: 16px;
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
 }
 
-.betting-site {
+.team-rosters {
+  gap: 16px;
+  
+  &.mobile {
+    gap: 12px;
+  }
+}
+
+.roster-col {
+  padding: 0 8px;
+}
+
+.betting-col {
+  padding-left: 16px;
+  
+  @media (max-width: 960px) {
+    padding-left: 0;
+    margin-top: 20px;
+  }
+}
+
+.betting-odds-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.betting-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 0;
-  border-bottom: 1px solid #e9ecef;
+  padding: 12px 16px;
+  border-radius: 6px;
+  border: 1px solid #e9ecef;
+  background: white;
   
-  &:last-child {
-    border-bottom: none;
+  &.rivalry-card {
+    border-left: 4px solid #ff6b35;
+  }
+  
+  &.betway-card {
+    border-left: 4px solid #00a859;
+  }
+  
+  &.ggbet-card {
+    border-left: 4px solid #ff6600;
   }
 }
 
-.betting-logo-text {
+.betting-brand {
   font-family: "Poppins";
-  font-weight: bold;
+  font-weight: 600;
   font-size: 14px;
-  padding: 6px 12px;
-  border-radius: 4px;
-  min-width: 80px;
-  text-align: center;
-  
-  &.rivalry {
-    background-color: #ff6b35;
-    color: white;
-  }
-  
-  &.betway {
-    background-color: #00a859;
-    color: white;
-  }
-  
-  &.ggbet {
-    background-color: #ff6600;
-    color: white;
-  }
+  color: #333;
 }
 
-.odds {
+.odds-display {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.odd {
   font-family: "Poppins";
-  font-weight: bold;
-  color: #2c3e50;
-  
-  span {
-    min-width: 30px;
-    text-align: center;
-    
-    &:nth-child(2) {
-      color: #7f8c8d;
-    }
-  }
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+  min-width: 24px;
+  text-align: center;
+}
+
+.separator {
+  font-family: "Poppins";
+  font-size: 14px;
+  color: #666;
 }
 
 .links-section {
@@ -387,13 +476,13 @@ function formatDate(inputDate) {
   }
 }
 
-.links-list {
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  padding: 16px;
+.links-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   
   &.mobile {
-    padding: 12px;
+    gap: 6px;
   }
 }
 
@@ -401,25 +490,26 @@ function formatDate(inputDate) {
   display: flex;
   align-items: center;
   padding: 8px 0;
-  border-bottom: 1px solid #e9ecef;
   
-  &:last-child {
-    border-bottom: none;
+  &:not(:last-child) {
+    border-bottom: 1px solid #f0f0f0;
   }
 }
 
 .link-number {
   font-family: "Poppins";
-  font-weight: bold;
-  color: #3498db;
-  margin-right: 12px;
-  min-width: 20px;
+  font-weight: 600;
+  color: #007bff;
+  margin-right: 8px;
+  min-width: 16px;
+  font-size: 14px;
 }
 
 .link-text {
   font-family: "Poppins";
-  color: #2980b9;
+  color: #007bff;
   text-decoration: none;
+  font-size: 14px;
   
   &:hover {
     text-decoration: underline;
@@ -431,11 +521,18 @@ function formatDate(inputDate) {
   overflow-y: auto;
 }
 
-// Responsive adjustments
 @media (max-width: 960px) {
   .modal-card {
     height: 100vh !important;
     width: 100% !important;
+  }
+  
+  .main-row {
+    flex-direction: column;
+  }
+  
+  .betting-col {
+    order: -1;
   }
 }
 </style>
