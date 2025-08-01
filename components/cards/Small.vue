@@ -120,4 +120,44 @@ img {
     font-size: 14px !important;
   }
 }
+
+/* Dark mode improvements for Small cards */
+[data-theme="dark"] .v-card {
+  background-color: var(--bg-secondary, #1a1a1a) !important;
+  color: var(--text-primary, #ffffff) !important;
+  border-bottom: 1px solid var(--border, #333) !important;
+  
+  /* Score numbers - maximum contrast */
+  .score {
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+  }
+  
+  /* Team acronyms - enhanced contrast */
+  .acronym {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7) !important;
+  }
+  
+  /* All heading elements */
+  .text-h4 {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6) !important;
+  }
+  
+  /* Card text (date, game name) */
+  .v-card-text {
+    color: #e0e0e0 !important;
+    font-weight: 500 !important;
+  }
+  
+  /* Title card text */
+  .title-card .v-card-text {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+  }
+}
 </style>

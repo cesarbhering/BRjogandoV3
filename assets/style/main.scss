@@ -77,7 +77,7 @@ roboto;
     border: 1px solid var(--border) !important;
   }
   
-  .medium-card, .big-card {
+  .medium-card, .big-card, .small-card {
     background-color: var(--bg-secondary) !important;
     color: var(--text-primary) !important;
     border: 1px solid var(--border) !important;
@@ -90,6 +90,28 @@ roboto;
     .text-h4 {
       color: #ffffff !important;
       font-weight: 700 !important;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7) !important;
+    }
+    
+    /* Enhanced contrast for time elements */
+    .countdown, .timer, .time, .date {
+      color: #ffffff !important;
+      font-weight: 800 !important;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+    }
+    
+    /* Score numbers - maximum contrast */
+    .score {
+      color: #ffffff !important;
+      font-weight: 800 !important;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9) !important;
+    }
+    
+    /* Team acronyms */
+    .acronym {
+      color: #ffffff !important;
+      font-weight: 700 !important;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7) !important;
     }
     
     /* Ensure all card text has good contrast */
@@ -102,10 +124,24 @@ roboto;
     }
   }
   
-  /* Sheets */
+  /* Sheets - should use primary background (black) not secondary (gray) */
   .v-sheet {
-    background-color: var(--bg-secondary) !important;
+    background-color: var(--bg-primary) !important;
     color: var(--text-primary) !important;
+  }
+  
+  /* Slide groups and carousels */
+  .v-slide-group {
+    background-color: var(--bg-primary) !important;
+    
+    .v-slide-group__content {
+      background-color: var(--bg-primary) !important;
+    }
+    
+    .v-slide-group__prev, .v-slide-group__next {
+      background-color: var(--bg-tertiary) !important;
+      color: var(--text-primary) !important;
+    }
   }
   
   /* Titles */
@@ -158,10 +194,12 @@ roboto;
       color: var(--text-secondary) !important;
     }
     
-    /* Special override for score numbers */
-    .score, .text--primary {
+    /* Special override for score numbers and time elements */
+    .score, .text--primary, .special-match-countdown {
       color: #ffffff !important;
-      font-weight: 700 !important;
+      font-weight: 800 !important;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9) !important;
+      letter-spacing: 0.3px !important;
     }
   }
   

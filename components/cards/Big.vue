@@ -225,48 +225,74 @@ const width = computed(() => {
 
 /* Dark mode improvements for Big cards */
 [data-theme="dark"] .big-card {
-  /* Match countdown - high contrast */
+  /* Match countdown - maximum contrast */
   .special-match-countdown {
     color: #ffffff !important;
-    font-weight: 700 !important;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+    font-weight: 800 !important;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9) !important;
+    font-size: 1.1em !important;
+    letter-spacing: 0.5px !important;
   }
   
   /* Special match name */
   .special-match-name {
     color: #ffffff !important;
-    font-weight: 600 !important;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+    font-weight: 700 !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
   }
   
-  /* Team acronyms - better contrast */
+  /* Team acronyms - enhanced contrast */
   .acronym {
     color: #ffffff !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6) !important;
   }
   
-  /* Versus X */
+  /* Versus X - maximum visibility */
   .versusX {
     color: #ffffff !important;
-    font-weight: 700 !important;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+    font-weight: 800 !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+    font-size: 1.2em !important;
   }
   
-  /* Match info text */
+  /* Match info text - better contrast */
   .match-info-big {
     span {
-      color: #e0e0e0 !important;
+      color: #ffffff !important;
+      font-weight: 600 !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+    }
+  }
+  
+  /* Card text - enhanced readability */
+  .v-card-text {
+    color: #ffffff !important;
+    
+    span {
+      color: #ffffff !important;
       font-weight: 500 !important;
     }
   }
   
-  /* Card text */
-  .v-card-text {
-    color: #e0e0e0 !important;
-    
-    span {
-      color: #e0e0e0 !important;
-    }
+  /* All heading elements */
+  .text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6 {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7) !important;
+  }
+  
+  /* Time and date elements */
+  .time, .date, .countdown {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+  }
+  
+  /* Final alert background for better number visibility */
+  .final-alert-big {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.6) 100%) !important;
+    backdrop-filter: blur(2px) !important;
   }
 }
 

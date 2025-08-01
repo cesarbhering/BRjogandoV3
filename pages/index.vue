@@ -275,7 +275,21 @@ const { mobile } = useDisplay();
 }
 
 [data-theme="dark"] .centered-matches {
-  background-color: var(--bg-secondary, #1a1a1a) !important;
+  background-color: var(--bg-primary, #0a0a0a) !important;
+}
+
+/* Carousel background - should be black like the rest of the site */
+[data-theme="dark"] .v-sheet {
+  background-color: var(--bg-primary, #0a0a0a) !important;
+}
+
+/* Slide group styling for dark mode */
+[data-theme="dark"] .v-slide-group {
+  background-color: var(--bg-primary, #0a0a0a) !important;
+  
+  .v-slide-group__content {
+    background-color: var(--bg-primary, #0a0a0a) !important;
+  }
 }
 
 [data-theme="dark"] .filter-button {
