@@ -69,7 +69,7 @@
     </v-card-actions>
   </v-card>
   <v-dialog v-model="dialog">
-    <ModalsMatchModal :match-info="matchInfo" :match-occurrence="'upcoming'" />
+    <ModalsMatchModal @closeModal="dialog = false" :match-info="matchInfo" :match-occurrence="'upcoming'" />
   </v-dialog>
 </template>
 <script>
@@ -268,7 +268,7 @@ const width = computed(() => {
 
     .special-match-countdown {
       width: 70px;
-      font-family: "Fira Code";
+      font-family: "Poppins";
       font-style: bold;
       font-weight: 900;
       font-size: 17px;

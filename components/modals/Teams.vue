@@ -1,46 +1,30 @@
 <template>
-  <v-row class="d-flex justify-space-between">
-    <v-col v-for="(opponent, index) in props.opponentsInfo" :key="index">
-      <v-row v-if="index === 0" class="d-flex align-center ml-5">
-        <!-- LOGO/SIGLA/SCORE TIME 0 -->
-        <!-- BANDEIRA DA ORG -->
-        <v-col  class="d-flex justify-center ">
-          <v-img class="elevation-1" max-width="6vw" :src="teamLogoThumb(false, opponent.opponent.location)" />
-        </v-col>
-        <!-- LOGO -->
-        <v-col  class="pa-0 d-flex justify-end">
-          <v-img max-width="6vw" :src="teamLogoThumb(opponent.opponent.image_url, false)" />
-        </v-col>
-        <v-col >
-          <!-- SIGLA -->
-          <span class="text-left acronym">
-            {{ opponent.opponent.name }}
-          </span>
-        </v-col>
-      </v-row>
-      <v-row v-if="index === 1" class="d-flex align-center mr-5">
-        <!-- LOGO/SIGLA/SCORE TIME 1 -->
-        <!-- LOGO -->
-        <v-col class="text-right">
-          <!-- SIGLA -->
+  <div class="teams-vs-container">
+    <!-- Team 1 -->
+    <div class="team-side left">
+      <div class="team-logos">
+        <v-img class="country-flag" :src="teamLogoThumb(false, props.opponentsInfo[0].opponent.location)" />
+        <v-img class="team-logo" :src="teamLogoThumb(props.opponentsInfo[0].opponent.image_url, false)" />
+      </div>
+      <div class="team-name-display">{{ props.opponentsInfo[0].opponent.name }}</div>
+    </div>
 
-          <span class="acronym">
-            {{ opponent.opponent.name }}
-          </span>
+    <!-- VS Separator -->
+    <div class="vs-separator">
+      <div class="vs-circle">
+        <span class="vs-text">VS</span>
+      </div>
+    </div>
 
-        </v-col>
-        <!-- LOGO -->
-        <v-col class="pa-0 d-flex justify-start">
-          <v-img max-width="6vw" :src="teamLogoThumb(opponent.opponent.image_url, false)" />
-        </v-col>
-        <!-- BANDEIRA DA ORG -->
-        <v-col class="d-flex justify-center">
-          <v-img class="elevation-1" max-width="6vw" :src="teamLogoThumb(false, opponent.opponent.location)"
-            :alt="opponent.opponent.location + ' flag'" />
-        </v-col>
-      </v-row>
-    </v-col>
-  </v-row>
+    <!-- Team 2 -->
+    <div class="team-side right">
+      <div class="team-logos">
+        <v-img class="team-logo" :src="teamLogoThumb(props.opponentsInfo[1].opponent.image_url, false)" />
+        <v-img class="country-flag" :src="teamLogoThumb(false, props.opponentsInfo[1].opponent.location)" />
+      </div>
+      <div class="team-name-display">{{ props.opponentsInfo[1].opponent.name }}</div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -53,34 +37,120 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
-.acronym {
+.teams-vs-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+  gap: 40px;
+  
+  @media (max-width: 960px) {
+    gap: 20px;
+    padding: 15px 0;
+  }
+}
+
+.team-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 180px;
+  
+  @media (max-width: 960px) {
+    min-width: 120px;
+  }
+  
+  &.left .team-logos {
+    flex-direction: row;
+  }
+  
+  &.right .team-logos {
+    flex-direction: row;
+  }
+}
+
+.team-logos {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+  
+  @media (max-width: 960px) {
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+}
+
+.team-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  
+  @media (max-width: 960px) {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+.country-flag {
+  width: 40px;
+  height: 30px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  
+  @media (max-width: 960px) {
+    width: 30px;
+    height: 22px;
+  }
+}
+
+.team-name-display {
   font-family: "Poppins";
   font-weight: bold;
-  color: #000000;
-  font-size: 25px !important;
+  font-size: 18px;
+  color: #2c3e50;
+  text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-
+  max-width: 200px;
+  
   @media (max-width: 960px) {
-    font-size: 21px !important;
+    font-size: 16px;
+    max-width: 150px;
   }
 }
 
-.score {
+.vs-separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vs-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  
+  @media (max-width: 960px) {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.vs-text {
   font-family: "Poppins";
   font-weight: bold;
-  font-size: 20px !important;
-  color: #002776;
-
+  font-size: 14px;
+  color: white;
+  
   @media (max-width: 960px) {
-    font-size: 14px !important;
+    font-size: 12px;
   }
-}
-
-.rosters {
-  border-bottom: 1px solid #E6E6E6;
-  margin: 0 50px;
-  min-height: 30dvh;
 }
 </style>
