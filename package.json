@@ -5,6 +5,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev --host",
+    "dev:netlify": "netlify dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
@@ -25,6 +26,7 @@
     "@supabase/supabase-js": "^2.38.5",
     "axios": "^1.6.2",
     "node-fetch": "^2.7.0",
+    "playwright-core": "^1.54.2",
     "simple-icons": "^15.8.0",
     "vue-i18n": "^9.14.5",
     "vuetify": "^3.5.0"

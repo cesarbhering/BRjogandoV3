@@ -152,18 +152,67 @@
         <!-- Links Section -->
         <div class="links-section">
           <h3 class="section-title">Links Relevantes</h3>
+          <p class="links-subtitle">Buscando diretamente na Liquipedia...</p>
           <div class="links-container">
             <div class="link-item">
               <span class="link-number">1.</span>
-              <a href="#" class="link-text">Página do torneio - Liquipedia</a>
+              <a 
+                v-if="dynamicLinks.tournament.url && dynamicLinks.tournament.url !== '#'" 
+                :href="dynamicLinks.tournament.url" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="link-text"
+              >
+                {{ dynamicLinks.tournament.title }}
+                <v-icon class="external-link-icon" size="x-small">mdi-open-in-new</v-icon>
+              </a>
+              <span v-else-if="dynamicLinks.tournament.loading" class="link-text loading">
+                <v-progress-circular size="12" width="2" indeterminate></v-progress-circular>
+                Procurando {{ matchInfo.league?.name || matchInfo.serie?.name }}...
+              </span>
+              <span v-else class="link-text unavailable">
+                {{ matchInfo.league?.name || matchInfo.serie?.name }} - Não encontrado
+              </span>
             </div>
             <div class="link-item">
               <span class="link-number">2.</span>
-              <a href="#" class="link-text">Página do time | {{ teamNames[0] }} - Liquipedia</a>
+              <a 
+                v-if="dynamicLinks.team1.url && dynamicLinks.team1.url !== '#'" 
+                :href="dynamicLinks.team1.url" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="link-text"
+              >
+                {{ dynamicLinks.team1.title }}
+                <v-icon class="external-link-icon" size="x-small">mdi-open-in-new</v-icon>
+              </a>
+              <span v-else-if="dynamicLinks.team1.loading" class="link-text loading">
+                <v-progress-circular size="12" width="2" indeterminate></v-progress-circular>
+                Procurando {{ teamNames[0] }}...
+              </span>
+              <span v-else class="link-text unavailable">
+                {{ teamNames[0] }} - Não encontrado
+              </span>
             </div>
             <div class="link-item">
               <span class="link-number">3.</span>
-              <a href="#" class="link-text">Página do time | {{ teamNames[1] }} - Liquipedia</a>
+              <a 
+                v-if="dynamicLinks.team2.url && dynamicLinks.team2.url !== '#'" 
+                :href="dynamicLinks.team2.url" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="link-text"
+              >
+                {{ dynamicLinks.team2.title }}
+                <v-icon class="external-link-icon" size="x-small">mdi-open-in-new</v-icon>
+              </a>
+              <span v-else-if="dynamicLinks.team2.loading" class="link-text loading">
+                <v-progress-circular size="12" width="2" indeterminate></v-progress-circular>
+                Procurando {{ teamNames[1] }}...
+              </span>
+              <span v-else class="link-text unavailable">
+                {{ teamNames[1] }} - Não encontrado
+              </span>
             </div>
           </div>
         </div>
@@ -256,14 +305,67 @@
       
       <div class="links-section mobile">
         <h3 class="section-title">Links Relevantes</h3>
+        <p class="links-subtitle">Buscando diretamente na Liquipedia...</p>
         <div class="links-container mobile">
           <div class="link-item">
             <span class="link-number">1.</span>
-            <a href="#" class="link-text">Página do torneio</a>
+            <a 
+              v-if="dynamicLinks.tournament.url && dynamicLinks.tournament.url !== '#'" 
+              :href="dynamicLinks.tournament.url" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="link-text"
+            >
+              {{ dynamicLinks.tournament.title }}
+              <v-icon class="external-link-icon" size="x-small">mdi-open-in-new</v-icon>
+            </a>
+            <span v-else-if="dynamicLinks.tournament.loading" class="link-text loading">
+              <v-progress-circular size="12" width="2" indeterminate></v-progress-circular>
+              Procurando...
+            </span>
+            <span v-else class="link-text unavailable">
+              {{ matchInfo.league?.name || matchInfo.serie?.name }} - Não encontrado
+            </span>
           </div>
           <div class="link-item">
             <span class="link-number">2.</span>
-            <a href="#" class="link-text">Página do time</a>
+            <a 
+              v-if="dynamicLinks.team1.url && dynamicLinks.team1.url !== '#'" 
+              :href="dynamicLinks.team1.url" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="link-text"
+            >
+              {{ dynamicLinks.team1.title }}
+              <v-icon class="external-link-icon" size="x-small">mdi-open-in-new</v-icon>
+            </a>
+            <span v-else-if="dynamicLinks.team1.loading" class="link-text loading">
+              <v-progress-circular size="12" width="2" indeterminate></v-progress-circular>
+              Procurando...
+            </span>
+            <span v-else class="link-text unavailable">
+              {{ teamNames[0] }} - Não encontrado
+            </span>
+          </div>
+          <div class="link-item">
+            <span class="link-number">3.</span>
+            <a 
+              v-if="dynamicLinks.team2.url && dynamicLinks.team2.url !== '#'" 
+              :href="dynamicLinks.team2.url" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="link-text"
+            >
+              {{ dynamicLinks.team2.title }}
+              <v-icon class="external-link-icon" size="x-small">mdi-open-in-new</v-icon>
+            </a>
+            <span v-else-if="dynamicLinks.team2.loading" class="link-text loading">
+              <v-progress-circular size="12" width="2" indeterminate></v-progress-circular>
+              Procurando...
+            </span>
+            <span v-else class="link-text unavailable">
+              {{ teamNames[1] }} - Não encontrado
+            </span>
           </div>
         </div>
       </div>
@@ -299,6 +401,13 @@ const teamNames = computed(() => {
     props.matchInfo.opponents[0]?.opponent?.name || 'Team 1',
     props.matchInfo.opponents[1]?.opponent?.name || 'Team 2',
   ];
+});
+
+// Dynamic links state
+const dynamicLinks = ref({
+  tournament: { url: null, title: '', loading: false },
+  team1: { url: null, title: '', loading: false },
+  team2: { url: null, title: '', loading: false }
 });
 
 const availableStreams = computed(() => {
@@ -345,6 +454,90 @@ function getGameIcon(videogameName) {
       return 'simple-icons:ea';
     default:
       return 'mdi:gamepad-variant'; // Generic gaming icon
+  }
+}
+
+
+
+// Direct Liquipedia search using Playwright
+async function searchLiquipediaDirectly(searchTerm, gameType) {
+  try {
+    const queryParams = new URLSearchParams({
+      searchTerm: searchTerm,
+      gameType: gameType || ''
+    });
+    
+    const response = await fetch(`/.netlify/functions/searchLiquipediaLinks?${queryParams}`);
+    
+    if (!response.ok) {
+      // In development, Netlify functions might not be available
+      if (response.status === 404 && process.env.NODE_ENV === 'development') {
+        console.warn('Liquipedia search not available in development mode (Netlify functions not running)');
+        return { 
+          url: `https://liquipedia.net/leagueoflegends/Special:Search?search=${encodeURIComponent(searchTerm)}`, 
+          title: `${searchTerm} - Buscar na Liquipedia` 
+        };
+      }
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error searching Liquipedia directly:', error);
+    // Provide a fallback search URL
+    const gameMap = {
+      'lol': 'leagueoflegends',
+      'league of legends': 'leagueoflegends',
+      'counter-strike': 'counterstrike',
+      'cs:go': 'counterstrike',
+      'cs2': 'counterstrike',
+      'dota 2': 'dota2',
+      'valorant': 'valorant'
+    };
+    const game = gameMap[gameType?.toLowerCase()] || 'leagueoflegends';
+    return { 
+      url: `https://liquipedia.net/${game}/Special:Search?search=${encodeURIComponent(searchTerm)}`,
+      title: `Buscar "${searchTerm}" na Liquipedia` 
+    };
+  }
+}
+
+async function loadDynamicLinks() {
+  const gameType = props.matchInfo.videogame?.name;
+  
+  // Search for tournament link directly on Liquipedia
+  if (props.matchInfo.league?.name || props.matchInfo.serie?.name) {
+    dynamicLinks.value.tournament.loading = true;
+    const tournamentName = props.matchInfo.league?.name || props.matchInfo.serie?.name;
+    const tournamentResult = await searchLiquipediaDirectly(tournamentName, gameType);
+    dynamicLinks.value.tournament = {
+      url: tournamentResult.url,
+      title: tournamentResult.title || `${tournamentName} - Liquipedia`,
+      loading: false
+    };
+  }
+  
+  // Search for team 1 link directly on Liquipedia
+  if (teamNames.value[0] !== 'Team 1') {
+    dynamicLinks.value.team1.loading = true;
+    const team1Result = await searchLiquipediaDirectly(teamNames.value[0], gameType);
+    dynamicLinks.value.team1 = {
+      url: team1Result.url,
+      title: team1Result.title || `${teamNames.value[0]} - Liquipedia`,
+      loading: false
+    };
+  }
+  
+  // Search for team 2 link directly on Liquipedia
+  if (teamNames.value[1] !== 'Team 2') {
+    dynamicLinks.value.team2.loading = true;
+    const team2Result = await searchLiquipediaDirectly(teamNames.value[1], gameType);
+    dynamicLinks.value.team2 = {
+      url: team2Result.url,
+      title: team2Result.title || `${teamNames.value[1]} - Liquipedia`,
+      loading: false
+    };
   }
 }
 
@@ -447,15 +640,16 @@ const currentScore = computed(() => {
 onBeforeMount(async () => {
   try {
     if (props.matchInfo?.opponents && props.matchInfo.opponents.length >= 2) {
-      await gamesStore.fetchSupabaseDataForMatch(
-        props.matchInfo.id,
-        props.matchOccurrence,
-        props.matchInfo.serie_id,
+  await gamesStore.fetchSupabaseDataForMatch(
+    props.matchInfo.id,
+    props.matchOccurrence,
+    props.matchInfo.serie_id,
         teamNames.value
-      );
-      await gamesStore.fetchGameRosters(props.matchInfo, props.matchOccurrence);
+  );
+  await gamesStore.fetchGameRosters(props.matchInfo, props.matchOccurrence);
       
-
+      // Load dynamic Liquipedia links
+      await loadDynamicLinks();
     }
   } catch (error) {
     console.warn('Error loading modal data:', error);
@@ -530,6 +724,8 @@ function formatDate(inputDate) {
     font-size: 20px;
     color: #333;
     margin: 0 0 8px 0;
+    
+
     
     @media (max-width: 960px) {
       font-size: 16px;
@@ -711,6 +907,8 @@ function formatDate(inputDate) {
   font-size: 18px;
   color: #333;
   white-space: nowrap;
+  
+
   
   @media (max-width: 960px) {
     font-size: 14px;
@@ -943,6 +1141,102 @@ function formatDate(inputDate) {
   
   &.official.main {
     border-left: 4px solid #fd7e14;
+  }
+}
+
+.links-section {
+  margin-bottom: 20px;
+  
+  @media (max-width: 960px) {
+    margin-bottom: 16px;
+  }
+}
+
+.links-subtitle {
+  font-family: "Poppins";
+  font-size: 12px;
+  color: #6c757d;
+  font-style: italic;
+  margin-bottom: 12px;
+  margin-top: -8px;
+  
+  @media (max-width: 960px) {
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+}
+
+.links-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  
+  &.mobile {
+    gap: 6px;
+  }
+}
+
+.link-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+}
+
+.link-number {
+  font-family: "Poppins";
+  font-weight: 600;
+  font-size: 14px;
+  color: #666;
+  min-width: 20px;
+  
+  @media (max-width: 960px) {
+    font-size: 12px;
+    min-width: 18px;
+  }
+}
+
+.link-text {
+  font-family: "Poppins";
+  font-weight: 500;
+  font-size: 14px;
+  color: #007bff;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+  
+  .external-link-icon {
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+  }
+  
+  &:hover .external-link-icon {
+    opacity: 1;
+  }
+  
+  @media (max-width: 960px) {
+    font-size: 13px;
+  }
+  
+  &.loading {
+    color: #6c757d;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-style: italic;
+  }
+  
+  &.unavailable {
+    color: #6c757d;
+    font-style: italic;
+    cursor: not-allowed;
   }
 }
 
