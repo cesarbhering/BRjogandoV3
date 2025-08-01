@@ -2,8 +2,10 @@
   <div class="roster-list">
     <div v-for="(player, index) in teamRosterActivePlayers" :key="index" class="player-item">
       <div class="player-basic-info">
-        <span class="player-name">{{ player.name }}</span>
-        <v-img class="player-flag" :src="teamLogoThumb(false, player.nationality)" />
+        <span class="player-name">{{ formatPlayerName(player) }}</span>
+        <div class="flag-container">
+          <v-img class="player-flag" :src="teamLogoThumb(false, player.nationality)" />
+        </div>
       </div>
     </div>
   </div>
@@ -21,6 +23,34 @@ const { teamLogoThumb } = useLogos();
 const teamRosterActivePlayers = computed(() => {
   return props.teamRoster.filter((player) => player.active === true).slice(0, 5);
 });
+
+// Format player name as: FirstName "Nickname" LastName
+function formatPlayerName(player) {
+  if (!player) return '';
+  
+  // Try different name field combinations
+  const firstName = player.first_name || '';
+  const lastName = player.last_name || '';
+  const nickname = player.name || player.slug || player.nickname || '';
+  
+  // If we have first and last name, format as: FirstName "Nickname" LastName
+  if (firstName && lastName && nickname) {
+    return `${firstName} "${nickname}" ${lastName}`;
+  }
+  
+  // If we only have nickname, show it without quotes
+  if (nickname && !firstName && !lastName) {
+    return nickname;
+  }
+  
+  // If we have first/last but no nickname
+  if ((firstName || lastName) && !nickname) {
+    return `${firstName} ${lastName}`.trim();
+  }
+  
+  // Fallback to whatever name we have
+  return nickname || firstName || lastName || 'Unknown Player';
+}
 
 
 
@@ -54,7 +84,7 @@ const teamRosterActivePlayers = computed(() => {
 .player-basic-info {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 8px;
 }
 
 .player-name {
@@ -62,22 +92,26 @@ const teamRosterActivePlayers = computed(() => {
   font-weight: 500;
   font-size: 13px;
   color: #333;
-  flex: 1;
+  flex: 0 1 80%; /* Takes 80% of the container */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-right: 8px;
   
   @media (max-width: 960px) {
     font-size: 12px;
   }
 }
 
+.flag-container {
+  flex: 0 0 20%; /* Takes exactly 20% of the container */
+  display: flex;
+  justify-content: flex-end;
+}
+
 .player-flag {
   width: 20px;
   height: 15px;
   border-radius: 2px;
-  flex-shrink: 0;
   
   @media (max-width: 960px) {
     width: 18px;

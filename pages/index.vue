@@ -1,6 +1,19 @@
 <template>
   <div class="home">
     <v-container class="px-1">
+      <!-- Filter Button -->
+      <div class="d-flex justify-center mb-4">
+        <v-btn 
+          @click="showOnlyBrazilian = !showOnlyBrazilian"
+          :color="showOnlyBrazilian ? 'green' : ''"
+          variant="flat"
+          size="small"
+          class="filter-button"
+        >
+          {{ showOnlyBrazilian ? 'Todas as partidas' : 'Apenas brasileiros' }}
+        </v-btn>
+      </div>
+      
       <div class="container-title">Partidas ao vivo</div>
       <v-row v-if="!gamesStore.runningMatches.length">
         <v-col v-for="index in new Array(2)">
@@ -8,8 +21,16 @@
         </v-col>
       </v-row>
       <v-sheet color="#E4E7EC">
-        <v-slide-group v-model="model" :show-arrows="!mobile">
-          <v-slide-group-item v-for="(runningMatch, index) in gamesStore.runningMatches" :key="index"
+        <!-- Show centered cards when few matches -->
+        <div v-if="filteredRunningMatches.length <= 3" class="centered-matches">
+          <div v-for="(runningMatch, index) in filteredRunningMatches" :key="index" class="match-card-wrapper">
+            <CardsMedium :match-info="runningMatch" />
+          </div>
+        </div>
+        
+        <!-- Show carousel when many matches -->
+        <v-slide-group v-else v-model="model" :show-arrows="!mobile">
+          <v-slide-group-item v-for="(runningMatch, index) in filteredRunningMatches" :key="index"
             v-slot="{ isSelected, toggle, selectedClass }">
             <div class="mr-3">
               <CardsMedium :match-info="runningMatch" />
@@ -20,7 +41,7 @@
     </v-container>
     <v-container class="mb-3">
       <v-row class="justify-center">
-        <v-col :cols="mobile ? 12 : 9" class="d-flex flex-wrap justify-start">
+        <v-col :cols="mobile ? 12 : 9">
           <v-row class="justify-center">
             <span class="container-title">Próximas Partidas</span>
           </v-row>
@@ -29,8 +50,8 @@
               <v-skeleton-loader width="380" type="image"></v-skeleton-loader>
             </v-col>
           </v-row>
-          <v-row class="justify-center">
-            <CardsBig v-for="(upcomingMatch, index) in gamesStore.upcomingMatches" :key="index" :match-info="upcomingMatch" />
+          <v-row v-else class="justify-center upcoming-matches-row">
+            <CardsBig v-for="(upcomingMatch, index) in filteredUpcomingMatches" :key="index" :match-info="upcomingMatch" />
           </v-row>
         </v-col>
         <v-col v-if="!mobile">
@@ -72,10 +93,12 @@ export default {
 };
 </script>
 <script setup>
+import { ref, computed, onBeforeMount } from 'vue';
 import { useDisplay } from "vuetify";
 import { useGamesStore } from "~/store/games";
 
 const gamesStore = useGamesStore();
+const showOnlyBrazilian = ref(false);
 
 useSeoMeta({
   title: 'BRjogando',
@@ -90,6 +113,58 @@ useSeoMeta({
   twitterImage: '/Logo-Default.png'
 })
 
+// Function to check if a match has Brazilian connection
+function hasBrazilianConnection(match) {
+  if (!match) return false;
+  
+  // Check team organizations for "BR" 
+  const teams = match.opponents || [];
+  for (const team of teams) {
+    const teamName = team.opponent?.name || '';
+    const location = team.opponent?.location || '';
+    
+    // Check if team name or location contains "BR"
+    if (teamName.toLowerCase().includes('br') || location.toLowerCase().includes('br')) {
+      return true;
+    }
+  }
+  
+  // Check players (if rosters are loaded)
+  if (match.rosters) {
+    for (const roster of match.rosters) {
+      if (roster.players) {
+        for (const player of roster.players) {
+          const nationality = player.nationality || '';
+          const playerName = player.name || '';
+          
+          // Check if player is Brazilian or has "BR" in name
+          if (nationality.toLowerCase().includes('br') || playerName.toLowerCase().includes('br')) {
+            return true;
+          }
+        }
+      }
+    }
+  }
+  
+  return false;
+}
+
+// Computed properties to filter matches
+const filteredUpcomingMatches = computed(() => {
+  if (!showOnlyBrazilian.value) {
+    return gamesStore.upcomingMatches;
+  }
+  
+  return gamesStore.upcomingMatches.filter(match => hasBrazilianConnection(match));
+});
+
+const filteredRunningMatches = computed(() => {
+  if (!showOnlyBrazilian.value) {
+    return gamesStore.runningMatches;
+  }
+  
+  return gamesStore.runningMatches.filter(match => hasBrazilianConnection(match));
+});
 
 onBeforeMount(async () => {
   // Carrega a informação das partidas na store
@@ -97,7 +172,6 @@ onBeforeMount(async () => {
   gamesStore.fetchUpcomingMatches();
   gamesStore.fetchPastMatches();
 });
-
 
 // Para auxiliar o carrossel
 let model = null;
@@ -129,6 +203,66 @@ const { mobile } = useDisplay();
   @media (max-width: 960px) {
     font-size: 2rem;
   }
+}
+
+.filter-button {
+  border-radius: 25px !important; /* Very rounded corners */
+  padding: 8px 24px !important;
+  font-weight: 600;
+  text-transform: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 40px !important;
+  background-color: #002776 !important; /* Same blue as "Partidas ao vivo" */
+  color: white !important;
+  
+  &:hover {
+    background-color: #001a5c !important; /* Darker blue on hover */
+  }
+  
+  @media (max-width: 960px) {
+    padding: 6px 20px !important;
+    font-size: 0.875rem;
+    min-height: 36px !important;
+  }
+}
+
+/* Green state when filtering */
+.filter-button.v-btn--variant-flat.bg-green {
+  background-color: #4caf50 !important;
+  color: white !important;
+  
+  &:hover {
+    background-color: #45a049 !important;
+  }
+}
+
+/* Center live match cards when there are few of them */
+.centered-matches {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  min-height: 200px; /* Ensure consistent height */
+  
+  @media (max-width: 960px) {
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+  }
+}
+
+.match-card-wrapper {
+  flex-shrink: 0;
+}
+
+/* Fix upcoming matches container height */
+.upcoming-matches-row {
+  min-height: auto !important;
+  align-content: flex-start !important;
 }
 
 .last-matches {

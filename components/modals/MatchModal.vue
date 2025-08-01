@@ -1,31 +1,40 @@
 <template>
   <!-- DESKTOP -->
   <v-row class="d-flex align-center justify-center" v-if="!mobile">
-    <v-card height="90vh" width="800px" class="modal-card">
-      <!-- Close Button -->
-      <div class="close-header">
-        <v-icon @click="emit('closeModal')" class="close-button">mdi-close</v-icon>
+    <div class="modal-backdrop" @click="emit('closeModal')"></div>
+    <v-card height="90vh" width="800px" class="modal-card" @click.stop>
+      <!-- Non-scrollable close button area -->
+      <div class="modal-top-bar">
+        <div class="close-header">
+          <v-icon @click="emit('closeModal')" class="close-button">mdi-close</v-icon>
+        </div>
       </div>
 
-             <!-- Tournament Header -->
-       <div class="tournament-header">
-         <div class="header-with-icon">
-           <Icon :icon="getGameIcon(matchInfo.videogame?.name)" class="game-icon" />
-           <div class="tournament-text">
-             <h2 class="tournament-title">{{ matchInfo.league.name }} - {{ matchInfo.serie.name }}</h2>
-             <div class="tournament-info">
-               <p class="tournament-date">{{ formatDate(matchInfo.begin_at) }}</p>
-               <div class="match-format-info">
-                 <span v-if="matchFormat" class="match-format">{{ matchFormat }}</span>
-                 <span v-if="currentScore" class="current-score">{{ currentScore }}</span>
-               </div>
-             </div>
-           </div>
-         </div>
-       </div>
+      <!-- Scrollable content area -->
+      <div class="modal-content-scroll">
+        <!-- Fixed Header Container (Desktop) -->
+      <div class="fixed-header-container">
+        <!-- Tournament Header -->
+        <div class="tournament-header">
+          <div class="header-with-icon">
+            <div class="tournament-text">
+              <h2 class="tournament-title">{{ matchInfo.league.name }} - {{ matchInfo.serie.name }}</h2>
+              <div class="tournament-info">
+                <div class="date-with-icon">
+                  <Icon v-if="getGameIcon(matchInfo.videogame?.name)" :icon="getGameIcon(matchInfo.videogame?.name)" class="game-icon-inline" />
+                  <p class="tournament-date">{{ formatDate(matchInfo.begin_at) }}</p>
+                </div>
+                <div class="match-format-info">
+                  <span v-if="matchFormat" class="match-format">{{ matchFormat }}</span>
+                  <span v-if="currentScore" class="current-score">{{ currentScore }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <!-- Teams Horizontal Layout -->
-      <div class="teams-horizontal-section">
+        <!-- Teams Horizontal Layout -->
+        <div class="teams-horizontal-section">
         <div class="team-lineup">
           <!-- Team 1 Flag -->
           <v-img 
@@ -62,6 +71,7 @@
             v-if="props.matchInfo.opponents?.[1]"
           />
         </div>
+      </div>
       </div>
 
       <!-- Main Content -->
@@ -152,10 +162,10 @@
         <!-- Links Section -->
         <div class="links-section">
           <h3 class="section-title">Links Relevantes</h3>
-          <p class="links-subtitle">Buscando diretamente na Liquipedia...</p>
+          <p v-if="isSearchingLinks" class="links-subtitle">Buscando diretamente na Liquipedia...</p>
           <div class="links-container">
-            <div class="link-item">
-              <span class="link-number">1.</span>
+            <div v-if="matchInfo.league?.name || matchInfo.serie?.name" class="link-item">
+              <img src="/liquipedia.svg" alt="Liquipedia" class="liquipedia-icon" />
               <a 
                 v-if="dynamicLinks.tournament.url && dynamicLinks.tournament.url !== '#'" 
                 :href="dynamicLinks.tournament.url" 
@@ -174,8 +184,8 @@
                 {{ matchInfo.league?.name || matchInfo.serie?.name }} - Não encontrado
               </span>
             </div>
-            <div class="link-item">
-              <span class="link-number">2.</span>
+            <div v-if="teamNames[0] !== 'Team 1'" class="link-item">
+              <img src="/liquipedia.svg" alt="Liquipedia" class="liquipedia-icon" />
               <a 
                 v-if="dynamicLinks.team1.url && dynamicLinks.team1.url !== '#'" 
                 :href="dynamicLinks.team1.url" 
@@ -194,8 +204,8 @@
                 {{ teamNames[0] }} - Não encontrado
               </span>
             </div>
-            <div class="link-item">
-              <span class="link-number">3.</span>
+            <div v-if="teamNames[1] !== 'Team 2'" class="link-item">
+              <img src="/liquipedia.svg" alt="Liquipedia" class="liquipedia-icon" />
               <a 
                 v-if="dynamicLinks.team2.url && dynamicLinks.team2.url !== '#'" 
                 :href="dynamicLinks.team2.url" 
@@ -217,22 +227,32 @@
           </div>
         </div>
       </div>
+      </div> <!-- Close modal-content-scroll -->
     </v-card>
   </v-row>
 
   <!-- MOBILE -->
-  <v-card v-if="mobile" class="mobile-modal">
-    <div class="close-header mobile">
-      <v-icon @click="emit('closeModal')" class="close-button">mdi-close</v-icon>
-    </div>
+  <div v-if="mobile" class="mobile-backdrop" @click="emit('closeModal')">
+    <v-card class="mobile-modal" @click.stop>
+      <!-- Non-scrollable close button area -->
+      <div class="modal-top-bar mobile">
+        <div class="close-header mobile">
+          <v-icon @click="emit('closeModal')" class="close-button">mdi-close</v-icon>
+        </div>
+      </div>
+
+      <!-- Scrollable content area -->
+      <div class="modal-content-scroll mobile">
     
          <div class="tournament-header mobile">
        <div class="header-with-icon mobile">
-         <Icon :icon="getGameIcon(matchInfo.videogame?.name)" class="game-icon mobile" />
          <div class="tournament-text mobile">
            <h3 class="tournament-title">{{ matchInfo.league.name }}</h3>
            <div class="tournament-info mobile">
-             <p class="tournament-date">{{ formatDate(matchInfo.begin_at) }}</p>
+             <div class="date-with-icon mobile">
+               <Icon v-if="getGameIcon(matchInfo.videogame?.name)" :icon="getGameIcon(matchInfo.videogame?.name)" class="game-icon-inline mobile" />
+               <p class="tournament-date">{{ formatDate(matchInfo.begin_at) }}</p>
+             </div>
              <div class="match-format-info mobile">
                <span v-if="matchFormat" class="match-format">{{ matchFormat }}</span>
                <span v-if="currentScore" class="current-score">{{ currentScore }}</span>
@@ -305,10 +325,10 @@
       
       <div class="links-section mobile">
         <h3 class="section-title">Links Relevantes</h3>
-        <p class="links-subtitle">Buscando diretamente na Liquipedia...</p>
+        <p v-if="isSearchingLinks" class="links-subtitle">Buscando diretamente na Liquipedia...</p>
         <div class="links-container mobile">
-          <div class="link-item">
-            <span class="link-number">1.</span>
+          <div v-if="matchInfo.league?.name || matchInfo.serie?.name" class="link-item">
+            <img src="/liquipedia.svg" alt="Liquipedia" class="liquipedia-icon" />
             <a 
               v-if="dynamicLinks.tournament.url && dynamicLinks.tournament.url !== '#'" 
               :href="dynamicLinks.tournament.url" 
@@ -321,14 +341,14 @@
             </a>
             <span v-else-if="dynamicLinks.tournament.loading" class="link-text loading">
               <v-progress-circular size="12" width="2" indeterminate></v-progress-circular>
-              Procurando...
+              Procurando {{ matchInfo.league?.name || matchInfo.serie?.name }}...
             </span>
             <span v-else class="link-text unavailable">
               {{ matchInfo.league?.name || matchInfo.serie?.name }} - Não encontrado
             </span>
           </div>
-          <div class="link-item">
-            <span class="link-number">2.</span>
+          <div v-if="teamNames[0] !== 'Team 1'" class="link-item">
+            <img src="/liquipedia.svg" alt="Liquipedia" class="liquipedia-icon" />
             <a 
               v-if="dynamicLinks.team1.url && dynamicLinks.team1.url !== '#'" 
               :href="dynamicLinks.team1.url" 
@@ -341,14 +361,14 @@
             </a>
             <span v-else-if="dynamicLinks.team1.loading" class="link-text loading">
               <v-progress-circular size="12" width="2" indeterminate></v-progress-circular>
-              Procurando...
+              Procurando {{ teamNames[0] }}...
             </span>
             <span v-else class="link-text unavailable">
               {{ teamNames[0] }} - Não encontrado
             </span>
           </div>
-          <div class="link-item">
-            <span class="link-number">3.</span>
+          <div v-if="teamNames[1] !== 'Team 2'" class="link-item">
+            <img src="/liquipedia.svg" alt="Liquipedia" class="liquipedia-icon" />
             <a 
               v-if="dynamicLinks.team2.url && dynamicLinks.team2.url !== '#'" 
               :href="dynamicLinks.team2.url" 
@@ -361,7 +381,7 @@
             </a>
             <span v-else-if="dynamicLinks.team2.loading" class="link-text loading">
               <v-progress-circular size="12" width="2" indeterminate></v-progress-circular>
-              Procurando...
+              Procurando {{ teamNames[1] }}...
             </span>
             <span v-else class="link-text unavailable">
               {{ teamNames[1] }} - Não encontrado
@@ -370,7 +390,9 @@
         </div>
       </div>
     </div>
+      </div> <!-- Close modal-content-scroll mobile -->
   </v-card>
+  </div>
 </template>
 
 <script>
@@ -388,6 +410,8 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['closeModal']);
+
+// Use store-based caching instead of component-level cache
 
 const { mobile } = useDisplay();
 const { teamLogoThumb } = useLogos();
@@ -410,6 +434,10 @@ const dynamicLinks = ref({
   team2: { url: null, title: '', loading: false }
 });
 
+const isSearchingLinks = ref(false);
+
+// This is intentionally empty - cache moved outside component
+
 const availableStreams = computed(() => {
   if (!props.matchInfo?.streams_list || !Array.isArray(props.matchInfo.streams_list)) {
     return [];
@@ -417,8 +445,12 @@ const availableStreams = computed(() => {
   return props.matchInfo.streams_list.filter(stream => stream.raw_url);
 });
 
+
+
 function getGameIcon(videogameName) {
-  if (!videogameName) return 'simple-icons:controller';
+  if (!videogameName) {
+    return 'mdi:gamepad-variant';
+  }
   
   switch (videogameName.toLowerCase()) {
     case 'lol':
@@ -461,6 +493,7 @@ function getGameIcon(videogameName) {
 
 // Direct Liquipedia search using Playwright
 async function searchLiquipediaDirectly(searchTerm, gameType) {
+  
   try {
     const queryParams = new URLSearchParams({
       searchTerm: searchTerm,
@@ -473,16 +506,18 @@ async function searchLiquipediaDirectly(searchTerm, gameType) {
       // In development, Netlify functions might not be available
       if (response.status === 404 && process.env.NODE_ENV === 'development') {
         console.warn('Liquipedia search not available in development mode (Netlify functions not running)');
-        return { 
+        const fallbackResult = { 
           url: `https://liquipedia.net/leagueoflegends/Special:Search?search=${encodeURIComponent(searchTerm)}`, 
           title: `${searchTerm} - Buscar na Liquipedia` 
         };
+        return fallbackResult;
       }
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
     
     const data = await response.json();
-    return data.data;
+    const result = data.data;
+    return result;
   } catch (error) {
     console.error('Error searching Liquipedia directly:', error);
     // Provide a fallback search URL
@@ -496,48 +531,114 @@ async function searchLiquipediaDirectly(searchTerm, gameType) {
       'valorant': 'valorant'
     };
     const game = gameMap[gameType?.toLowerCase()] || 'leagueoflegends';
-    return { 
+    const fallbackResult = { 
       url: `https://liquipedia.net/${game}/Special:Search?search=${encodeURIComponent(searchTerm)}`,
       title: `Buscar "${searchTerm}" na Liquipedia` 
     };
+    
+    // Cache the fallback result too
+    return fallbackResult;
   }
 }
 
 async function loadDynamicLinks() {
   const gameType = props.matchInfo.videogame?.name;
   
-  // Search for tournament link directly on Liquipedia
-  if (props.matchInfo.league?.name || props.matchInfo.serie?.name) {
-    dynamicLinks.value.tournament.loading = true;
-    const tournamentName = props.matchInfo.league?.name || props.matchInfo.serie?.name;
-    const tournamentResult = await searchLiquipediaDirectly(tournamentName, gameType);
-    dynamicLinks.value.tournament = {
-      url: tournamentResult.url,
-      title: tournamentResult.title || `${tournamentName} - Liquipedia`,
-      loading: false
-    };
+  // Check if links are already stored in match data
+  if (props.matchInfo.liquipediaLinks) {
+    console.log('📋 Using cached Liquipedia links from store...');
+    dynamicLinks.value = { ...props.matchInfo.liquipediaLinks };
+    isSearchingLinks.value = false;
+    return;
   }
   
-  // Search for team 1 link directly on Liquipedia
+  const tournamentName = props.matchInfo.league?.name || props.matchInfo.serie?.name;
+  
+  // Create an array to hold all parallel search promises
+  const searchPromises = [];
+  
+  // Set searching state to true
+  isSearchingLinks.value = true;
+  
+  // Add tournament search if available
+  if (tournamentName) {
+    dynamicLinks.value.tournament.loading = true;
+    searchPromises.push(
+      searchLiquipediaDirectly(tournamentName, gameType).then(result => ({
+        type: 'tournament',
+        result: {
+          url: result.url,
+          title: result.title || `${tournamentName} - Liquipedia`,
+          loading: false
+        }
+      }))
+    );
+  }
+  
+  // Add team 1 search if available
   if (teamNames.value[0] !== 'Team 1') {
     dynamicLinks.value.team1.loading = true;
-    const team1Result = await searchLiquipediaDirectly(teamNames.value[0], gameType);
-    dynamicLinks.value.team1 = {
-      url: team1Result.url,
-      title: team1Result.title || `${teamNames.value[0]} - Liquipedia`,
-      loading: false
-    };
+    searchPromises.push(
+      searchLiquipediaDirectly(teamNames.value[0], gameType).then(result => ({
+        type: 'team1',
+        result: {
+          url: result.url,
+          title: result.title || `${teamNames.value[0]} - Liquipedia`,
+          loading: false
+        }
+      }))
+    );
   }
   
-  // Search for team 2 link directly on Liquipedia
+  // Add team 2 search if available
   if (teamNames.value[1] !== 'Team 2') {
     dynamicLinks.value.team2.loading = true;
-    const team2Result = await searchLiquipediaDirectly(teamNames.value[1], gameType);
-    dynamicLinks.value.team2 = {
-      url: team2Result.url,
-      title: team2Result.title || `${teamNames.value[1]} - Liquipedia`,
-      loading: false
-    };
+    searchPromises.push(
+      searchLiquipediaDirectly(teamNames.value[1], gameType).then(result => ({
+        type: 'team2',
+        result: {
+          url: result.url,
+          title: result.title || `${teamNames.value[1]} - Liquipedia`,
+          loading: false
+        }
+      }))
+    );
+  }
+  
+  // Execute only uncached searches in parallel
+  if (searchPromises.length > 0) {
+    try {
+      console.log(`🚀 Starting ${searchPromises.length} parallel Liquipedia searches...`);
+      const results = await Promise.all(searchPromises);
+      
+      // Update the dynamic links with results
+      results.forEach(({ type, result }) => {
+        dynamicLinks.value[type] = result;
+      });
+      
+      console.log('✅ All Liquipedia searches completed');
+      
+      // Store the results in the match data for future use
+      await gamesStore.storeLiquipediaLinks(props.matchInfo, props.matchOccurrence, dynamicLinks.value);
+    } catch (error) {
+      console.error('❌ Error in parallel Liquipedia searches:', error);
+      // Set any still-loading items to error state
+      ['tournament', 'team1', 'team2'].forEach(type => {
+        if (dynamicLinks.value[type].loading) {
+          dynamicLinks.value[type] = {
+            url: '#',
+            title: 'Erro na busca',
+            loading: false
+          };
+        }
+      });
+    } finally {
+      // Hide the searching message when all searches are done
+      isSearchingLinks.value = false;
+    }
+  } else {
+    // No searches to perform, hide the searching message immediately
+    isSearchingLinks.value = false;
   }
 }
 
@@ -680,21 +781,80 @@ function formatDate(inputDate) {
 </script>
 
 <style lang="scss" scoped>
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 5;
+}
+
+.mobile-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .modal-card {
-  overflow-y: auto;
   background: white;
   position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-top-bar {
+  position: relative;
+  z-index: 1002;
+  height: 0;
+  flex-shrink: 0;
+  
+  &.mobile {
+    height: 0;
+  }
+}
+
+.modal-content-scroll {
+  flex: 1;
+  overflow-y: auto;
+  
+  /* Fixed header styles for desktop */
+  .fixed-header-container {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: white;
+    border-bottom: 1px solid #e0e0e0;
+  }
+}
+
+.mobile-modal {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
 }
 
 .close-header {
   position: absolute;
   top: 12px;
   right: 12px;
-  z-index: 10;
+  z-index: 1003;
   
   &.mobile {
+    position: absolute;
     top: 8px;
     right: 8px;
+    z-index: 1003;
   }
 }
 
@@ -807,28 +967,49 @@ function formatDate(inputDate) {
 .header-with-icon {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
   
   &.mobile {
-    gap: 10px;
+    justify-content: center;
   }
 }
 
-.game-icon {
-  font-size: 28px;
+.date-with-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  
+  &.mobile {
+    gap: 6px;
+  }
+}
+
+.game-icon-inline {
+  font-size: 18px; /* Same height as text */
   color: #007bff;
   flex-shrink: 0;
   
   &.mobile {
-    font-size: 24px;
+    font-size: 16px;
   }
 }
 
 .tournament-text {
   flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   
   &.mobile {
     flex: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 }
 
@@ -1341,14 +1522,12 @@ function formatDate(inputDate) {
   }
 }
 
-.link-number {
-  font-family: "Poppins";
-  font-weight: 600;
-  color: #007bff;
-  margin-right: 8px;
-  min-width: 16px;
-  font-size: 14px;
-}
+  .liquipedia-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
 
 .link-text {
   font-family: "Poppins";
@@ -1388,6 +1567,13 @@ function formatDate(inputDate) {
   .modal-card {
     height: 100vh !important;
     width: 100% !important;
+    
+    /* Reset fixed header for mobile */
+    .fixed-header-container {
+      position: relative;
+      background: transparent;
+      border-bottom: none;
+    }
   }
 }
 

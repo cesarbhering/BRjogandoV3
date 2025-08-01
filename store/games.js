@@ -88,6 +88,16 @@ export const useGamesStore = defineStore({
         });
     },
 
+    // Store Liquipedia links in match data (similar to rosters)
+    async storeLiquipediaLinks(matchDetails, matchOccurrence, links) {
+      const match = this[`${matchOccurrence}Matches`].find(
+        (match) => match.id === matchDetails.id
+      );
+      if (match) {
+        Object.assign(match, { liquipediaLinks: links });
+      }
+    },
+
 
   },
 });
