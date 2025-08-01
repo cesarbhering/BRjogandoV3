@@ -28,3 +28,169 @@ roboto;
   background-image: linear-gradient(to right, #ffdf00, #009c3b);
   align-self: flex-end;
 }
+
+.special-match-countdown {
+  font-family: "Poppins", sans-serif;
+}
+
+/* Dark Mode Styles */
+[data-theme="dark"] {
+  /* Base colors */
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #2a2a2a;
+  --text-primary: #ffffff;
+  --text-secondary: #e0e0e0;
+  --text-muted: #b0b0b0;
+  --border: #333333;
+  --accent: #64b5f6;
+  
+  /* Apply dark theme */
+  body {
+    background-color: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+  }
+  
+  .v-application {
+    background-color: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+  }
+  
+  .v-main {
+    background-color: var(--bg-primary) !important;
+  }
+  
+  /* Header */
+  .header {
+    background-color: var(--bg-secondary) !important;
+    border-bottom: 1px solid var(--border) !important;
+  }
+  
+  .header img {
+    filter: brightness(0.9);
+  }
+  
+  /* Cards */
+  .v-card {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border) !important;
+  }
+  
+  .medium-card, .big-card {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border) !important;
+    
+    &:hover {
+      border-color: #555 !important;
+    }
+    
+    /* High contrast for all numbers and important text */
+    .text-h4 {
+      color: #ffffff !important;
+      font-weight: 700 !important;
+    }
+    
+    /* Ensure all card text has good contrast */
+    .v-card-title, .v-card-subtitle, .v-card-text {
+      color: var(--text-primary) !important;
+      
+      p, span {
+        color: var(--text-secondary) !important;
+      }
+    }
+  }
+  
+  /* Sheets */
+  .v-sheet {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+  }
+  
+  /* Titles */
+  .container-title {
+    color: var(--text-primary) !important;
+  }
+  
+  /* Buttons */
+  .v-btn {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border) !important;
+    
+    &:hover {
+      background-color: #3a3a3a !important;
+    }
+  }
+  
+  /* Filter button */
+  .filter-button {
+    background-color: #1976d2 !important;
+    
+    &:hover {
+      background-color: #1565c0 !important;
+    }
+  }
+  
+  /* Dialogs */
+  .v-dialog .v-card {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+  }
+  
+  .v-overlay {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+  }
+  
+  /* Text content - enhanced contrast */
+  .v-card-title, .v-card-subtitle, .v-card-text {
+    color: var(--text-primary) !important;
+    
+    /* Numbers and headings need maximum contrast */
+    .text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6 {
+      color: #ffffff !important;
+      font-weight: 700 !important;
+    }
+    
+    /* Ensure nested elements inherit good contrast */
+    p, span, div {
+      color: var(--text-secondary) !important;
+    }
+    
+    /* Special override for score numbers */
+    .score, .text--primary {
+      color: #ffffff !important;
+      font-weight: 700 !important;
+    }
+  }
+  
+  /* Nation colors line */
+  .nation-colors-line {
+    opacity: 0.8;
+  }
+  
+  /* Skeleton loaders */
+  .v-skeleton-loader {
+    background-color: var(--bg-tertiary) !important;
+  }
+  
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    background-color: var(--bg-tertiary);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #555;
+    border-radius: 4px;
+    
+    &:hover {
+      background-color: #777;
+    }
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: var(--bg-secondary);
+  }
+}

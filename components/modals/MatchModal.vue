@@ -790,6 +790,71 @@ function formatDate(inputDate) {
   z-index: 5;
 }
 
+/* Dark mode modal styles */
+[data-theme="dark"] .modal-card {
+  background-color: var(--bg-secondary, #1a1a1a) !important;
+  color: var(--text-primary, #ffffff) !important;
+  border: 1px solid var(--border, #333) !important;
+}
+
+[data-theme="dark"] .mobile-modal {
+  background-color: var(--bg-secondary, #1a1a1a) !important;
+  color: var(--text-primary, #ffffff) !important;
+}
+
+[data-theme="dark"] .tournament-title {
+  color: var(--accent, #64b5f6) !important;
+}
+
+[data-theme="dark"] .section-title {
+  color: var(--text-primary, #ffffff) !important;
+}
+
+[data-theme="dark"] .team-name {
+  color: var(--text-primary, #ffffff) !important;
+}
+
+[data-theme="dark"] .tournament-header {
+  background-color: var(--bg-secondary, #1a1a1a) !important;
+  border-bottom: 1px solid var(--border, #333) !important;
+}
+
+[data-theme="dark"] .teams-horizontal-section {
+  background-color: var(--bg-secondary, #1a1a1a) !important;
+  border-bottom: 1px solid var(--border, #333) !important;
+}
+
+[data-theme="dark"] .fixed-header-container {
+  background-color: var(--bg-secondary, #1a1a1a) !important;
+  border-bottom: 1px solid var(--border, #333) !important;
+}
+
+[data-theme="dark"] .stream-item {
+  background-color: var(--bg-tertiary, #2a2a2a) !important;
+  color: var(--text-primary, #ffffff) !important;
+  border: 1px solid var(--border, #333) !important;
+  
+  &:hover {
+    background-color: #3a3a3a !important;
+  }
+}
+
+[data-theme="dark"] .link-text {
+  color: var(--accent, #64b5f6) !important;
+  
+  &:hover {
+    color: #90caf9 !important;
+  }
+}
+
+[data-theme="dark"] .close-button {
+  color: var(--text-primary, #ffffff) !important;
+  
+  &:hover {
+    color: var(--accent, #64b5f6) !important;
+  }
+}
+
 .mobile-backdrop {
   position: fixed;
   top: 0;

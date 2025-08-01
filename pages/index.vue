@@ -265,6 +265,35 @@ const { mobile } = useDisplay();
   align-content: flex-start !important;
 }
 
+/* Dark mode styles for main page */
+[data-theme="dark"] .home {
+  background-color: var(--bg-primary, #0a0a0a) !important;
+}
+
+[data-theme="dark"] .container-title {
+  color: var(--text-primary, #ffffff) !important;
+}
+
+[data-theme="dark"] .centered-matches {
+  background-color: var(--bg-secondary, #1a1a1a) !important;
+}
+
+[data-theme="dark"] .filter-button {
+  background-color: #1976d2 !important;
+  
+  &:hover {
+    background-color: #1565c0 !important;
+  }
+  
+  &.bg-green {
+    background-color: #388e3c !important;
+    
+    &:hover {
+      background-color: #2e7d32 !important;
+    }
+  }
+}
+
 .last-matches {
   /* Desktop/H2 */
   font-family: "Poppins";

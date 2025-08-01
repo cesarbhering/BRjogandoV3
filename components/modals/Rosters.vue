@@ -118,4 +118,23 @@ function formatPlayerName(player) {
     height: 13px;
   }
 }
+
+/* Dark mode styles for roster component */
+[data-theme="dark"] .roster-list {
+  background-color: var(--bg-secondary, #1a1a1a) !important;
+}
+
+[data-theme="dark"] .player-item {
+  background-color: var(--bg-tertiary, #2a2a2a) !important;
+  color: var(--text-primary, #ffffff) !important;
+  border: 1px solid var(--border, #333) !important;
+  
+  &:hover {
+    background-color: #3a3a3a !important;
+  }
+}
+
+[data-theme="dark"] .player-name {
+  color: var(--text-primary, #ffffff) !important;
+}
 </style>

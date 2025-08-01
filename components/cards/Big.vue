@@ -223,6 +223,53 @@ const width = computed(() => {
   }
 }
 
+/* Dark mode improvements for Big cards */
+[data-theme="dark"] .big-card {
+  /* Match countdown - high contrast */
+  .special-match-countdown {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+  }
+  
+  /* Special match name */
+  .special-match-name {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+  }
+  
+  /* Team acronyms - better contrast */
+  .acronym {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+  }
+  
+  /* Versus X */
+  .versusX {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+  }
+  
+  /* Match info text */
+  .match-info-big {
+    span {
+      color: #e0e0e0 !important;
+      font-weight: 500 !important;
+    }
+  }
+  
+  /* Card text */
+  .v-card-text {
+    color: #e0e0e0 !important;
+    
+    span {
+      color: #e0e0e0 !important;
+    }
+  }
+}
+
 .v-card-title {
   height: 136px;
   padding: 0px;

@@ -216,4 +216,38 @@ const vVideoGameBasedBackground = {
 .custom-dialog .v-dialog__content {
   padding-top: 40px; /* Adjust the value as needed */
 }
+
+/* Dark mode improvements for Medium cards */
+[data-theme="dark"] .medium-card {
+  /* Score numbers - high contrast */
+  .score {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+  }
+  
+  /* Team acronyms - better contrast */
+  .acronym {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+  }
+  
+  /* Match info text */
+  .match-infos {
+    color: #e0e0e0 !important;
+    
+    p {
+      color: #e0e0e0 !important;
+    }
+  }
+  
+  /* Card subtitle */
+  .v-card-subtitle {
+    color: #e0e0e0 !important;
+    
+    p {
+      color: #e0e0e0 !important;
+    }
+  }
+}
 </style>
