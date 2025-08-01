@@ -17,80 +17,122 @@
       <div class="teams-horizontal-section">
         <div class="team-lineup">
           <!-- Team 1 Flag -->
-          <v-img class="country-flag" :src="teamLogoThumb(false, props.matchInfo.opponents[0].opponent.location)" />
+          <v-img 
+            class="country-flag" 
+            :src="teamLogoThumb(false, props.matchInfo.opponents?.[0]?.opponent?.location)" 
+            v-if="props.matchInfo.opponents?.[0]"
+          />
           
           <!-- Team 1 Logo -->
-          <v-img class="team-logo-small" :src="teamLogoThumb(props.matchInfo.opponents[0].opponent.image_url, false)" />
+          <v-img 
+            class="team-logo-medium" 
+            :src="teamLogoThumb(props.matchInfo.opponents?.[0]?.opponent?.image_url, false)" 
+            v-if="props.matchInfo.opponents?.[0]"
+          />
           
           <!-- Team Names -->
           <div class="team-names">
-            <span class="team-name-text">{{ props.matchInfo.opponents[0].opponent.name }}</span>
+            <span class="team-name-text">{{ props.matchInfo.opponents?.[0]?.opponent?.name || 'Team 1' }}</span>
             <v-icon class="vs-icon">mdi-close</v-icon>
-            <span class="team-name-text">{{ props.matchInfo.opponents[1].opponent.name }}</span>
+            <span class="team-name-text">{{ props.matchInfo.opponents?.[1]?.opponent?.name || 'Team 2' }}</span>
           </div>
           
           <!-- Team 2 Logo -->
-          <v-img class="team-logo-small" :src="teamLogoThumb(props.matchInfo.opponents[1].opponent.image_url, false)" />
+          <v-img 
+            class="team-logo-medium" 
+            :src="teamLogoThumb(props.matchInfo.opponents?.[1]?.opponent?.image_url, false)" 
+            v-if="props.matchInfo.opponents?.[1]"
+          />
           
           <!-- Team 2 Flag -->
-          <v-img class="country-flag" :src="teamLogoThumb(false, props.matchInfo.opponents[1].opponent.location)" />
+          <v-img 
+            class="country-flag" 
+            :src="teamLogoThumb(false, props.matchInfo.opponents?.[1]?.opponent?.location)" 
+            v-if="props.matchInfo.opponents?.[1]"
+          />
         </div>
       </div>
 
       <!-- Main Content -->
       <div class="modal-content">
-        <v-row class="main-row">
-          <!-- Left Column - Team Members -->
-          <v-col cols="8" class="team-members-col">
-            <h3 class="section-title">Integrantes do time</h3>
-            
-            <div v-if="!props.matchInfo.rosters" class="loading-container">
-              <v-progress-circular :size="40" color="primary" indeterminate></v-progress-circular>
+        <!-- Team Members Section -->
+        <div class="team-members-section">
+          <h3 class="section-title">Integrantes do time</h3>
+          
+          <div v-if="!props.matchInfo.rosters" class="loading-container">
+            <v-progress-circular :size="40" color="primary" indeterminate></v-progress-circular>
+          </div>
+          
+          <div v-if="props.matchInfo.rosters" class="team-rosters">
+            <!-- Team 1 Roster (Left) -->
+            <div class="roster-column">
+              <ModalsRosters :team-roster="props.matchInfo.rosters[0].players" />
             </div>
             
-            <v-row v-if="props.matchInfo.rosters" class="team-rosters">
-              <v-col cols="6" class="roster-col">
-                <ModalsRosters :team-roster="props.matchInfo.rosters[0].players" />
-              </v-col>
-              <v-col cols="6" class="roster-col">
-                <ModalsRosters :team-roster="props.matchInfo.rosters[1].players" />
-              </v-col>
-            </v-row>
-          </v-col>
+            <!-- Team 2 Roster (Right) -->
+            <div class="roster-column">
+              <ModalsRosters :team-roster="props.matchInfo.rosters[1].players" />
+            </div>
+          </div>
+        </div>
 
-          <!-- Right Column - Betting Odds -->
-          <v-col cols="4" class="betting-col">
-            <h3 class="section-title">Betting odds</h3>
-            <div class="betting-odds-container">
-              <div class="betting-card rivalry-card">
-                <div class="betting-brand">RIVALRY</div>
-                <div class="odds-display">
-                  <span class="odd">{{ props.matchInfo.supabaseDataForMatch?.odds0 || '2.8' }}</span>
-                  <span class="separator">:</span>
-                  <span class="odd">{{ props.matchInfo.supabaseDataForMatch?.odds1 || '2.8' }}</span>
-                </div>
-              </div>
-              
-              <div class="betting-card betway-card">
-                <div class="betting-brand">betway</div>
-                <div class="odds-display">
-                  <span class="odd">2.8</span>
-                  <span class="separator">:</span>
-                  <span class="odd">2.8</span>
-                </div>
-              </div>
-              
-              <div class="betting-card ggbet-card">
-                <div class="betting-brand">GGBET</div>
-                <div class="odds-display">
-                  <span class="odd">2.8</span>
-                  <span class="separator">:</span>
-                  <span class="odd">2.8</span>
-                </div>
+        <!-- Betting Odds Section -->
+        <div class="betting-section">
+          <h3 class="section-title">Betting odds</h3>
+          <div class="betting-odds-container horizontal">
+            <div class="betting-card rivalry-card">
+              <div class="betting-brand">RIVALRY</div>
+              <div class="odds-display">
+                <span class="odd">{{ props.matchInfo.supabaseDataForMatch?.odds0 || '2.8' }}</span>
+                <span class="separator">:</span>
+                <span class="odd">{{ props.matchInfo.supabaseDataForMatch?.odds1 || '2.8' }}</span>
               </div>
             </div>
-          </v-col>
-        </v-row>
+            
+            <div class="betting-card betway-card">
+              <div class="betting-brand">betway</div>
+              <div class="odds-display">
+                <span class="odd">2.8</span>
+                <span class="separator">:</span>
+                <span class="odd">2.8</span>
+              </div>
+            </div>
+            
+            <div class="betting-card ggbet-card">
+              <div class="betting-brand">GGBET</div>
+              <div class="odds-display">
+                <span class="odd">2.8</span>
+                <span class="separator">:</span>
+                <span class="odd">2.8</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Streams Section -->
+        <div v-if="availableStreams.length > 0" class="streams-section">
+          <h3 class="section-title">Live Streams</h3>
+          <div class="streams-container">
+            <a 
+              v-for="(stream, index) in availableStreams" 
+              :key="index"
+              :href="stream.raw_url" 
+              target="_blank" 
+              class="stream-item"
+              :class="{ 'official': stream.official, 'main': stream.main }"
+            >
+              <div class="stream-info">
+                <i :class="getStreamIcon(stream.raw_url)" class="stream-icon"></i>
+                <span class="stream-platform">{{ getStreamPlatform(stream.raw_url) }}</span>
+                <span v-if="stream.language" class="stream-language">{{ stream.language.toUpperCase() }}</span>
+              </div>
+              <div class="stream-badges">
+                <span v-if="stream.official" class="badge official">OFICIAL</span>
+                <span v-if="stream.main" class="badge main">PRINCIPAL</span>
+              </div>
+            </a>
+          </div>
+        </div>
 
         <!-- Links Section -->
         <div class="links-section">
@@ -98,19 +140,15 @@
           <div class="links-container">
             <div class="link-item">
               <span class="link-number">1.</span>
-              <a href="#" class="link-text">Stream - Twitch</a>
-            </div>
-            <div class="link-item">
-              <span class="link-number">2.</span>
               <a href="#" class="link-text">Página do torneio - Liquipedia</a>
             </div>
             <div class="link-item">
-              <span class="link-number">3.</span>
-              <a href="#" class="link-text">Página do time | {{ props.matchInfo.opponents[0]?.opponent?.name }} - Liquipedia</a>
+              <span class="link-number">2.</span>
+              <a href="#" class="link-text">Página do time | {{ teamNames[0] }} - Liquipedia</a>
             </div>
             <div class="link-item">
-              <span class="link-number">4.</span>
-              <a href="#" class="link-text">Página do time | {{ props.matchInfo.opponents[1]?.opponent?.name }} - Liquipedia</a>
+              <span class="link-number">3.</span>
+              <a href="#" class="link-text">Página do time | {{ teamNames[1] }} - Liquipedia</a>
             </div>
           </div>
         </div>
@@ -131,35 +169,71 @@
 
     <div class="teams-horizontal-section mobile">
       <div class="team-lineup mobile">
-        <v-img class="country-flag" :src="teamLogoThumb(false, props.matchInfo.opponents[0].opponent.location)" />
-        <span class="team-name-text">{{ props.matchInfo.opponents[0].opponent.name }}</span>
+        <v-img 
+          class="country-flag" 
+          :src="teamLogoThumb(false, props.matchInfo.opponents?.[0]?.opponent?.location)" 
+          v-if="props.matchInfo.opponents?.[0]"
+        />
+        <span class="team-name-text">{{ props.matchInfo.opponents?.[0]?.opponent?.name || 'Team 1' }}</span>
         <v-icon class="vs-icon">mdi-close</v-icon>
-        <span class="team-name-text">{{ props.matchInfo.opponents[1].opponent.name }}</span>
-        <v-img class="country-flag" :src="teamLogoThumb(false, props.matchInfo.opponents[1].opponent.location)" />
+        <span class="team-name-text">{{ props.matchInfo.opponents?.[1]?.opponent?.name || 'Team 2' }}</span>
+        <v-img 
+          class="country-flag" 
+          :src="teamLogoThumb(false, props.matchInfo.opponents?.[1]?.opponent?.location)" 
+          v-if="props.matchInfo.opponents?.[1]"
+        />
       </div>
     </div>
 
     <div class="modal-content mobile">
       <h3 class="section-title">Integrantes do time</h3>
-      <v-row v-if="props.matchInfo.rosters" class="team-rosters mobile">
-        <v-col cols="6">
+      <div v-if="props.matchInfo.rosters" class="team-rosters mobile">
+        <!-- Team 1 Roster (Mobile) -->
+        <div class="roster-column mobile">
           <ModalsRosters :team-roster="props.matchInfo.rosters[0].players" />
-        </v-col>
-        <v-col cols="6">
+        </div>
+        
+        <!-- Team 2 Roster (Mobile) -->
+        <div class="roster-column mobile">
           <ModalsRosters :team-roster="props.matchInfo.rosters[1].players" />
-        </v-col>
-      </v-row>
+        </div>
+      </div>
+      
+      <!-- Mobile Streams Section -->
+      <div v-if="availableStreams.length > 0" class="streams-section mobile">
+        <h3 class="section-title">Live Streams</h3>
+        <div class="streams-container">
+          <a 
+            v-for="(stream, index) in availableStreams" 
+            :key="index"
+            :href="stream.raw_url" 
+            target="_blank" 
+            class="stream-item"
+            :class="{ 'official': stream.official, 'main': stream.main }"
+          >
+            <div class="stream-info">
+              <i :class="getStreamIcon(stream.raw_url)" class="stream-icon"></i>
+              <span class="stream-platform">{{ getStreamPlatform(stream.raw_url) }}</span>
+              <span v-if="stream.language" class="stream-language">{{ stream.language.toUpperCase() }}</span>
+            </div>
+            <div class="stream-badges">
+              <span v-if="stream.official" class="badge official">OFICIAL</span>
+              <span v-if="stream.main" class="badge main">PRINCIPAL</span>
+            </div>
+          </a>
+        </div>
+      </div>
       
       <div class="links-section mobile">
         <h3 class="section-title">Links Relevantes</h3>
         <div class="links-container mobile">
           <div class="link-item">
             <span class="link-number">1.</span>
-            <a href="#" class="link-text">Stream - Twitch</a>
+            <a href="#" class="link-text">Página do torneio</a>
           </div>
           <div class="link-item">
             <span class="link-number">2.</span>
-            <a href="#" class="link-text">Página do torneio</a>
+            <a href="#" class="link-text">Página do time</a>
           </div>
         </div>
       </div>
@@ -182,22 +256,65 @@ const props = defineProps({
 });
 
 const { mobile } = useDisplay();
-
+const { teamLogoThumb } = useLogos();
 const gamesStore = useGamesStore();
 
-const teamNames = [
-  props.matchInfo.opponents[0].opponent.name,
-  props.matchInfo.opponents[1].opponent.name,
-];
+const teamNames = computed(() => {
+  if (!props.matchInfo?.opponents || props.matchInfo.opponents.length < 2) {
+    return ['Team 1', 'Team 2'];
+  }
+  return [
+    props.matchInfo.opponents[0]?.opponent?.name || 'Team 1',
+    props.matchInfo.opponents[1]?.opponent?.name || 'Team 2',
+  ];
+});
+
+const availableStreams = computed(() => {
+  if (!props.matchInfo?.streams_list || !Array.isArray(props.matchInfo.streams_list)) {
+    return [];
+  }
+  return props.matchInfo.streams_list.filter(stream => stream.raw_url);
+});
+
+function getStreamPlatform(url) {
+  if (!url) return 'Stream';
+  
+  if (url.includes('twitch.tv')) return 'Twitch';
+  if (url.includes('youtube.com') || url.includes('youtu.be')) return 'YouTube';
+  if (url.includes('kick.com')) return 'Kick';
+  if (url.includes('facebook.com')) return 'Facebook';
+  if (url.includes('instagram.com')) return 'Instagram';
+  if (url.includes('tiktok.com')) return 'TikTok';
+  
+  return 'Stream';
+}
+
+function getStreamIcon(url) {
+  if (!url) return 'fas fa-play';
+  
+  if (url.includes('twitch.tv')) return 'fab fa-twitch';
+  if (url.includes('youtube.com') || url.includes('youtu.be')) return 'fab fa-youtube';
+  if (url.includes('kick.com')) return 'fas fa-play'; // Kick doesn't have FA icon
+  if (url.includes('facebook.com')) return 'fab fa-facebook';
+  if (url.includes('instagram.com')) return 'fab fa-instagram';
+  if (url.includes('tiktok.com')) return 'fab fa-tiktok';
+  
+  return 'fas fa-play';
+}
 
 onBeforeMount(async () => {
-  await gamesStore.fetchSupabaseDataForMatch(
-    props.matchInfo.id,
-    props.matchOccurrence,
-    props.matchInfo.serie_id,
-    teamNames
-  );
-  await gamesStore.fetchGameRosters(props.matchInfo, props.matchOccurrence);
+  try {
+    if (props.matchInfo?.opponents && props.matchInfo.opponents.length >= 2) {
+      await gamesStore.fetchSupabaseDataForMatch(
+        props.matchOccurrence,
+        props.matchInfo.serie_id,
+        teamNames.value
+      );
+      await gamesStore.fetchGameRosters(props.matchInfo, props.matchOccurrence);
+    }
+  } catch (error) {
+    console.warn('Error loading modal data:', error);
+  }
 });
 
 function formatDate(inputDate) {
@@ -221,7 +338,7 @@ function formatDate(inputDate) {
 
 <style lang="scss" scoped>
 .modal-card {
-  overflow: hidden;
+  overflow-y: auto;
   background: white;
   position: relative;
 }
@@ -283,9 +400,11 @@ function formatDate(inputDate) {
 }
 
 .teams-horizontal-section {
-  padding: 20px 24px;
+  padding: 10px 24px;
   background: white;
   border-bottom: 1px solid #e9ecef;
+  display: flex;
+  justify-content: center;
   
   &.mobile {
     padding: 16px 20px;
@@ -296,42 +415,57 @@ function formatDate(inputDate) {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 20px;
+  max-width: 50%;
+  width: fit-content;
   
   &.mobile {
-    gap: 12px;
+    gap: 16px;
+    max-width: 85%;
+  }
+  
+  @media (max-width: 960px) {
+    max-width: 90%;
   }
 }
 
 .country-flag {
-  width: 32px;
-  height: 24px;
-  border-radius: 2px;
+  width: 36px;
+  height: 27px;
+  border-radius: 3px;
   flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
   
   @media (max-width: 960px) {
-    width: 24px;
-    height: 18px;
+    width: 28px;
+    height: 21px;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.25));
   }
 }
 
-.team-logo-small {
-  width: 28px;
-  height: 28px;
-  border-radius: 4px;
+.team-logo-medium {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
   flex-shrink: 0;
   
   @media (max-width: 960px) {
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
   }
 }
 
 .team-names {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin: 0 8px;
+  gap: 16px;
+  margin: 0 12px;
+  
+  @media (max-width: 960px) {
+    gap: 12px;
+    margin: 0 8px;
+  }
 }
 
 .team-name-text {
@@ -360,10 +494,6 @@ function formatDate(inputDate) {
   }
 }
 
-.main-row {
-  margin-bottom: 24px;
-}
-
 .section-title {
   font-family: "Poppins";
   font-weight: 600;
@@ -377,11 +507,11 @@ function formatDate(inputDate) {
   }
 }
 
-.team-members-col {
-  padding-right: 16px;
+.team-members-section {
+  margin-bottom: 32px;
   
   @media (max-width: 960px) {
-    padding-right: 0;
+    margin-bottom: 24px;
   }
 }
 
@@ -392,51 +522,113 @@ function formatDate(inputDate) {
 }
 
 .team-rosters {
+  display: flex;
   gap: 16px;
   
   &.mobile {
-    gap: 12px;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  @media (max-width: 960px) {
+    flex-direction: column;
+    gap: 20px;
   }
 }
 
-.roster-col {
-  padding: 0 8px;
-}
-
-.betting-col {
-  padding-left: 16px;
+.roster-column {
+  flex: 1;
+  padding: 0 12px;
+  
+  &.mobile {
+    padding: 0;
+    margin-bottom: 16px;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
   
   @media (max-width: 960px) {
-    padding-left: 0;
-    margin-top: 20px;
+    padding: 0;
+  }
+}
+
+.betting-section {
+  margin-bottom: 32px;
+  
+  @media (max-width: 960px) {
+    margin-bottom: 24px;
   }
 }
 
 .betting-odds-container {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  gap: 16px;
+  
+  &.horizontal {
+    flex-direction: row;
+    justify-content: space-between;
+    
+    @media (max-width: 960px) {
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+  
+  @media (max-width: 960px) {
+    flex-direction: column;
+    gap: 12px;
+  }
 }
 
 .betting-card {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px;
+  justify-content: center;
+  padding: 16px 12px;
   border-radius: 6px;
   border: 1px solid #e9ecef;
   background: white;
+  min-width: 120px;
+  flex: 1;
   
   &.rivalry-card {
-    border-left: 4px solid #ff6b35;
+    border-top: 4px solid #ff6b35;
   }
   
   &.betway-card {
-    border-left: 4px solid #00a859;
+    border-top: 4px solid #00a859;
   }
   
   &.ggbet-card {
-    border-left: 4px solid #ff6600;
+    border-top: 4px solid #ff6600;
+  }
+  
+  @media (max-width: 960px) {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 12px 16px;
+    
+    &.rivalry-card,
+    &.betway-card,
+    &.ggbet-card {
+      border-top: none;
+      border-left: 4px solid;
+    }
+    
+    &.rivalry-card {
+      border-left-color: #ff6b35;
+    }
+    
+    &.betway-card {
+      border-left-color: #00a859;
+    }
+    
+    &.ggbet-card {
+      border-left-color: #ff6600;
+    }
   }
 }
 
@@ -445,6 +637,11 @@ function formatDate(inputDate) {
   font-weight: 600;
   font-size: 14px;
   color: #333;
+  margin-bottom: 8px;
+  
+  @media (max-width: 960px) {
+    margin-bottom: 0;
+  }
 }
 
 .odds-display {
@@ -466,6 +663,123 @@ function formatDate(inputDate) {
   font-family: "Poppins";
   font-size: 14px;
   color: #666;
+}
+
+.streams-section {
+  margin-bottom: 32px;
+  
+  @media (max-width: 960px) {
+    margin-bottom: 24px;
+  }
+}
+
+.streams-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stream-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s;
+  
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-color: #007bff;
+  }
+  
+  &.official {
+    border-left: 4px solid #28a745;
+  }
+  
+  &.main {
+    border-left: 4px solid #dc3545;
+  }
+  
+  &.official.main {
+    border-left: 4px solid #fd7e14;
+  }
+}
+
+.stream-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stream-icon {
+  font-size: 18px;
+  color: #6c757d;
+  min-width: 20px;
+  
+  &.fa-twitch {
+    color: #9146ff;
+  }
+  
+  &.fa-youtube {
+    color: #ff0000;
+  }
+  
+  &.fa-facebook {
+    color: #1877f2;
+  }
+  
+  &.fa-instagram {
+    color: #e4405f;
+  }
+  
+  &.fa-tiktok {
+    color: #000000;
+  }
+}
+
+.stream-platform {
+  font-family: "Poppins";
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.stream-language {
+  font-family: "Poppins";
+  font-size: 11px;
+  color: #6c757d;
+  background: #f8f9fa;
+  padding: 2px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.stream-badges {
+  display: flex;
+  gap: 6px;
+}
+
+.badge {
+  font-family: "Poppins";
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  
+  &.official {
+    background: #d1ecf1;
+    color: #0c5460;
+  }
+  
+  &.main {
+    background: #f8d7da;
+    color: #721c24;
+  }
 }
 
 .links-section {
@@ -519,6 +833,24 @@ function formatDate(inputDate) {
 .mobile-modal {
   height: 100vh;
   overflow-y: auto;
+  
+  /* Custom scrollbar for webkit browsers */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
 }
 
 @media (max-width: 960px) {
@@ -526,14 +858,24 @@ function formatDate(inputDate) {
     height: 100vh !important;
     width: 100% !important;
   }
-  
-  .main-row {
-    flex-direction: column;
-  }
-  
-  .betting-col {
-    order: -1;
-  }
+}
+
+/* Custom scrollbar for the modal */
+.modal-card::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-card::-webkit-scrollbar-track {
+  background: #f8f9fa;
+}
+
+.modal-card::-webkit-scrollbar-thumb {
+  background: #dee2e6;
+  border-radius: 4px;
+}
+
+.modal-card::-webkit-scrollbar-thumb:hover {
+  background: #adb5bd;
 }
 </style>
 

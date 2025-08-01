@@ -17,6 +17,7 @@
     "sass-loader": "^13.3.2"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^7.0.0",
     "@mdi/font": "^7.2.96",
     "@netlify/functions": "^2.4.1",
     "@pinia/nuxt": "^0.4.11",
