@@ -7,17 +7,22 @@
         <v-icon @click="emit('closeModal')" class="close-button">mdi-close</v-icon>
       </div>
 
-      <!-- Tournament Header -->
-      <div class="tournament-header">
-        <h2 class="tournament-title">{{ matchInfo.league.name }} - {{ matchInfo.serie.name }}</h2>
-        <div class="tournament-info">
-          <p class="tournament-date">{{ formatDate(matchInfo.begin_at) }}</p>
-          <div class="match-format-info">
-            <span v-if="matchFormat" class="match-format">{{ matchFormat }}</span>
-            <span v-if="currentScore" class="current-score">{{ currentScore }}</span>
-          </div>
-        </div>
-      </div>
+             <!-- Tournament Header -->
+       <div class="tournament-header">
+         <div class="header-with-icon">
+           <Icon :icon="getGameIcon(matchInfo.videogame?.name)" class="game-icon" />
+           <div class="tournament-text">
+             <h2 class="tournament-title">{{ matchInfo.league.name }} - {{ matchInfo.serie.name }}</h2>
+             <div class="tournament-info">
+               <p class="tournament-date">{{ formatDate(matchInfo.begin_at) }}</p>
+               <div class="match-format-info">
+                 <span v-if="matchFormat" class="match-format">{{ matchFormat }}</span>
+                 <span v-if="currentScore" class="current-score">{{ currentScore }}</span>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
 
       <!-- Teams Horizontal Layout -->
       <div class="teams-horizontal-section">
@@ -74,9 +79,6 @@
             <div class="roster-column">
               <ModalsRosters 
                 :team-roster="props.matchInfo.rosters[0].players" 
-                :live-stats="getTeamLiveStats(0)"
-                :is-live="isMatchLive"
-                :game-type="props.matchInfo.videogame?.name"
               />
             </div>
             
@@ -84,9 +86,6 @@
             <div class="roster-column">
               <ModalsRosters 
                 :team-roster="props.matchInfo.rosters[1].players"
-                :live-stats="getTeamLiveStats(1)"
-                :is-live="isMatchLive"
-                :game-type="props.matchInfo.videogame?.name"
               />
             </div>
           </div>
@@ -175,19 +174,24 @@
   <!-- MOBILE -->
   <v-card v-if="mobile" class="mobile-modal">
     <div class="close-header mobile">
-      <v-icon @click="$emit('closeModal')" class="close-button">mdi-close</v-icon>
+      <v-icon @click="emit('closeModal')" class="close-button">mdi-close</v-icon>
     </div>
     
-    <div class="tournament-header mobile">
-      <h3 class="tournament-title">{{ matchInfo.league.name }}</h3>
-      <div class="tournament-info mobile">
-        <p class="tournament-date">{{ formatDate(matchInfo.begin_at) }}</p>
-        <div class="match-format-info mobile">
-          <span v-if="matchFormat" class="match-format">{{ matchFormat }}</span>
-          <span v-if="currentScore" class="current-score">{{ currentScore }}</span>
-        </div>
-      </div>
-    </div>
+         <div class="tournament-header mobile">
+       <div class="header-with-icon mobile">
+         <Icon :icon="getGameIcon(matchInfo.videogame?.name)" class="game-icon mobile" />
+         <div class="tournament-text mobile">
+           <h3 class="tournament-title">{{ matchInfo.league.name }}</h3>
+           <div class="tournament-info mobile">
+             <p class="tournament-date">{{ formatDate(matchInfo.begin_at) }}</p>
+             <div class="match-format-info mobile">
+               <span v-if="matchFormat" class="match-format">{{ matchFormat }}</span>
+               <span v-if="currentScore" class="current-score">{{ currentScore }}</span>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
 
     <div class="teams-horizontal-section mobile">
       <div class="team-lineup mobile">
@@ -214,9 +218,6 @@
         <div class="roster-column mobile">
           <ModalsRosters 
             :team-roster="props.matchInfo.rosters[0].players"
-            :live-stats="getTeamLiveStats(0)"
-            :is-live="isMatchLive"
-            :game-type="props.matchInfo.videogame?.name"
           />
         </div>
         
@@ -224,9 +225,6 @@
         <div class="roster-column mobile">
           <ModalsRosters 
             :team-roster="props.matchInfo.rosters[1].players"
-            :live-stats="getTeamLiveStats(1)"
-            :is-live="isMatchLive"
-            :game-type="props.matchInfo.videogame?.name"
           />
         </div>
       </div>
@@ -309,6 +307,46 @@ const availableStreams = computed(() => {
   }
   return props.matchInfo.streams_list.filter(stream => stream.raw_url);
 });
+
+function getGameIcon(videogameName) {
+  if (!videogameName) return 'simple-icons:controller';
+  
+  switch (videogameName.toLowerCase()) {
+    case 'lol':
+    case 'league of legends':
+      return 'simple-icons:leagueoflegends';
+    case 'counter-strike':
+    case 'cs:go':
+    case 'cs2':
+      return 'simple-icons:counterstrike';
+    case 'dota 2':
+    case 'dota2':
+      return 'simple-icons:dota2';
+    case 'valorant':
+      return 'simple-icons:valorant';
+    case 'rainbow 6 siege':
+    case 'r6':
+      return 'simple-icons:ubisoft'; // R6 Siege via Ubisoft
+    case 'free fire':
+      return 'mdi:fire';
+    case 'rocket league':
+      return 'simple-icons:rocketleague';
+    case 'overwatch':
+    case 'overwatch 2':
+      return 'simple-icons:overwatch';
+    case 'fortnite':
+      return 'simple-icons:epicgames';
+    case 'apex legends':
+      return 'simple-icons:apexlegends';
+    case 'call of duty':
+    case 'cod':
+      return 'simple-icons:activision';
+    case 'fifa':
+      return 'simple-icons:ea';
+    default:
+      return 'mdi:gamepad-variant'; // Generic gaming icon
+  }
+}
 
 function getStreamPlatform(url) {
   if (!url) return 'Stream';
@@ -402,28 +440,9 @@ const currentScore = computed(() => {
   return `${team1Wins}x${team2Wins}`;
 });
 
-const isMatchLive = computed(() => {
-  return props.matchInfo?.status === 'running';
-});
 
-const getTeamLiveStats = (teamIndex) => {
-  if (!isMatchLive.value || !props.matchInfo?.livePlayerStats) {
-    return {};
-  }
-  
-  const teamOpponentId = props.matchInfo.opponents?.[teamIndex]?.opponent?.id;
-  if (!teamOpponentId) return {};
-  
-  // Group live stats by team
-  const teamStats = {};
-  props.matchInfo.livePlayerStats.forEach(playerStat => {
-    if (playerStat.team?.id === teamOpponentId) {
-      teamStats[playerStat.player?.id] = playerStat;
-    }
-  });
-  
-  return teamStats;
-};
+
+
 
 onBeforeMount(async () => {
   try {
@@ -436,34 +455,16 @@ onBeforeMount(async () => {
       );
       await gamesStore.fetchGameRosters(props.matchInfo, props.matchOccurrence);
       
-      // Fetch live stats if match is running
-      if (isMatchLive.value) {
-        await gamesStore.fetchLivePlayerStats(props.matchInfo);
-      }
+
     }
   } catch (error) {
     console.warn('Error loading modal data:', error);
   }
 });
 
-// Auto-refresh live stats every 30 seconds for running matches
-let statsInterval = null;
-watch(isMatchLive, (newValue) => {
-  if (newValue) {
-    statsInterval = setInterval(async () => {
-      await gamesStore.fetchLivePlayerStats(props.matchInfo);
-    }, 30000); // 30 seconds
-  } else if (statsInterval) {
-    clearInterval(statsInterval);
-    statsInterval = null;
-  }
-});
 
-onUnmounted(() => {
-  if (statsInterval) {
-    clearInterval(statsInterval);
-  }
-});
+
+
 
 function formatDate(inputDate) {
   const date = new Date(inputDate);
@@ -604,6 +605,34 @@ function formatDate(inputDate) {
       font-size: 12px;
       padding: 3px 8px;
     }
+  }
+}
+
+.header-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  
+  &.mobile {
+    gap: 10px;
+  }
+}
+
+.game-icon {
+  font-size: 28px;
+  color: #007bff;
+  flex-shrink: 0;
+  
+  &.mobile {
+    font-size: 24px;
+  }
+}
+
+.tournament-text {
+  flex: 1;
+  
+  &.mobile {
+    flex: 1;
   }
 }
 

@@ -18,12 +18,14 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^7.0.0",
+    "@iconify/vue": "^5.0.0",
     "@mdi/font": "^7.2.96",
     "@netlify/functions": "^2.4.1",
     "@pinia/nuxt": "^0.4.11",
     "@supabase/supabase-js": "^2.38.5",
     "axios": "^1.6.2",
     "node-fetch": "^2.7.0",
+    "simple-icons": "^15.8.0",
     "vue-i18n": "^9.14.5",
     "vuetify": "^3.5.0"
   }
