@@ -4,13 +4,19 @@
     <v-card height="90vh" width="800px" class="modal-card">
       <!-- Close Button -->
       <div class="close-header">
-        <v-icon @click="$emit('closeModal')" class="close-button">mdi-close</v-icon>
+        <v-icon @click="emit('closeModal')" class="close-button">mdi-close</v-icon>
       </div>
 
       <!-- Tournament Header -->
       <div class="tournament-header">
         <h2 class="tournament-title">{{ matchInfo.league.name }} - {{ matchInfo.serie.name }}</h2>
-        <p class="tournament-date">{{ formatDate(matchInfo.begin_at) }}</p>
+        <div class="tournament-info">
+          <p class="tournament-date">{{ formatDate(matchInfo.begin_at) }}</p>
+          <div class="match-format-info">
+            <span v-if="matchFormat" class="match-format">{{ matchFormat }}</span>
+            <span v-if="currentScore" class="current-score">{{ currentScore }}</span>
+          </div>
+        </div>
       </div>
 
       <!-- Teams Horizontal Layout -->
@@ -66,12 +72,22 @@
           <div v-if="props.matchInfo.rosters" class="team-rosters">
             <!-- Team 1 Roster (Left) -->
             <div class="roster-column">
-              <ModalsRosters :team-roster="props.matchInfo.rosters[0].players" />
+              <ModalsRosters 
+                :team-roster="props.matchInfo.rosters[0].players" 
+                :live-stats="getTeamLiveStats(0)"
+                :is-live="isMatchLive"
+                :game-type="props.matchInfo.videogame?.name"
+              />
             </div>
             
             <!-- Team 2 Roster (Right) -->
             <div class="roster-column">
-              <ModalsRosters :team-roster="props.matchInfo.rosters[1].players" />
+              <ModalsRosters 
+                :team-roster="props.matchInfo.rosters[1].players"
+                :live-stats="getTeamLiveStats(1)"
+                :is-live="isMatchLive"
+                :game-type="props.matchInfo.videogame?.name"
+              />
             </div>
           </div>
         </div>
@@ -164,7 +180,13 @@
     
     <div class="tournament-header mobile">
       <h3 class="tournament-title">{{ matchInfo.league.name }}</h3>
-      <p class="tournament-date">{{ formatDate(matchInfo.begin_at) }}</p>
+      <div class="tournament-info mobile">
+        <p class="tournament-date">{{ formatDate(matchInfo.begin_at) }}</p>
+        <div class="match-format-info mobile">
+          <span v-if="matchFormat" class="match-format">{{ matchFormat }}</span>
+          <span v-if="currentScore" class="current-score">{{ currentScore }}</span>
+        </div>
+      </div>
     </div>
 
     <div class="teams-horizontal-section mobile">
@@ -190,12 +212,22 @@
       <div v-if="props.matchInfo.rosters" class="team-rosters mobile">
         <!-- Team 1 Roster (Mobile) -->
         <div class="roster-column mobile">
-          <ModalsRosters :team-roster="props.matchInfo.rosters[0].players" />
+          <ModalsRosters 
+            :team-roster="props.matchInfo.rosters[0].players"
+            :live-stats="getTeamLiveStats(0)"
+            :is-live="isMatchLive"
+            :game-type="props.matchInfo.videogame?.name"
+          />
         </div>
         
         <!-- Team 2 Roster (Mobile) -->
         <div class="roster-column mobile">
-          <ModalsRosters :team-roster="props.matchInfo.rosters[1].players" />
+          <ModalsRosters 
+            :team-roster="props.matchInfo.rosters[1].players"
+            :live-stats="getTeamLiveStats(1)"
+            :is-live="isMatchLive"
+            :game-type="props.matchInfo.videogame?.name"
+          />
         </div>
       </div>
       
@@ -255,6 +287,8 @@ const props = defineProps({
   matchOccurrence: { type: String, required: true },
 });
 
+const emit = defineEmits(['closeModal']);
+
 const { mobile } = useDisplay();
 const { teamLogoThumb } = useLogos();
 const gamesStore = useGamesStore();
@@ -302,18 +336,132 @@ function getStreamIcon(url) {
   return 'fas fa-play';
 }
 
+const matchFormat = computed(() => {
+  // Check for number_of_games field first
+  if (props.matchInfo?.number_of_games) {
+    return `BO${props.matchInfo.number_of_games}`;
+  }
+  
+  // Check for games array length as fallback
+  if (props.matchInfo?.games && Array.isArray(props.matchInfo.games)) {
+    const totalGames = props.matchInfo.games.length;
+    if (totalGames > 0) {
+      // Determine BO format based on games array
+      if (totalGames === 1) return 'BO1';
+      if (totalGames <= 3) return 'BO3';
+      if (totalGames <= 5) return 'BO5';
+      if (totalGames <= 7) return 'BO7';
+      return `BO${totalGames}`;
+    }
+  }
+  
+  // Check for match name patterns
+  if (props.matchInfo?.name) {
+    const name = props.matchInfo.name.toLowerCase();
+    if (name.includes('bo1') || name.includes('best of 1')) return 'BO1';
+    if (name.includes('bo3') || name.includes('best of 3')) return 'BO3';
+    if (name.includes('bo5') || name.includes('best of 5')) return 'BO5';
+    if (name.includes('bo7') || name.includes('best of 7')) return 'BO7';
+  }
+  
+  return null;
+});
+
+const currentScore = computed(() => {
+  // Only show score for ongoing or completed matches
+  if (!props.matchInfo?.games || !Array.isArray(props.matchInfo.games)) {
+    return null;
+  }
+  
+  const games = props.matchInfo.games;
+  if (games.length === 0) return null;
+  
+  let team1Wins = 0;
+  let team2Wins = 0;
+  
+  // Count wins for each team
+  games.forEach(game => {
+    if (game.finished && game.winner) {
+      if (game.winner.id === props.matchInfo.opponents?.[0]?.opponent?.id) {
+        team1Wins++;
+      } else if (game.winner.id === props.matchInfo.opponents?.[1]?.opponent?.id) {
+        team2Wins++;
+      }
+    }
+  });
+  
+  // Only show score if at least one game has been played
+  if (team1Wins === 0 && team2Wins === 0) {
+    // Check if match is live or has started
+    if (props.matchInfo.status === 'running' || props.matchInfo.status === 'not_started') {
+      return '0x0';
+    }
+    return null;
+  }
+  
+  return `${team1Wins}x${team2Wins}`;
+});
+
+const isMatchLive = computed(() => {
+  return props.matchInfo?.status === 'running';
+});
+
+const getTeamLiveStats = (teamIndex) => {
+  if (!isMatchLive.value || !props.matchInfo?.livePlayerStats) {
+    return {};
+  }
+  
+  const teamOpponentId = props.matchInfo.opponents?.[teamIndex]?.opponent?.id;
+  if (!teamOpponentId) return {};
+  
+  // Group live stats by team
+  const teamStats = {};
+  props.matchInfo.livePlayerStats.forEach(playerStat => {
+    if (playerStat.team?.id === teamOpponentId) {
+      teamStats[playerStat.player?.id] = playerStat;
+    }
+  });
+  
+  return teamStats;
+};
+
 onBeforeMount(async () => {
   try {
     if (props.matchInfo?.opponents && props.matchInfo.opponents.length >= 2) {
       await gamesStore.fetchSupabaseDataForMatch(
+        props.matchInfo.id,
         props.matchOccurrence,
         props.matchInfo.serie_id,
         teamNames.value
       );
       await gamesStore.fetchGameRosters(props.matchInfo, props.matchOccurrence);
+      
+      // Fetch live stats if match is running
+      if (isMatchLive.value) {
+        await gamesStore.fetchLivePlayerStats(props.matchInfo);
+      }
     }
   } catch (error) {
     console.warn('Error loading modal data:', error);
+  }
+});
+
+// Auto-refresh live stats every 30 seconds for running matches
+let statsInterval = null;
+watch(isMatchLive, (newValue) => {
+  if (newValue) {
+    statsInterval = setInterval(async () => {
+      await gamesStore.fetchLivePlayerStats(props.matchInfo);
+    }, 30000); // 30 seconds
+  } else if (statsInterval) {
+    clearInterval(statsInterval);
+    statsInterval = null;
+  }
+});
+
+onUnmounted(() => {
+  if (statsInterval) {
+    clearInterval(statsInterval);
   }
 });
 
@@ -380,10 +528,28 @@ function formatDate(inputDate) {
     font-weight: 600;
     font-size: 20px;
     color: #333;
-    margin: 0 0 4px 0;
+    margin: 0 0 8px 0;
     
     @media (max-width: 960px) {
       font-size: 16px;
+      margin: 0 0 6px 0;
+    }
+  }
+  
+  .tournament-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    
+    &.mobile {
+      flex-direction: column;
+      gap: 6px;
+    }
+    
+    @media (max-width: 960px) {
+      flex-direction: column;
+      gap: 6px;
     }
   }
 
@@ -395,6 +561,48 @@ function formatDate(inputDate) {
     
     @media (max-width: 960px) {
       font-size: 12px;
+    }
+  }
+  
+  .match-format-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    
+    &.mobile {
+      gap: 8px;
+    }
+  }
+  
+  .match-format {
+    font-family: "Poppins";
+    font-weight: 600;
+    font-size: 12px;
+    color: #fff;
+    background: #007bff;
+    padding: 4px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    
+    @media (max-width: 960px) {
+      font-size: 11px;
+      padding: 3px 6px;
+    }
+  }
+  
+  .current-score {
+    font-family: "Poppins";
+    font-weight: 700;
+    font-size: 14px;
+    color: #333;
+    background: #fff;
+    padding: 4px 12px;
+    border-radius: 6px;
+    border: 2px solid #e9ecef;
+    
+    @media (max-width: 960px) {
+      font-size: 12px;
+      padding: 3px 8px;
     }
   }
 }
