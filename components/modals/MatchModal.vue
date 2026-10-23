@@ -493,7 +493,14 @@ function getGameIcon(videogameName) {
 
 // Direct Liquipedia search using Playwright
 async function searchLiquipediaDirectly(searchTerm, gameType) {
-  
+  // No modo mock não busca na Liquipedia, só devolve o link de busca
+  if (useRuntimeConfig().public.mockData) {
+    return {
+      url: `https://liquipedia.net/leagueoflegends/Special:Search?search=${encodeURIComponent(searchTerm)}`,
+      title: `${searchTerm} - Buscar na Liquipedia`
+    };
+  }
+
   try {
     const queryParams = new URLSearchParams({
       searchTerm: searchTerm,

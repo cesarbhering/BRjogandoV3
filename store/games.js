@@ -1,5 +1,32 @@
 import { defineStore } from "pinia";
 
+const mocks = {
+  running: () => import("~/mocks/running.json"),
+  upcoming: () => import("~/mocks/upcoming.json"),
+  past: () => import("~/mocks/past.json"),
+};
+
+/**
+ * Busca os jogos da PandaScore ou, com a flag de mock ligada, dos JSONs em /mocks.
+ * @param {String} matchOccurrence running, upcoming ou past
+ * @returns {Promise<Array>} lista de jogos
+ */
+const fetchMatches = async (matchOccurrence) => {
+  if (useRuntimeConfig().public.mockData) {
+    const mock = (await mocks[matchOccurrence]()).default;
+    // Logos baixados em public/mocks, para não fazer chamada externa no modo mock
+    const localMock = JSON.parse(
+      JSON.stringify(mock).replaceAll("https://cdn-api.pandascore.co/", "/mocks/")
+    );
+    // O mock de past veio como array puro, os outros como { data: [...] }
+    return Array.isArray(localMock) ? localMock : localMock.data;
+  }
+  const res = await fetch(
+    `/.netlify/functions/fetchPandaScoreMatches?matchOccurrence=${matchOccurrence}`
+  );
+  return (await res.json()).data;
+};
+
 export const useGamesStore = defineStore({
   id: "games-store",
   state: () => {
@@ -11,31 +38,21 @@ export const useGamesStore = defineStore({
   },
   actions: {
     fetchRunningMatches() {
-      fetch(
-        "/.netlify/functions/fetchPandaScoreMatches?matchOccurrence=running"
-      )
-        .then((res) => res.json())
-        .then((res) => {
-          this.runningMatches = res.data;
-        });
+      fetchMatches("running").then((matches) => {
+        this.runningMatches = matches;
+      });
     },
 
     fetchUpcomingMatches() {
-      fetch(
-        "/.netlify/functions/fetchPandaScoreMatches?matchOccurrence=upcoming"
-      )
-        .then((res) => res.json())
-        .then((res) => {
-          this.upcomingMatches = res.data;
-        });
+      fetchMatches("upcoming").then((matches) => {
+        this.upcomingMatches = matches;
+      });
     },
 
     fetchPastMatches() {
-      fetch("/.netlify/functions/fetchPandaScoreMatches?matchOccurrence=past")
-        .then((res) => res.json())
-        .then((res) => {
-          this.pastMatches = res.data;
-        });
+      fetchMatches("past").then((matches) => {
+        this.pastMatches = matches;
+      });
     },
 
     /**
@@ -49,6 +66,7 @@ export const useGamesStore = defineStore({
       pandaScoreSerieId,
       teamNames
     ) {
+      if (useRuntimeConfig().public.mockData) return;
       try {
         const response = await fetch(
           `/.netlify/functions/fetchSupabaseDataForMatch?matchOccurrence=${matchOccurrence}&pandaScoreSerieId=${pandaScoreSerieId}&teamNames=${teamNames}`
@@ -64,6 +82,7 @@ export const useGamesStore = defineStore({
     },
 
     fetchOdds1xBet(matchUrl1xBet, pandaScoreMatchId, matchOccurrence) {
+      if (useRuntimeConfig().public.mockData) return;
       fetch(`/.netlify/functions/fetchOdds1xBet?matchUrl1xBet=${matchUrl1xBet}`)
         .then((res) => res.json())
         .then(async (res) => {
@@ -75,6 +94,7 @@ export const useGamesStore = defineStore({
     },
 
     fetchGameRosters(matchDetails, matchOccurrence) {
+      if (useRuntimeConfig().public.mockData) return;
       const videoGameId = matchDetails.videogame.id
       const opponentOneId = matchDetails.opponents[0].opponent.id
       const opponentTwoId = matchDetails.opponents[1].opponent.id

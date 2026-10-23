@@ -5,6 +5,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev --host",
+    "dev:mock": "MOCK_DATA=true nuxt dev --host",
     "dev:netlify": "netlify dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",

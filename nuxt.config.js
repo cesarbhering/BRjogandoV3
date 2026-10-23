@@ -6,6 +6,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       gtagId: 'G-54X94ZFNWQ',
+      // Usa os JSONs de /mocks no lugar da PandaScore: `npm run dev --mockdata` ou `npm run dev:mock`
+      mockData: process.env.npm_config_mockdata === 'true' || process.env.MOCK_DATA === 'true',
     }
   },
 

@@ -18,6 +18,10 @@ export const useLogos = () => {
     }
     // Quando for BR importar o br-flag.svg que já temos no assets, pra economizar tempo de download.
     if (nationality) {
+      // No modo mock as bandeiras ficam em public/mocks/flags
+      if (useRuntimeConfig().public.mockData) {
+        return `/mocks/flags/${nationality.toLowerCase()}.webp`
+      }
       return `https://flagcdn.com/w160/${nationality.toLowerCase()}.webp`
     }
     

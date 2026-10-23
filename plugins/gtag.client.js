@@ -1,5 +1,7 @@
 export default defineNuxtPlugin((nuxtApp) => {
-  const { gtagId } = useRuntimeConfig().public;
+  const { gtagId, mockData } = useRuntimeConfig().public;
+  // Sem chamadas externas no modo mock
+  if (mockData) return;
   
   function gtag() {
     window.dataLayer.push(arguments);

@@ -1,0 +1,951 @@
+[
+    {
+        "league_id": 4554,
+        "winner_id": 135505,
+        "videogame": {
+            "id": 3,
+            "name": "Counter-Strike",
+            "slug": "cs-go"
+        },
+        "live": {
+            "supported": false,
+            "url": null,
+            "opens_at": null
+        },
+        "original_scheduled_at": null,
+        "winner_type": "Team",
+        "begin_at": null,
+        "rescheduled": false,
+        "games": [
+            {
+                "complete": true,
+                "id": 176592,
+                "position": 1,
+                "status": "finished",
+                "length": null,
+                "finished": true,
+                "match_id": 1200600,
+                "begin_at": null,
+                "detailed_stats": false,
+                "end_at": null,
+                "forfeit": true,
+                "winner": {
+                    "id": 135505,
+                    "type": "Team"
+                },
+                "winner_type": "Team"
+            },
+            {
+                "complete": true,
+                "id": 176593,
+                "position": 2,
+                "status": "finished",
+                "length": null,
+                "finished": true,
+                "match_id": 1200600,
+                "begin_at": null,
+                "detailed_stats": false,
+                "end_at": null,
+                "forfeit": true,
+                "winner": {
+                    "id": 135505,
+                    "type": "Team"
+                },
+                "winner_type": "Team"
+            }
+        ],
+        "tournament": {
+            "id": 16969,
+            "name": "Playoffs",
+            "type": "online",
+            "country": null,
+            "slug": "cs-go-gamers-club-liga-serie-a-june-2025-playoffs",
+            "begin_at": "2025-06-24T21:00:00Z",
+            "detailed_stats": false,
+            "end_at": "2025-06-27T22:00:00Z",
+            "winner_id": null,
+            "winner_type": "Team",
+            "region": "SA",
+            "serie_id": 9437,
+            "modified_at": "2025-06-24T08:47:37Z",
+            "league_id": 4554,
+            "prizepool": null,
+            "tier": "d",
+            "has_bracket": true,
+            "live_supported": false
+        },
+        "serie": {
+            "id": 9437,
+            "name": "",
+            "year": 2025,
+            "slug": "cs-go-gamers-club-liga-serie-a-june-2025",
+            "begin_at": "2025-06-24T21:00:00Z",
+            "end_at": "2025-06-27T22:00:00Z",
+            "winner_id": null,
+            "winner_type": "Team",
+            "modified_at": "2025-06-24T08:47:37Z",
+            "league_id": 4554,
+            "season": "June",
+            "full_name": "June 2025"
+        },
+        "modified_at": "2025-06-24T11:50:26Z",
+        "videogame_title": {
+            "id": 13,
+            "name": "Counter-Strike 2",
+            "slug": "cs-2",
+            "videogame_id": 3
+        },
+        "scheduled_at": null,
+        "slug": "bestia-academy-vs-red-canids-academy-no-date",
+        "status": "finished",
+        "number_of_games": 3,
+        "end_at": null,
+        "draw": false,
+        "serie_id": 9437,
+        "videogame_version": null,
+        "detailed_stats": false,
+        "streams_list": [
+            {
+                "main": false,
+                "language": "es",
+                "embed_url": "https://player.twitch.tv/?channel=gamersclubes",
+                "official": false,
+                "raw_url": "https://www.twitch.tv/gamersclubes"
+            },
+            {
+                "main": true,
+                "language": "pt",
+                "embed_url": "https://player.twitch.tv/?channel=gamersclubcs",
+                "official": true,
+                "raw_url": "https://www.twitch.tv/gamersclubcs"
+            }
+        ],
+        "id": 1200600,
+        "name": "Quarterfinal 1: BST.A vs RED.A",
+        "winner": {
+            "id": 135505,
+            "name": "RED Canids Academy",
+            "location": "BR",
+            "slug": "red-canids-academy",
+            "modified_at": "2026-10-22T02:01:39Z",
+            "acronym": "RED.A",
+            "image_url": "https://cdn-api.pandascore.co/images/team/image/135505/red_canids_cs_go.png",
+            "dark_mode_image_url": null
+        },
+        "opponents": [
+            {
+                "type": "Team",
+                "opponent": {
+                    "id": 135743,
+                    "name": "BESTIA Academy",
+                    "location": "BR",
+                    "slug": "bestia-academy",
+                    "modified_at": "2026-10-23T20:03:12Z",
+                    "acronym": "BST.A",
+                    "image_url": "https://cdn-api.pandascore.co/images/team/image/135743/186px_bestia_lightmode.png",
+                    "dark_mode_image_url": "https://cdn-api.pandascore.co/dark_images/team/dark_image/135743/124px_bestia_darkmode.png"
+                }
+            },
+            {
+                "type": "Team",
+                "opponent": {
+                    "id": 135505,
+                    "name": "RED Canids Academy",
+                    "location": "BR",
+                    "slug": "red-canids-academy",
+                    "modified_at": "2026-10-22T02:01:39Z",
+                    "acronym": "RED.A",
+                    "image_url": "https://cdn-api.pandascore.co/images/team/image/135505/red_canids_cs_go.png",
+                    "dark_mode_image_url": null
+                }
+            }
+        ],
+        "results": [
+            {
+                "score": 0,
+                "team_id": 135743
+            },
+            {
+                "score": 2,
+                "team_id": 135505
+            }
+        ],
+        "forfeit": false,
+        "tournament_id": 16969,
+        "match_type": "best_of",
+        "league": {
+            "id": 4554,
+            "name": "Gamers Club Liga Série A",
+            "url": null,
+            "slug": "cs-go-gamers-club-liga-serie-a",
+            "modified_at": "2022-08-12T14:23:59Z",
+            "image_url": "https://cdn-api.pandascore.co/images/league/image/4554/Liga_Gamers_Club_SSrie_A_logo.png"
+        },
+        "game_advantage": null
+    },
+    {
+        "league_id": 4125,
+        "winner_id": 136103,
+        "videogame": {
+            "id": 4,
+            "name": "Dota 2",
+            "slug": "dota-2"
+        },
+        "live": {
+            "supported": false,
+            "url": null,
+            "opens_at": null
+        },
+        "original_scheduled_at": null,
+        "winner_type": "Team",
+        "begin_at": null,
+        "rescheduled": false,
+        "games": [
+            {
+                "complete": true,
+                "id": 719144,
+                "position": 1,
+                "status": "finished",
+                "length": null,
+                "finished": true,
+                "match_id": 1099552,
+                "begin_at": null,
+                "detailed_stats": false,
+                "end_at": null,
+                "forfeit": false,
+                "winner": {
+                    "id": 136103,
+                    "type": "Team"
+                },
+                "winner_type": "Team"
+            }
+        ],
+        "tournament": {
+            "id": 15669,
+            "name": "Playoffs",
+            "type": "online",
+            "country": null,
+            "slug": "dreamleague-north-america-open-qualifier-1-25-2025-playoffs",
+            "begin_at": "2025-01-03T21:00:00Z",
+            "detailed_stats": true,
+            "end_at": "2025-01-05T09:00:00Z",
+            "winner_id": null,
+            "winner_type": "Team",
+            "region": "NA",
+            "serie_id": 8847,
+            "modified_at": "2025-01-04T22:35:52Z",
+            "league_id": 4125,
+            "prizepool": null,
+            "tier": "d",
+            "has_bracket": true,
+            "live_supported": false
+        },
+        "serie": {
+            "id": 8847,
+            "name": "North America Open Qualifier 1",
+            "year": 2025,
+            "slug": "dreamleague-north-america-open-qualifier-1-25-2025",
+            "begin_at": "2025-01-03T21:00:00Z",
+            "end_at": "2025-01-05T09:00:00Z",
+            "winner_id": null,
+            "winner_type": "Team",
+            "modified_at": "2025-01-03T23:02:31Z",
+            "league_id": 4125,
+            "season": "25",
+            "full_name": "North America Open Qualifier 1 season 25 2025"
+        },
+        "modified_at": "2025-01-03T23:05:31Z",
+        "videogame_title": null,
+        "scheduled_at": null,
+        "slug": "grin-esports-vs-meant-2-be-no-date",
+        "status": "finished",
+        "number_of_games": 1,
+        "end_at": null,
+        "draw": false,
+        "serie_id": 8847,
+        "videogame_version": null,
+        "detailed_stats": false,
+        "streams_list": [],
+        "id": 1099552,
+        "name": "Quarterfinal match 1: GRIN vs Meant 2 Be",
+        "winner": {
+            "id": 136103,
+            "name": "Meant 2 Be",
+            "location": "US",
+            "slug": "meant-2-be",
+            "modified_at": "2025-01-10T03:27:21Z",
+            "acronym": null,
+            "image_url": null,
+            "dark_mode_image_url": null
+        },
+        "opponents": [
+            {
+                "type": "Team",
+                "opponent": {
+                    "id": 133227,
+                    "name": "GRIN Esports",
+                    "location": "US",
+                    "slug": "grin-esports",
+                    "modified_at": "2024-12-15T02:11:58Z",
+                    "acronym": "GRIN",
+                    "image_url": "https://cdn-api.pandascore.co/images/team/image/133227/214px_grin_esports_allmode.png",
+                    "dark_mode_image_url": null
+                }
+            },
+            {
+                "type": "Team",
+                "opponent": {
+                    "id": 136103,
+                    "name": "Meant 2 Be",
+                    "location": "US",
+                    "slug": "meant-2-be",
+                    "modified_at": "2025-01-10T03:27:21Z",
+                    "acronym": null,
+                    "image_url": null,
+                    "dark_mode_image_url": null
+                }
+            }
+        ],
+        "results": [
+            {
+                "score": 0,
+                "team_id": 133227
+            },
+            {
+                "score": 1,
+                "team_id": 136103
+            }
+        ],
+        "forfeit": false,
+        "tournament_id": 15669,
+        "match_type": "best_of",
+        "league": {
+            "id": 4125,
+            "name": "DreamLeague",
+            "url": null,
+            "slug": "dreamleague",
+            "modified_at": "2019-03-05T11:02:02Z",
+            "image_url": null
+        },
+        "game_advantage": null
+    },
+    {
+        "league_id": 297,
+        "winner_id": 126536,
+        "videogame": {
+            "id": 1,
+            "name": "LoL",
+            "slug": "league-of-legends"
+        },
+        "live": {
+            "supported": true,
+            "url": "wss://live.pandascore.co/matches/1710939",
+            "opens_at": "2026-10-23T18:55:00.000000Z"
+        },
+        "original_scheduled_at": "2026-10-24T00:00:00Z",
+        "winner_type": "Team",
+        "begin_at": "2026-10-23T19:07:13Z",
+        "rescheduled": true,
+        "games": [
+            {
+                "complete": true,
+                "id": 284713,
+                "position": 1,
+                "status": "finished",
+                "length": 2321,
+                "finished": true,
+                "match_id": 1710939,
+                "begin_at": "2026-10-23T19:07:14Z",
+                "detailed_stats": true,
+                "end_at": "2026-10-23T19:52:44Z",
+                "forfeit": false,
+                "winner": {
+                    "id": 126536,
+                    "type": "Team"
+                },
+                "winner_type": "Team"
+            }
+        ],
+        "tournament": {
+            "id": 22047,
+            "name": "Group Stage",
+            "type": "offline",
+            "country": null,
+            "slug": "league-of-legends-world-championship-2026-group-stage",
+            "begin_at": "2026-10-23T17:00:00Z",
+            "detailed_stats": true,
+            "end_at": "2026-11-01T02:00:00Z",
+            "winner_id": null,
+            "winner_type": "Team",
+            "region": "NA",
+            "serie_id": 11014,
+            "modified_at": "2026-10-23T13:08:31Z",
+            "league_id": 297,
+            "prizepool": "5,000,000 United States Dollar",
+            "tier": "s",
+            "has_bracket": false,
+            "live_supported": true
+        },
+        "serie": {
+            "id": 11014,
+            "name": "",
+            "year": 2026,
+            "slug": "league-of-legends-world-championship-2026",
+            "begin_at": "2026-10-15T08:00:00Z",
+            "end_at": "2026-11-15T01:00:00Z",
+            "winner_id": null,
+            "winner_type": "Team",
+            "modified_at": "2026-09-25T09:27:42Z",
+            "league_id": 297,
+            "season": null,
+            "full_name": "2026"
+        },
+        "modified_at": "2026-10-23T20:27:19Z",
+        "videogame_title": null,
+        "scheduled_at": "2026-10-23T19:10:00Z",
+        "slug": "2026-10-24-e5b9b4d5-7597-4fd2-b80c-711e8ccc4fd2",
+        "status": "finished",
+        "number_of_games": 1,
+        "end_at": "2026-10-23T19:52:43Z",
+        "draw": false,
+        "serie_id": 11014,
+        "videogame_version": {
+            "name": "16.21.1",
+            "current": true
+        },
+        "detailed_stats": true,
+        "streams_list": [
+            {
+                "main": false,
+                "language": "no",
+                "embed_url": "https://player.twitch.tv/?channel=veigarv2",
+                "official": false,
+                "raw_url": "https://www.twitch.tv/veigarv2"
+            },
+            {
+                "main": false,
+                "language": "ru",
+                "embed_url": "https://player.twitch.tv/?channel=diamondprox_lol",
+                "official": false,
+                "raw_url": "https://www.twitch.tv/diamondprox_lol"
+            },
+            {
+                "main": false,
+                "language": "de",
+                "embed_url": "https://player.twitch.tv/?channel=obsess3",
+                "official": false,
+                "raw_url": "https://www.twitch.tv/obsess3"
+            },
+            {
+                "main": false,
+                "language": "vi",
+                "embed_url": "https://player.twitch.tv/?channel=hoangluanblv",
+                "official": false,
+                "raw_url": "https://www.twitch.tv/hoangluanblv"
+            },
+            {
+                "main": false,
+                "language": "hu",
+                "embed_url": "https://player.twitch.tv/?channel=esport2tv",
+                "official": false,
+                "raw_url": "https://www.twitch.tv/esport2tv"
+            },
+            {
+                "main": false,
+                "language": "tr",
+                "embed_url": "https://player.kick.com/zeitnot",
+                "official": false,
+                "raw_url": "https://kick.com/zeitnot"
+            },
+            {
+                "main": false,
+                "language": "pt",
+                "embed_url": "https://player.kick.com/yoda",
+                "official": false,
+                "raw_url": "https://kick.com/yoda"
+            },
+            {
+                "main": false,
+                "language": "cs",
+                "embed_url": "https://player.twitch.tv/?channel=xnapycz",
+                "official": false,
+                "raw_url": "https://www.twitch.tv/xnapycz"
+            },
+            {
+                "main": false,
+                "language": "ja",
+                "embed_url": "https://player.twitch.tv/?channel=yutapongo",
+                "official": false,
+                "raw_url": "https://www.twitch.tv/yutapongo"
+            },
+            {
+                "main": false,
+                "language": "zh",
+                "embed_url": "https://player.twitch.tv/?channel=lolesportstw",
+                "official": false,
+                "raw_url": "https://www.twitch.tv/lolesportstw"
+            },
+            {
+                "main": false,
+                "language": "en",
+                "embed_url": "https://player.twitch.tv/?channel=caedrel",
+                "official": false,
+                "raw_url": "https://www.twitch.tv/caedrel"
+            },
+            {
+                "main": true,
+                "language": "en",
+                "embed_url": "https://player.twitch.tv/?channel=riotgames",
+                "official": true,
+                "raw_url": "https://www.twitch.tv/riotgames"
+            }
+        ],
+        "id": 1710939,
+        "name": "Round 1: BLG vs MKOI",
+        "winner": {
+            "id": 126536,
+            "name": "Movistar KOI",
+            "location": "ES",
+            "slug": "mad-lions-league-of-legends",
+            "modified_at": "2026-10-06T11:02:55Z",
+            "acronym": "MKOI",
+            "image_url": "https://cdn-api.pandascore.co/images/team/image/126536/movistar_ko_ilogo_square.png",
+            "dark_mode_image_url": null
+        },
+        "opponents": [
+            {
+                "type": "Team",
+                "opponent": {
+                    "id": 1566,
+                    "name": "Bilibili Gaming",
+                    "location": "CN",
+                    "slug": "bilibili-gaming",
+                    "modified_at": "2026-10-06T11:02:52Z",
+                    "acronym": "BLG",
+                    "image_url": "https://cdn-api.pandascore.co/images/team/image/1566/qw_yi_qu_j.png",
+                    "dark_mode_image_url": null
+                }
+            },
+            {
+                "type": "Team",
+                "opponent": {
+                    "id": 126536,
+                    "name": "Movistar KOI",
+                    "location": "ES",
+                    "slug": "mad-lions-league-of-legends",
+                    "modified_at": "2026-10-06T11:02:55Z",
+                    "acronym": "MKOI",
+                    "image_url": "https://cdn-api.pandascore.co/images/team/image/126536/movistar_ko_ilogo_square.png",
+                    "dark_mode_image_url": null
+                }
+            }
+        ],
+        "results": [
+            {
+                "score": 0,
+                "team_id": 1566
+            },
+            {
+                "score": 1,
+                "team_id": 126536
+            }
+        ],
+        "forfeit": false,
+        "tournament_id": 22047,
+        "match_type": "best_of",
+        "league": {
+            "id": 297,
+            "name": "Worlds",
+            "url": null,
+            "slug": "league-of-legends-world-championship",
+            "modified_at": "2023-12-06T15:53:28Z",
+            "image_url": "https://cdn-api.pandascore.co/images/league/image/297/worlds-png"
+        },
+        "game_advantage": null
+    },
+    {
+        "league_id": 4243,
+        "winner_id": 138358,
+        "videogame": {
+            "id": 3,
+            "name": "Counter-Strike",
+            "slug": "cs-go"
+        },
+        "live": {
+            "supported": false,
+            "url": null,
+            "opens_at": null
+        },
+        "original_scheduled_at": "2026-10-23T18:30:00Z",
+        "winner_type": "Team",
+        "begin_at": "2026-10-23T18:36:03Z",
+        "rescheduled": false,
+        "games": [
+            {
+                "complete": true,
+                "id": 236915,
+                "position": 1,
+                "status": "finished",
+                "length": 2726,
+                "finished": true,
+                "match_id": 1766440,
+                "begin_at": "2026-10-23T18:36:03Z",
+                "detailed_stats": false,
+                "end_at": "2026-10-23T19:21:29Z",
+                "forfeit": false,
+                "winner": {
+                    "id": 138358,
+                    "type": "Team"
+                },
+                "winner_type": "Team"
+            }
+        ],
+        "tournament": {
+            "id": 22135,
+            "name": "Regular Season",
+            "type": "online",
+            "country": null,
+            "slug": "cs-go-esea-advanced-europe-59-2026-regular-season",
+            "begin_at": "2026-10-06T18:00:00Z",
+            "detailed_stats": false,
+            "end_at": "2026-12-07T23:00:00Z",
+            "winner_id": null,
+            "winner_type": "Team",
+            "region": "WEU",
+            "serie_id": 11070,
+            "modified_at": "2026-10-21T14:22:45Z",
+            "league_id": 4243,
+            "prizepool": null,
+            "tier": "d",
+            "has_bracket": false,
+            "live_supported": false
+        },
+        "serie": {
+            "id": 11070,
+            "name": "Advanced Europe",
+            "year": 2026,
+            "slug": "cs-go-esea-advanced-europe-59-2026",
+            "begin_at": "2026-10-06T18:00:00Z",
+            "end_at": "2026-12-14T23:00:00Z",
+            "winner_id": null,
+            "winner_type": "Team",
+            "modified_at": "2026-10-06T14:31:10Z",
+            "league_id": 4243,
+            "season": "59",
+            "full_name": "Advanced Europe season 59 2026"
+        },
+        "modified_at": "2026-10-23T19:21:30Z",
+        "videogame_title": {
+            "id": 13,
+            "name": "Counter-Strike 2",
+            "slug": "cs-2",
+            "videogame_id": 3
+        },
+        "scheduled_at": "2026-10-23T18:30:00Z",
+        "slug": "enrage-vs-banda-chuya-2026-10-23",
+        "status": "finished",
+        "number_of_games": 1,
+        "end_at": "2026-10-23T19:21:29Z",
+        "draw": false,
+        "serie_id": 11070,
+        "videogame_version": null,
+        "detailed_stats": false,
+        "streams_list": [],
+        "id": 1766440,
+        "name": "ENRAGE vs banda chuya",
+        "winner": {
+            "id": 138358,
+            "name": "banda chuya",
+            "location": "PL",
+            "slug": "banda-chuya",
+            "modified_at": "2026-10-19T18:38:15Z",
+            "acronym": null,
+            "image_url": null,
+            "dark_mode_image_url": null
+        },
+        "opponents": [
+            {
+                "type": "Team",
+                "opponent": {
+                    "id": 126515,
+                    "name": "ENRAGE",
+                    "location": null,
+                    "slug": "enrage",
+                    "modified_at": "2026-10-13T08:09:45Z",
+                    "acronym": null,
+                    "image_url": null,
+                    "dark_mode_image_url": null
+                }
+            },
+            {
+                "type": "Team",
+                "opponent": {
+                    "id": 138358,
+                    "name": "banda chuya",
+                    "location": "PL",
+                    "slug": "banda-chuya",
+                    "modified_at": "2026-10-19T18:38:15Z",
+                    "acronym": null,
+                    "image_url": null,
+                    "dark_mode_image_url": null
+                }
+            }
+        ],
+        "results": [
+            {
+                "score": 0,
+                "team_id": 126515
+            },
+            {
+                "score": 1,
+                "team_id": 138358
+            }
+        ],
+        "forfeit": false,
+        "tournament_id": 22135,
+        "match_type": "best_of",
+        "league": {
+            "id": 4243,
+            "name": "ESEA",
+            "url": "https://play.esea.net/",
+            "slug": "cs-go-esea",
+            "modified_at": "2020-11-12T15:51:24Z",
+            "image_url": null
+        },
+        "game_advantage": null
+    },
+    {
+        "league_id": 297,
+        "winner_id": 2883,
+        "videogame": {
+            "id": 1,
+            "name": "LoL",
+            "slug": "league-of-legends"
+        },
+        "live": {
+            "supported": true,
+            "url": "wss://live.pandascore.co/matches/1710936",
+            "opens_at": "2026-10-23T18:00:00.000000Z"
+        },
+        "original_scheduled_at": "2026-10-23T21:00:00Z",
+        "winner_type": "Team",
+        "begin_at": "2026-10-23T18:17:22Z",
+        "rescheduled": true,
+        "games": [
+            {
+                "complete": true,
+                "id": 284710,
+                "position": 1,
+                "status": "finished",
+                "length": 1431,
+                "finished": true,
+                "match_id": 1710936,
+                "begin_at": "2026-10-23T18:17:22Z",
+                "detailed_stats": true,
+                "end_at": "2026-10-23T18:48:35Z",
+                "forfeit": false,
+                "winner": {
+                    "id": 2883,
+                    "type": "Team"
+                },
+                "winner_type": "Team"
+            }
+        ],
+        "tournament": {
+            "id": 22047,
+            "name": "Group Stage",
+            "type": "offline",
+            "country": null,
+            "slug": "league-of-legends-world-championship-2026-group-stage",
+            "begin_at": "2026-10-23T17:00:00Z",
+            "detailed_stats": true,
+            "end_at": "2026-11-01T02:00:00Z",
+            "winner_id": null,
+            "winner_type": "Team",
+            "region": "NA",
+            "serie_id": 11014,
+            "modified_at": "2026-10-23T13:08:31Z",
+            "league_id": 297,
+            "prizepool": "5,000,000 United States Dollar",
+            "tier": "s",
+            "has_bracket": false,
+            "live_supported": true
+        },
+        "serie": {
+            "id": 11014,
+            "name": "",
+            "year": 2026,
+            "slug": "league-of-legends-world-championship-2026",
+            "begin_at": "2026-10-15T08:00:00Z",
+            "end_at": "2026-11-15T01:00:00Z",
+            "winner_id": null,
+            "winner_type": "Team",
+            "modified_at": "2026-09-25T09:27:42Z",
+            "league_id": 297,
+            "season": null,
+            "full_name": "2026"
+        },
+        "modified_at": "2026-10-23T19:17:35Z",
+        "videogame_title": null,
+        "scheduled_at": "2026-10-23T18:15:00Z",
+        "slug": "2026-10-23-10eb067f-fc72-4737-bcdb-616d477789da",
+        "status": "finished",
+        "number_of_games": 1,
+        "end_at": "2026-10-23T18:48:35Z",
+        "draw": false,
+        "serie_id": 11014,
+        "videogame_version": {
+            "name": "16.21.1",
+            "current": true
+        },
+        "detailed_stats": true,
+        "streams_list": [
+            {
+                "main": false,
+                "language": "it",
+                "embed_url": "https://player.twitch.tv/?channel=terenas",
+                "official": false,
+                "raw_url": "https://www.twitch.tv/terenas"
+            },
+            {
+                "main": false,
+                "language": "ru",
+                "embed_url": "https://player.twitch.tv/?channel=smurf_tv",
+                "official": false,
+                "raw_url": "https://www.twitch.tv/smurf_tv"
+            },
+            {
+                "main": false,
+                "language": "vi",
+                "embed_url": "https://player.twitch.tv/?channel=hoangluanblv",
+                "official": false,
+                "raw_url": "https://www.twitch.tv/hoangluanblv"
+            },
+            {
+                "main": false,
+                "language": "hu",
+                "embed_url": "https://player.twitch.tv/?channel=esport2tv",
+                "official": false,
+                "raw_url": "https://www.twitch.tv/esport2tv"
+            },
+            {
+                "main": false,
+                "language": "pl",
+                "embed_url": "https://player.twitch.tv/?channel=nervarien",
+                "official": false,
+                "raw_url": "https://www.twitch.tv/nervarien"
+            },
+            {
+                "main": false,
+                "language": "tr",
+                "embed_url": "https://player.kick.com/zeitnot",
+                "official": false,
+                "raw_url": "https://kick.com/zeitnot"
+            },
+            {
+                "main": false,
+                "language": "pt",
+                "embed_url": "https://player.kick.com/yoda",
+                "official": false,
+                "raw_url": "https://kick.com/yoda"
+            },
+            {
+                "main": false,
+                "language": "cs",
+                "embed_url": "https://player.twitch.tv/?channel=xnapycz",
+                "official": false,
+                "raw_url": "https://www.twitch.tv/xnapycz"
+            },
+            {
+                "main": false,
+                "language": "ja",
+                "embed_url": "https://player.twitch.tv/?channel=yutapongo",
+                "official": false,
+                "raw_url": "https://www.twitch.tv/yutapongo"
+            },
+            {
+                "main": false,
+                "language": "zh",
+                "embed_url": "https://player.twitch.tv/?channel=lolesportstw",
+                "official": false,
+                "raw_url": "https://www.twitch.tv/lolesportstw"
+            },
+            {
+                "main": false,
+                "language": "en",
+                "embed_url": "https://www.youtube.com/embed/h7CiX2esSb0",
+                "official": false,
+                "raw_url": "https://www.youtube.com/watch?v=h7CiX2esSb0"
+            },
+            {
+                "main": true,
+                "language": "en",
+                "embed_url": "https://player.twitch.tv/?channel=riotgames",
+                "official": true,
+                "raw_url": "https://www.twitch.tv/riotgames"
+            }
+        ],
+        "id": 1710936,
+        "name": "Round 1: HLE vs TES",
+        "winner": {
+            "id": 2883,
+            "name": "Hanwha Life Esports",
+            "location": "KR",
+            "slug": "hanwha-life-esports",
+            "modified_at": "2026-10-06T11:02:49Z",
+            "acronym": "HLE",
+            "image_url": "https://cdn-api.pandascore.co/images/team/image/2883/hanwha-life-esports-1s04vbu0.png",
+            "dark_mode_image_url": null
+        },
+        "opponents": [
+            {
+                "type": "Team",
+                "opponent": {
+                    "id": 2883,
+                    "name": "Hanwha Life Esports",
+                    "location": "KR",
+                    "slug": "hanwha-life-esports",
+                    "modified_at": "2026-10-06T11:02:49Z",
+                    "acronym": "HLE",
+                    "image_url": "https://cdn-api.pandascore.co/images/team/image/2883/hanwha-life-esports-1s04vbu0.png",
+                    "dark_mode_image_url": null
+                }
+            },
+            {
+                "type": "Team",
+                "opponent": {
+                    "id": 126059,
+                    "name": "Top Esports",
+                    "location": "CN",
+                    "slug": "top-esports",
+                    "modified_at": "2026-10-20T19:19:31Z",
+                    "acronym": "TES",
+                    "image_url": "https://cdn-api.pandascore.co/images/team/image/126059/top_esportslogo_square.png",
+                    "dark_mode_image_url": null
+                }
+            }
+        ],
+        "results": [
+            {
+                "score": 1,
+                "team_id": 2883
+            },
+            {
+                "score": 0,
+                "team_id": 126059
+            }
+        ],
+        "forfeit": false,
+        "tournament_id": 22047,
+        "match_type": "best_of",
+        "league": {
+            "id": 297,
+            "name": "Worlds",
+            "url": null,
+            "slug": "league-of-legends-world-championship",
+            "modified_at": "2023-12-06T15:53:28Z",
+            "image_url": "https://cdn-api.pandascore.co/images/league/image/297/worlds-png"
+        },
+        "game_advantage": null
+    }
+]
