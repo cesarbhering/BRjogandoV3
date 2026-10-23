@@ -1,0 +1,41 @@
+{
+  "version": "5",
+  "remote": {
+    "https://edge.netlify.com/": "607baf43414ddf5d42a24cf0e0ac7d03cc02fbc96f21bc34f027935060e28793",
+    "https://edge.netlify.com/bootstrap/config.ts": "6a2ce0e544e15e8f8883a5c18da5948e37fd0f2619f68cb31f3af53c51817025",
+    "https://edge.netlify.com/bootstrap/context.ts": "2260177df4a7d692f31177ccbf2de969cd8db1269c564a45517d6e47fd7d248f",
+    "https://edge.netlify.com/bootstrap/cookie.ts": "8b0baae708989ca183c6f3b4ab3d029e6abcbc2e43f93edeb0ff447b3bbc3a05",
+    "https://edge.netlify.com/bootstrap/edge_function.ts": "0c6c24959154a4ac64e24077adea5b4d23f01704a1dd1290df56fa9e4c6801f3",
+    "https://edge.netlify.com/bootstrap/globals/types.ts": "eaa6148ded3121d8dee62dd91c86e7fe76601df0f3ca8d7962243a30f4c8935f"
+  },
+  "workspace": {
+    "packageJson": {
+      "dependencies": [
+        "npm:@fortawesome/fontawesome-free@7",
+        "npm:@iconify/vue@5",
+        "npm:@mdi/font@^7.2.96",
+        "npm:@netlify/functions@^2.4.1",
+        "npm:@nuxt/devtools@latest",
+        "npm:@nuxt/test-utils@^3.12.1",
+        "npm:@nuxtjs/i18n@^8.0.0-rc.4",
+        "npm:@pinia/nuxt@~0.4.11",
+        "npm:@playwright/test@^1.54.2",
+        "npm:@supabase/supabase-js@^2.38.5",
+        "npm:@vue/test-utils@^2.4.6",
+        "npm:axios@^1.6.2",
+        "npm:happy-dom@^14.12.3",
+        "npm:msw@^2.7.0",
+        "npm:node-fetch@^2.7.0",
+        "npm:nuxt@^3.10.0",
+        "npm:playwright-core@^1.54.2",
+        "npm:sass-loader@^13.3.2",
+        "npm:sass@^1.68.0",
+        "npm:simple-icons@^15.8.0",
+        "npm:vitest-environment-nuxt@1",
+        "npm:vitest@^1.6.0",
+        "npm:vue-i18n@^9.14.5",
+        "npm:vuetify@^3.5.0"
+      ]
+    }
+  }
+}
