@@ -38,42 +38,6 @@ export const useGamesStore = defineStore({
         });
     },
 
-    /**
-     * Faz a chamada no supabase para pegar dados adicionais de um jogo.
-     * @param {Number} pandaScoreMatchId
-     * @param {String} matchOccurrence
-     */
-    async fetchSupabaseDataForMatch(
-      pandaScoreMatchId,
-      matchOccurrence,
-      pandaScoreSerieId,
-      teamNames
-    ) {
-      try {
-        const response = await fetch(
-          `/.netlify/functions/fetchSupabaseDataForMatch?matchOccurrence=${matchOccurrence}&pandaScoreSerieId=${pandaScoreSerieId}&teamNames=${teamNames}`
-        );
-        const data = await response.json();
-        //Adiciona as informações no pinia
-        this[`${matchOccurrence}Matches`].find(
-          (match) => match.id === pandaScoreMatchId
-        ).supabaseDataForMatch = Object.assign({}, ...data.data);
-      } catch (error) {
-        console.error("Error fetching Supabase data:", error);
-      }
-    },
-
-    fetchOdds1xBet(matchUrl1xBet, pandaScoreMatchId, matchOccurrence) {
-      fetch(`/.netlify/functions/fetchOdds1xBet?matchUrl1xBet=${matchUrl1xBet}`)
-        .then((res) => res.json())
-        .then(async (res) => {
-          const match = this[`${matchOccurrence}Matches`].find(
-            (match) => match.id === pandaScoreMatchId
-          );
-          Object.assign(match, { odds: { odds1xBet: res.data } });
-        });
-    },
-
     fetchGameRosters(matchDetails, matchOccurrence) {
       const videoGameId = matchDetails.videogame.id
       const opponentOneId = matchDetails.opponents[0].opponent.id

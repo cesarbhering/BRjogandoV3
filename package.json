@@ -2,6 +2,7 @@
   "name": "brjogando_v3",
   "description": "BRjogando",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev --host",
@@ -23,7 +24,6 @@
     "@mdi/font": "^7.2.96",
     "@netlify/functions": "^2.4.1",
     "@pinia/nuxt": "^0.4.11",
-    "@supabase/supabase-js": "^2.38.5",
     "axios": "^1.6.2",
     "node-fetch": "^2.7.0",
     "playwright-core": "^1.54.2",

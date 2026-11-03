@@ -101,39 +101,6 @@
           </div>
         </div>
 
-        <!-- Betting Odds Section -->
-        <div class="betting-section">
-          <h3 class="section-title">Betting odds</h3>
-          <div class="betting-odds-container horizontal">
-            <div class="betting-card rivalry-card">
-              <div class="betting-brand">RIVALRY</div>
-              <div class="odds-display">
-                <span class="odd">{{ props.matchInfo.supabaseDataForMatch?.odds0 || '2.8' }}</span>
-                <span class="separator">:</span>
-                <span class="odd">{{ props.matchInfo.supabaseDataForMatch?.odds1 || '2.8' }}</span>
-              </div>
-            </div>
-            
-            <div class="betting-card betway-card">
-              <div class="betting-brand">betway</div>
-              <div class="odds-display">
-                <span class="odd">2.8</span>
-                <span class="separator">:</span>
-                <span class="odd">2.8</span>
-              </div>
-            </div>
-            
-            <div class="betting-card ggbet-card">
-              <div class="betting-brand">GGBET</div>
-              <div class="odds-display">
-                <span class="odd">2.8</span>
-                <span class="separator">:</span>
-                <span class="odd">2.8</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <!-- Streams Section -->
         <div v-if="availableStreams.length > 0" class="streams-section">
           <h3 class="section-title">Live Streams</h3>
@@ -741,13 +708,7 @@ const currentScore = computed(() => {
 onBeforeMount(async () => {
   try {
     if (props.matchInfo?.opponents && props.matchInfo.opponents.length >= 2) {
-  await gamesStore.fetchSupabaseDataForMatch(
-    props.matchInfo.id,
-    props.matchOccurrence,
-    props.matchInfo.serie_id,
-        teamNames.value
-  );
-  await gamesStore.fetchGameRosters(props.matchInfo, props.matchOccurrence);
+      await gamesStore.fetchGameRosters(props.matchInfo, props.matchOccurrence);
       
       // Load dynamic Liquipedia links
       await loadDynamicLinks();
@@ -1233,117 +1194,6 @@ function formatDate(inputDate) {
   @media (max-width: 960px) {
     padding: 0;
   }
-}
-
-.betting-section {
-  margin-bottom: 32px;
-  
-  @media (max-width: 960px) {
-    margin-bottom: 24px;
-  }
-}
-
-.betting-odds-container {
-  display: flex;
-  gap: 16px;
-  
-  &.horizontal {
-    flex-direction: row;
-    justify-content: space-between;
-    
-    @media (max-width: 960px) {
-      flex-direction: column;
-      gap: 12px;
-    }
-  }
-  
-  @media (max-width: 960px) {
-    flex-direction: column;
-    gap: 12px;
-  }
-}
-
-.betting-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 16px 12px;
-  border-radius: 6px;
-  border: 1px solid #e9ecef;
-  background: white;
-  min-width: 120px;
-  flex: 1;
-  
-  &.rivalry-card {
-    border-top: 4px solid #ff6b35;
-  }
-  
-  &.betway-card {
-    border-top: 4px solid #00a859;
-  }
-  
-  &.ggbet-card {
-    border-top: 4px solid #ff6600;
-  }
-  
-  @media (max-width: 960px) {
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 12px 16px;
-    
-    &.rivalry-card,
-    &.betway-card,
-    &.ggbet-card {
-      border-top: none;
-      border-left: 4px solid;
-    }
-    
-    &.rivalry-card {
-      border-left-color: #ff6b35;
-    }
-    
-    &.betway-card {
-      border-left-color: #00a859;
-    }
-    
-    &.ggbet-card {
-      border-left-color: #ff6600;
-    }
-  }
-}
-
-.betting-brand {
-  font-family: "Poppins";
-  font-weight: 600;
-  font-size: 14px;
-  color: #333;
-  margin-bottom: 8px;
-  
-  @media (max-width: 960px) {
-    margin-bottom: 0;
-  }
-}
-
-.odds-display {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.odd {
-  font-family: "Poppins";
-  font-weight: 600;
-  font-size: 14px;
-  color: #333;
-  min-width: 24px;
-  text-align: center;
-}
-
-.separator {
-  font-family: "Poppins";
-  font-size: 14px;
-  color: #666;
 }
 
 .streams-section {

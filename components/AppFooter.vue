@@ -1,12 +1,4 @@
 <template>
-    <div v-if="!mobile" class="container-apostas">
-          <div class="container-apostas-txt">
-            <div>
-              <h2>Apostas com Segurança</h2>
-            </div>            
-            <p>A prática de apostas com segurança é fundamental para garantir uma experiência positiva e responsável no mundo do entretenimento de jogos de azar. Ao adotar medidas prudentes, como definir limites de apostas, entender as regras dos jogos e escolher plataformas confiáveis, os apostadores podem minimizar os riscos financeiros e aproveitar a diversão de forma mais controlada.</p>
-          </div>          
-    </div>    
     <v-footer :app="mobile? false: true ">     
       <div class="top-line"></div>
       <div class="footer-logo">
@@ -18,11 +10,9 @@
           <NuxtLink :to="{ name: 'institutional-contact' }"> Contato </NuxtLink>
           <NuxtLink :to="{ name: 'institutional-terms' }"> Termo de Uso </NuxtLink>
           <NuxtLink :to="{ name: 'institutional-games' }"> Jogos</NuxtLink>
-          <NuxtLink :to="{ name: 'institutional-bets' }"> Apostas </NuxtLink>
           <NuxtLink :to="{ name: 'institutional-profile' }"> Perfil </NuxtLink>
           <NuxtLink :to="{ name: 'institutional-questions' }"> Perguntas Frequentes </NuxtLink>
           <NuxtLink :to="{ name: 'institutional-privacy' }"> Política de Privacidade </NuxtLink>
-          <NuxtLink :to="{ name: 'institutional-betting' }"> Casas de Apostas </NuxtLink>
         </div>
         <div class="footer-infos-social-media">
           <div><p>Redes Sociais</p></div>
@@ -47,41 +37,6 @@ const { mobile } = useDisplay();
 </script>
 
 <style lang="scss" scoped>
-
-.container-apostas{
-  font-family: "Poppins";
-  background-image: url(../assets/image/footer-image.png);
-  background-size: 100% 53%;
-  height: 825px;
-  width: 100vw;
-  color: white;
-
-  @media (max-width:960px){
-
-  }
-}
-
-.container-apostas-txt{
-  margin-left: 101px;
-  margin-top: 60px;
-  width: 569px;
-  height: 254px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.container-apostas-txt h2{
-  font-size: 48px;
-}
-
-.container-apostas-txt .v-btn{
-  align-self: flex-start;
-  background-color:rgb(255, 184, 0);
-  color: white;
-  font-weight: bold;
-  height: 40px;
-}
-
 
 .v-footer {
   font-family: "Poppins";
