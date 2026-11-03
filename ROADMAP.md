@@ -23,14 +23,24 @@ This is the work planned for BR Jogando. Items are grouped by theme and roughly 
 | Let users favorite teams and filter the home page by them, saved in the browser | 5h |
 | Show the match schedule in the visitor's own time zone instead of a fixed GMT-3 offset | 3h |
 
-## 3. Content pages
+## 3. Live match experience
+
+| Item | Estimate |
+|---|---|
+| Add a real-time chat room for each match, so fans can talk while they watch | 12h |
+| Add basic chat moderation: rate limits, a word filter and a way to report messages | 6h |
+| Build a bot that posts the most relevant plays of each game into the match chat, such as kills, rounds, objectives and map wins | 16h |
+| Read live match events from the data provider and decide which ones are worth posting | 8h |
+| Let users mute the bot or choose which kinds of plays it posts | 3h |
+
+## 4. Content pages
 
 | Item | Estimate |
 |---|---|
 | Write the About, FAQ, Contact, Terms of Use and Privacy Policy pages, which are placeholders today | 5h |
 | Point the social media icons in the footer to the real profiles | 1h |
 
-## 4. Internationalization
+## 5. Internationalization
 
 | Item | Estimate |
 |---|---|
@@ -38,7 +48,7 @@ This is the work planned for BR Jogando. Items are grouped by theme and roughly 
 | Add a full English translation and a language switcher | 4h |
 | Make date and time formatting follow the selected locale | 2h |
 
-## 5. Performance and reliability
+## 6. Performance and reliability
 
 | Item | Estimate |
 |---|---|
@@ -47,7 +57,7 @@ This is the work planned for BR Jogando. Items are grouped by theme and roughly 
 | Handle API errors and empty states in the UI, instead of showing endless loaders | 3h |
 | Automate the update of the Brazilian team and player ID lists | 4h |
 
-## 6. Maintenance
+## 7. Maintenance
 
 | Item | Estimate |
 |---|---|
@@ -57,4 +67,4 @@ This is the work planned for BR Jogando. Items are grouped by theme and roughly 
 | Improve SEO with per-page titles, descriptions and Open Graph tags | 3h |
 | Review accessibility: alt text, color contrast and keyboard navigation | 3h |
 
-**Total:** about 90 hours of planned work.
+**Total:** about 135 hours of planned work.
