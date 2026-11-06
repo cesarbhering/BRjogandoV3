@@ -23,7 +23,7 @@ export default defineI18nConfig(() => ({
         quarterfinal: 'Quarterfinal',
         playoffs: 'Playoffs',
         final: 'Final',
-        liveGame: 'Live game',
+        live: 'Live',
       },
       match: {
         team1: 'Team 1',
@@ -84,7 +84,7 @@ export default defineI18nConfig(() => ({
         quarterfinal: 'Quartas de final',
         playoffs: 'Playoffs',
         final: 'Final',
-        liveGame: 'Jogo ao vivo',
+        live: 'Ao vivo',
       },
       match: {
         team1: 'Time 1',

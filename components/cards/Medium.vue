@@ -51,7 +51,13 @@
       </div>
       <!-- LIVE SVG -->
        <div v-if="!mobile" class="live text-center">
-        <img src="../../assets/image/aovivo.svg" :alt="$t('cards.liveGame')" />
+        <span class="live-badge">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="8" cy="8" r="7.5" fill="none" stroke="#FF0000" />
+            <circle cx="8" cy="8" r="4" fill="#FF0000" />
+          </svg>
+          {{ $t('cards.live') }}
+        </span>
       </div>
       <div v-else class="match-infos text-center">
         <p>{{ matchInfo.serie.name || matchInfo.serie.full_name }}</p>
@@ -196,18 +202,19 @@ const vVideoGameBasedBackground = {
 }
 
 .live {
-  width: 100%;
-  max-width: 31px;
   position: absolute;
   bottom: 0;
-  padding-left: 31%;
-  @media (max-width: 960px) {
-    padding-left: 37%;
+  left: 0;
+  right: 0;
+}
 
-    img {
-      max-width: 51px;
-    }
-  }
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #ff0000;
+  font-size: 16px;
+  line-height: 26px;
 }
 
 .custom-dialog .v-dialog__content {
