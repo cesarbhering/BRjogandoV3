@@ -11,14 +11,14 @@
     </v-card-title>
     <v-card-text>
       <div class="match-info-big d-flex flex-column">
-        <!-- NOME DA LIGA -->
+        <!-- LEAGUE NAME -->
         <span>{{ matchInfo.league.name }}</span>
-        <!-- DATA E HORARIO DE INICIO -->
+        <!-- START DATE AND TIME -->
         <span>{{ formatDate(matchInfo.begin_at) }}</span>
       </div>
     </v-card-text>
     <v-card-actions v-if="matchInfo.opponents.length">
-      <!-- LOGO/SIGLA TIME 0 -->
+      <!-- LOGO/ACRONYM TEAM 0 -->
       <div class="opponent-actions">
         <div class="d-flex align-center">
           <!-- LOGO -->
@@ -31,7 +31,7 @@
             )
               " />
           </div>
-          <!-- SIGLA -->
+          <!-- ACRONYM -->
           <div>
             <p class="text-h4 pl-0 text--primary acronym">
               {{
@@ -42,9 +42,9 @@
           </div>
         </div>
       </div>
-      <!-- O "X" -->
+      <!-- THE "X" -->
       <div class="versusX">X</div>
-      <!-- LOGO/SIGLA TIME 1 -->
+      <!-- LOGO/ACRONYM TEAM 1 -->
       <div class="opponent-actions">
         <div class="d-flex align-center">
           <!-- LOGO -->
@@ -55,7 +55,7 @@
             )
               " />
           </div>
-          <!-- SIGLA -->
+          <!-- ACRONYM -->
           <div>
             <p class="text-h4 pl-1 text--primary acronym">
               {{
@@ -91,38 +91,39 @@ const props = defineProps({
 });
 
 const { teamLogoThumb } = useLogos();
+const { formatDate } = useFormatDate();
+const { t } = useI18n();
 
 let now = ref(Date.now());
 
 
 
 onMounted(() => {
-  // Para atualizar a função specialMatchCountdown
+  // Keeps specialMatchCountdown ticking
   setInterval(() => {
     now.value = Date.now();
   }, 1000);
 });
-// @TODO fazer esta função mais maleável, para que possa ser usada na internacionalização
 /**
- * Retorna o tipo de partida no play-off
+ * Returns the playoff stage of the match
  * @returns {String}
  */
 const specialMatchName = computed(() => {
   if (props.matchInfo.name.toLowerCase().includes("semifinal")) {
-    return "Semifinal";
+    return t("cards.semifinal");
   } else if (props.matchInfo.name.toLowerCase().includes("quarterfinal")) {
-    return "Quartas de Final";
+    return t("cards.quarterfinal");
   } else if (props.matchInfo.name.toLowerCase().includes("playoffs")) {
-    return "Playoffs";
+    return t("cards.playoffs");
   } else if (props.matchInfo.name.toLowerCase().includes("final")) {
-    return "Final";
+    return t("cards.final");
   }
 });
 
 /**
- * Recebe o nome do videogame e retorna a imagem a ser utilizada no topo do cartão.
+ * Takes the video game name and returns the image shown at the top of the card.
  * @param {String} videogameName
- * @returns {URL} URL montado com a imagem hospedada localmente.
+ * @returns {URL} URL of the locally hosted image.
  */
 function videoGameImage(videogameName) {
   switch (videogameName) {
@@ -139,37 +140,14 @@ function videoGameImage(videogameName) {
     case "Rainbow 6 Siege":
       return new URL("~/assets/image/rb6Bg.png", import.meta.url);
     default:
-      /* VERIFICAR COM O DESIGNER UMA IMAGEM PADRÃO */
+      /* TODO: ask the designer for a default image */
       return new URL("../../assets/image/LoLBg.png", import.meta.url);
   }
 }
 
+
 /**
- * Esta função é apenas uma copia do chatGPT, com certeza pode ser simplificada.
- * @param {String} inputDate Data do begin_at informado na prop matchInfo
- * @returns {String} string formata dd/MM HH:mm
- */
-function formatDate(inputDate) {
-  const date = new Date(inputDate);
-
-  // Adjust for GMT-3 - GMT-3 É O NOSSO TIME ZONE NO BRASIL, SEMPRE TER ISTO EM MENTE
-  date.setHours(date.getHours());
-
-  // Get day, month, hours, and minutes
-  const day = date.getDate().toString().padStart(2, "0");
-  const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
-  const hours = date.getHours().toString().padStart(2, "0");
-  const minutes = date.getMinutes().toString().padStart(2, "0");
-
-  // Construct the formatted string
-  const formattedDate = `${day}/${month} ${hours}:${minutes}`;
-
-  return formattedDate;
-}
-
-// @TODO fazer função amis maleavel na questão do fuso para atender internacionalização.
-/**
- * Countdown exibido na div final-alert-big
+ * Countdown shown in the final-alert-big div
  * @returns {String}
  */
 const specialMatchCountdown = computed(() => {
@@ -186,7 +164,6 @@ const specialMatchCountdown = computed(() => {
   )
     .toString()
     .padStart(2, "0");
-  // Remove 3grs da conta devido ao GMT-3, @TODO fazer função mais flexivel para internacionalização
   return `${hours}:${minutes}:${seconds}`;
 });
 

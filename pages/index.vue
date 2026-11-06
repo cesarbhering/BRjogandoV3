@@ -10,11 +10,11 @@
           size="small"
           class="filter-button"
         >
-          {{ showOnlyBrazilian ? 'Todas as partidas' : 'Apenas brasileiros' }}
+          {{ showOnlyBrazilian ? $t('home.allMatches') : $t('home.onlyBrazilian') }}
         </v-btn>
       </div>
       
-      <div class="container-title">Partidas ao vivo</div>
+      <div class="container-title">{{ $t('home.liveMatches') }}</div>
       <v-row v-if="!gamesStore.runningMatches.length">
         <v-col v-for="index in new Array(2)">
           <v-skeleton-loader :width="mobile ? '180' : '280'" type="image"></v-skeleton-loader>
@@ -43,7 +43,7 @@
       <v-row class="justify-center">
         <v-col :cols="mobile ? 12 : 9">
           <v-row class="justify-center">
-            <span class="container-title">Próximas Partidas</span>
+            <span class="container-title">{{ $t('home.upcomingMatches') }}</span>
           </v-row>
           <v-row v-if="!gamesStore.upcomingMatches.length">
             <v-col v-for="index in new Array(14)">
@@ -56,26 +56,20 @@
         </v-col>
         <v-col v-if="!mobile">
           <v-row class="mt-15 ml-6 last-matches">
-            <span>Últimas Partidas</span>
+            <span>{{ $t('home.pastMatches') }}</span>
           </v-row>
           <v-row>
             <CardsSmall v-for="(pastMatch, index) in gamesStore.pastMatches.slice(1)" :key="index" :match-info="pastMatch" />
           </v-row>
-          <v-row class="mt-15">
-            <a target="_blank"
-              href="https://www.amazon.com.br/b?_encoding=UTF8&tag=brjogando-20&linkCode=ur2&linkId=bd4eb4dac09bc4d3474f21381ef8299a&camp=1789&creative=9325&node=16243794011">
-              <img width="250" src="../assets/image/amazon-notebook.jpg" />
-            </a>
-          </v-row>
         </v-col>
       </v-row>
     </v-container>
-    <!-- ULTIMAS PARTIDAS MOBILE -->
+    <!-- RECENT MATCHES (MOBILE) -->
     <v-container v-if="mobile">
       <v-row class="mb-2">
         <v-row class="justify-center">
           <div class="last-matches">
-            <span>Últimas Partidas</span>
+            <span>{{ $t('home.pastMatches') }}</span>
           </div>
         </v-row>
         <v-row>
@@ -98,18 +92,19 @@ import { useDisplay } from "vuetify";
 import { useGamesStore } from "~/store/games";
 
 const gamesStore = useGamesStore();
+const { t } = useI18n();
 const showOnlyBrazilian = ref(false);
 
 useSeoMeta({
   title: 'BRjogando',
   ogTitle: 'BRjogando',
-  description: 'Jogos que importam, na hora que importam.',
-  ogDescription: 'Jogos que importam, na hora que importam.',
+  description: () => t('seo.description'),
+  ogDescription: () => t('seo.description'),
   ogImage: '/Logo-Default.png',
   ogUrl: 'brjogando.com.br',
   twitterCard: 'summary_large_image',
   twitterTitle: 'BRjogando',
-  twitterDescription: 'Jogos que importam, na hora que importam',
+  twitterDescription: () => t('seo.description'),
   twitterImage: '/Logo-Default.png'
 })
 
@@ -167,13 +162,13 @@ const filteredRunningMatches = computed(() => {
 });
 
 onBeforeMount(async () => {
-  // Carrega a informação das partidas na store
+  // Loads the match data into the store
   gamesStore.fetchRunningMatches();
   gamesStore.fetchUpcomingMatches();
   gamesStore.fetchPastMatches();
 });
 
-// Para auxiliar o carrossel
+// Used by the carousel
 let model = null;
 
 const { mobile } = useDisplay();
@@ -215,7 +210,7 @@ const { mobile } = useDisplay();
   align-items: center !important;
   justify-content: center !important;
   min-height: 40px !important;
-  background-color: #002776 !important; /* Same blue as "Partidas ao vivo" */
+  background-color: #002776 !important; /* Same blue as the "Live matches" title */
   color: white !important;
   
   &:hover {

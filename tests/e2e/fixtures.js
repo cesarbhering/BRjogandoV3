@@ -9,15 +9,15 @@ export const mocks = {
   past: pastMock,
 };
 
-// Mesma regra do filtro "Apenas brasileiros" em pages/index.vue
+// Same rule as the "Brazilians only" filter in pages/index.vue
 export const hasBrazilianConnection = (match) =>
   match.opponents.some(({ opponent }) =>
     `${opponent.name} ${opponent.location || ""}`.toLowerCase().includes("br")
   );
 
 /**
- * `page` que falha o teste se qualquer requisição sair do localhost:
- * no modo mock (`npm run dev:mock`) nada pode ir para a internet.
+ * `page` that fails the test if any request leaves localhost:
+ * in mock mode (`npm run dev:mock`) nothing may go to the internet.
  */
 export const test = base.extend({
   page: async ({ page }, use) => {
@@ -29,18 +29,18 @@ export const test = base.extend({
       }
     });
     await use(page);
-    expect(external, "requisições externas no modo mock").toEqual([]);
+    expect(external, "external requests in mock mode").toEqual([]);
   },
 });
 
-/** Abre a home e espera as três listas do mock aparecerem. */
+/** Opens the home page and waits for the three mock lists to show up. */
 export const gotoHome = async (page) => {
   await page.goto("/");
   await expect(page.locator(".medium-card")).toHaveCount(mocks.running.length);
   await expect(page.locator(".big-card")).toHaveCount(mocks.upcoming.length);
 };
 
-/** Lê estilos computados de um elemento. */
+/** Reads the computed styles of an element. */
 export const styles = (locator, ...props) =>
   locator.evaluate(
     (el, props) => {
@@ -50,7 +50,7 @@ export const styles = (locator, ...props) =>
     props
   );
 
-/** Espera os estilos computados ficarem iguais (as cores têm transição). */
+/** Waits for the computed styles to match (the colors have a transition). */
 export const expectStyles = (locator, expected) =>
   expect.poll(() => styles(locator, ...Object.keys(expected))).toEqual(expected);
 

@@ -3,8 +3,8 @@ import { setActivePinia, createPinia } from "pinia";
 import { useGamesStore } from "~/store/games";
 import runningMock from "~/mocks/running.json";
 
-describe("modo mock", () => {
-  it("está ligado nos testes", () => {
+describe("mock mode", () => {
+  it("is on in the tests", () => {
     expect(useRuntimeConfig().public.mockData).toBe(true);
   });
 });
@@ -12,21 +12,21 @@ describe("modo mock", () => {
 describe("useLogos", () => {
   const { teamLogoThumb } = useLogos();
 
-  it("transforma o logo no thumb_ do mesmo caminho", () => {
+  it("turns the logo into the thumb_ file in the same folder", () => {
     expect(teamLogoThumb("/mocks/images/team/image/3288/600px_virtus.pro_2019.png", "RU"))
       .toBe("/mocks/images/team/image/3288/thumb_600px_virtus.pro_2019.png");
   });
 
-  it("usa a bandeira local quando o time não tem logo", () => {
+  it("uses the local flag when the team has no logo", () => {
     expect(teamLogoThumb(null, "BR")).toBe("/mocks/flags/br.webp");
   });
 
-  it("não retorna nada sem logo e sem país", () => {
+  it("returns nothing without a logo or a country", () => {
     expect(teamLogoThumb(null, null)).toBeUndefined();
   });
 });
 
-describe("store de jogos no modo mock", () => {
+describe("games store in mock mode", () => {
   let fetchSpy;
 
   beforeEach(() => {
@@ -41,7 +41,7 @@ describe("store de jogos no modo mock", () => {
   const waitForMatches = (store, key) =>
     vi.waitFor(() => expect(store[key].length).toBeGreaterThan(0));
 
-  it("carrega as partidas ao vivo do mock", async () => {
+  it("loads the live matches from the mock", async () => {
     const store = useGamesStore();
     store.fetchRunningMatches();
     await waitForMatches(store, "runningMatches");
@@ -49,7 +49,7 @@ describe("store de jogos no modo mock", () => {
     expect(store.runningMatches[0].name).toBe("Grand Final: NEM vs VP");
   });
 
-  it("carrega as próximas partidas do mock", async () => {
+  it("loads the upcoming matches from the mock", async () => {
     const store = useGamesStore();
     store.fetchUpcomingMatches();
     await waitForMatches(store, "upcomingMatches");
@@ -57,7 +57,7 @@ describe("store de jogos no modo mock", () => {
     expect(store.upcomingMatches.every((m) => m.status === "not_started")).toBe(true);
   });
 
-  it("carrega as últimas partidas do mock (array puro)", async () => {
+  it("loads the recent matches from the mock (plain array)", async () => {
     const store = useGamesStore();
     store.fetchPastMatches();
     await waitForMatches(store, "pastMatches");
@@ -65,7 +65,7 @@ describe("store de jogos no modo mock", () => {
     expect(store.pastMatches.every((m) => m.status === "finished")).toBe(true);
   });
 
-  it("troca os logos da PandaScore pelos arquivos locais", async () => {
+  it("replaces the PandaScore logos with local files", async () => {
     const store = useGamesStore();
     store.fetchRunningMatches();
     store.fetchUpcomingMatches();
@@ -79,15 +79,13 @@ describe("store de jogos no modo mock", () => {
     expect(all[0].opponents[0].opponent.image_url).toMatch(/^\/mocks\/images\//);
   });
 
-  it("não faz nenhuma chamada de rede", async () => {
+  it("makes no network calls", async () => {
     const store = useGamesStore();
     store.fetchRunningMatches();
     await waitForMatches(store, "runningMatches");
     const match = store.runningMatches[0];
 
-    await store.fetchSupabaseDataForMatch(match.id, "running", match.serie_id, "NEM,VP");
     store.fetchGameRosters(match, "running");
-    store.fetchOdds1xBet("url", match.id, "running");
 
     expect(fetchSpy).not.toHaveBeenCalled();
   });

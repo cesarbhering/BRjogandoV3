@@ -19,6 +19,7 @@ const props = defineProps({
 
 
 const { teamLogoThumb } = useLogos();
+const { t } = useI18n();
 
 const teamRosterActivePlayers = computed(() => {
   return props.teamRoster.filter((player) => player.active === true).slice(0, 5);
@@ -49,7 +50,7 @@ function formatPlayerName(player) {
   }
   
   // Fallback to whatever name we have
-  return nickname || firstName || lastName || 'Unknown Player';
+  return nickname || firstName || lastName || t('match.unknownPlayer');
 }
 
 

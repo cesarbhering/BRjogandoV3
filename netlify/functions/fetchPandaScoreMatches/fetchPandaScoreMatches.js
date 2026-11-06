@@ -2,13 +2,13 @@ const fetch = require("node-fetch");
 const fs = require("fs");
 
 /**
- * Função para processar o documento de texto com os Ids relevantes da nacionalidade.
- * @param {String} fileWithIds Caminho para o ocumento de texto com os ids que você quer filtrar, um em cada linha.
- * @returns {Array} Array com os ids contidos no arquivo informado.
+ * Reads the text file with the relevant team or player IDs.
+ * @param {String} fileWithIds Path to the text file with the IDs to filter by, one per line.
+ * @returns {Array} The IDs listed in the file.
  */
 const constructArrayWithRelevantIds = (fileWithIds) => {
   let idsArray = [];
-  if (process.env.DEV === 'true') { // Necessário para que faça a chamada tanto no ambiente de desenvolvimento quanto em produção.
+  if (process.env.DEV === 'true') { // Needed so the file resolves both in local development and in production.
     fs.readFileSync(fileWithIds)
       .toString()
       .split("\n")
@@ -27,10 +27,10 @@ const constructArrayWithRelevantIds = (fileWithIds) => {
 };
 
 /**
- * Recebe o jogo e o array com os Ids a filtrar, retorna apenas jogos que tenham os Ids de oponente que queremos.
- * @param {Object} game Jogo a analisar se temos interesse em mostrar na tela.
- * @param {Array} array Array gerado em constructArrayWithRelevantIds.
- * @returns {Object} objeto do jogo que nos interessa.
+ * Takes a match and the IDs to filter by, and returns the match only if one of its opponents is in the list.
+ * @param {Object} game Match to check.
+ * @param {Array} arrayWithIds Array built by constructArrayWithRelevantIds.
+ * @returns {Object} The match, if it is relevant.
  */
 const playerProcessor = (game, arrayWithIds) => {
   if (
@@ -44,7 +44,7 @@ const playerProcessor = (game, arrayWithIds) => {
 
 const handler = async function (event) {
   try {
-    // usar filter[opponents_filled]=true ?
+    // Only matches with both opponents filled in
     const matchOccurrence = event.queryStringParameters.matchOccurrence;
     const response = await fetch(
       `https://api.pandascore.co/matches/${matchOccurrence}?filter[opponents_filled]=true${matchOccurrence === 'past' ? '&page=1&per_page=5' : ''}`,
@@ -80,10 +80,10 @@ const handler = async function (event) {
       body: JSON.stringify({ data/* : gamesWithBrs.filter(Boolean) */ }),
     };
   } catch (error) {
-    // Printa o erro no log da netlify, não no browser do usuário.
+    // Logs the error in the Netlify log, not in the user's browser.
     console.log(error);
     return {
-      // Erro que vai para o usuário.
+      // Error returned to the user.
       statusCode: 500,
       body: JSON.stringify({ msg: error.message }),
     };

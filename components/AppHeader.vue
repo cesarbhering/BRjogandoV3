@@ -5,6 +5,11 @@
     
     <v-spacer></v-spacer>
     
+    <!-- Language Switch -->
+    <v-btn class="lang-switch" variant="outlined" size="small" :title="$t('header.switchLanguage')" :aria-label="$t('header.switchLanguage')" @click="toggleLocale">
+      <v-icon start>mdi-translate</v-icon>{{ nextLocaleLabel }}
+    </v-btn>
+
     <!-- Clean Dark Mode Toggle -->
     <div class="theme-toggle">
       <v-icon class="theme-icon">mdi-weather-sunny</v-icon>
@@ -19,11 +24,11 @@
       <v-icon class="theme-icon">mdi-weather-night</v-icon>
     </div>
     
-    <!-- <NuxtLink to="/"> Início </NuxtLink>      
+    <!-- <NuxtLink to="/"> Home </NuxtLink>      
     
     <v-menu>
       <template v-slot:activator="{ props }">
-        <v-btn outlined v-bind="props">Jogos <span>V</span></v-btn>
+        <v-btn outlined v-bind="props">Games <span>V</span></v-btn>
       </template>
       <template v-slot:default>
         <v-list>
@@ -36,9 +41,9 @@
       </template>
     </v-menu> 
 
-    <NuxtLink :to="{ name: 'institutional-cronogram' }"> Cronograma </NuxtLink>
-    <NuxtLink :to="{ name: 'institutional-about' }"> Sobre nós </NuxtLink>
-    <NuxtLink :to="{ name: 'institutional-support' }"> Suporte </NuxtLink> -->
+    <NuxtLink :to="{ name: 'institutional-cronogram' }"> Schedule </NuxtLink>
+    <NuxtLink :to="{ name: 'institutional-about' }"> About us </NuxtLink>
+    <NuxtLink :to="{ name: 'institutional-support' }"> Support </NuxtLink> -->
   </v-toolbar>
 
   <!-- HEADER MOBILE -->
@@ -46,6 +51,11 @@
     <img src="../assets/image/Logo-Branca.png" alt="brjogando" />
     
     <template v-slot:append>
+      <!-- Mobile Language Switch -->
+      <v-btn class="lang-switch mobile" variant="text" size="small" :title="$t('header.switchLanguage')" :aria-label="$t('header.switchLanguage')" @click="toggleLocale">
+        {{ nextLocaleLabel }}
+      </v-btn>
+
       <!-- Mobile Dark Mode Toggle -->
       <v-switch
         v-model="isDarkMode"
@@ -60,12 +70,12 @@
     </template>
   </v-app-bar>
   <!-- <v-navigation-drawer class="mobile-header-navigation" app temporary v-model="drawer" location="right">
-    <v-list-item to="/">Início</v-list-item>
-    <v-list-item to="/institutional/cronogram">Cronograma</v-list-item>
-    <v-list-item to="/institutional/about">Sobre nós</v-list-item>
-    <v-list-item to="/institutional/support">Suporte</v-list-item>
+    <v-list-item to="/">Home</v-list-item>
+    <v-list-item to="/institutional/cronogram">Schedule</v-list-item>
+    <v-list-item to="/institutional/about">About us</v-list-item>
+    <v-list-item to="/institutional/support">Support</v-list-item>
     <v-list>
-      <v-list-subheader>Jogos</v-list-subheader>
+      <v-list-subheader>Games</v-list-subheader>
       <v-list-item v-for="(item, index) in arrayDeJogos" :key="index">
         <NuxtLink :to="'esports/' + item">{{
           item.split("_").join(" ")
@@ -82,6 +92,7 @@ import { useDarkMode } from "~/composables/useDarkMode";
 
 const { mobile } = useDisplay();
 const { isDarkMode, toggleDarkMode } = useDarkMode();
+const { nextLocaleLabel, toggleLocale } = useLocaleSwitch();
 
 const arrayDeJogos = [
   'Dota_2',
@@ -111,7 +122,7 @@ const drawer = ref(false);
   z-index: 99;
 }
 
-/* MELHORAR ESTE SELETOR */
+/* TODO: improve this selector */
 #__nuxt > div > div > div > div > header {
 
 }
@@ -178,6 +189,21 @@ a{
 
 .v-list-item a:hover {
   background-color: #e6e6e6;
+}
+
+/* Language Switch */
+.v-btn.lang-switch {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.5);
+  background-color: transparent;
+  padding: 0 10px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+
+  &.mobile {
+    min-width: 0;
+    margin-right: 4px;
+  }
 }
 
 /* Theme Toggle Styles */

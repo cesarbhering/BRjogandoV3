@@ -1,11 +1,11 @@
 import { defineConfig } from "@playwright/test";
 
-// Os testes de navegação rodam contra o servidor em modo mock (`npm run dev:mock`)
+// The browser tests run against the dev server in mock mode (`npm run dev:mock`)
 export default defineConfig({
   testDir: "tests/e2e",
   timeout: 120_000,
-  // Em máquinas lentas (CI, Docker emulado) o dev server demora para compilar cada página:
-  // mais tempo para os expects e um worker só, para não disputar CPU
+  // On slow machines (CI, emulated Docker) the dev server takes a while to compile each page:
+  // give the expects more time and use a single worker so they do not compete for CPU
   expect: { timeout: 30_000 },
   workers: process.env.CI ? 1 : undefined,
   use: {

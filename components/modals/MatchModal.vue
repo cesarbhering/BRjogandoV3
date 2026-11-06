@@ -52,9 +52,9 @@
           
           <!-- Team Names -->
           <div class="team-names">
-            <span class="team-name-text">{{ props.matchInfo.opponents?.[0]?.opponent?.name || 'Team 1' }}</span>
+            <span class="team-name-text">{{ props.matchInfo.opponents?.[0]?.opponent?.name || $t('match.team1') }}</span>
             <v-icon class="vs-icon">mdi-close</v-icon>
-            <span class="team-name-text">{{ props.matchInfo.opponents?.[1]?.opponent?.name || 'Team 2' }}</span>
+            <span class="team-name-text">{{ props.matchInfo.opponents?.[1]?.opponent?.name || $t('match.team2') }}</span>
           </div>
           
           <!-- Team 2 Logo -->
@@ -78,7 +78,7 @@
       <div class="modal-content">
         <!-- Team Members Section -->
         <div class="team-members-section">
-          <h3 class="section-title">Integrantes do time</h3>
+          <h3 class="section-title">{{ $t('match.teamMembers') }}</h3>
           
           <div v-if="!props.matchInfo.rosters" class="loading-container">
             <v-progress-circular :size="40" color="primary" indeterminate></v-progress-circular>
@@ -101,42 +101,9 @@
           </div>
         </div>
 
-        <!-- Betting Odds Section -->
-        <div class="betting-section">
-          <h3 class="section-title">Betting odds</h3>
-          <div class="betting-odds-container horizontal">
-            <div class="betting-card rivalry-card">
-              <div class="betting-brand">RIVALRY</div>
-              <div class="odds-display">
-                <span class="odd">{{ props.matchInfo.supabaseDataForMatch?.odds0 || '2.8' }}</span>
-                <span class="separator">:</span>
-                <span class="odd">{{ props.matchInfo.supabaseDataForMatch?.odds1 || '2.8' }}</span>
-              </div>
-            </div>
-            
-            <div class="betting-card betway-card">
-              <div class="betting-brand">betway</div>
-              <div class="odds-display">
-                <span class="odd">2.8</span>
-                <span class="separator">:</span>
-                <span class="odd">2.8</span>
-              </div>
-            </div>
-            
-            <div class="betting-card ggbet-card">
-              <div class="betting-brand">GGBET</div>
-              <div class="odds-display">
-                <span class="odd">2.8</span>
-                <span class="separator">:</span>
-                <span class="odd">2.8</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <!-- Streams Section -->
         <div v-if="availableStreams.length > 0" class="streams-section">
-          <h3 class="section-title">Live Streams</h3>
+          <h3 class="section-title">{{ $t('match.liveStreams') }}</h3>
           <div class="streams-container">
             <a 
               v-for="(stream, index) in availableStreams" 
@@ -152,8 +119,8 @@
                 <span v-if="stream.language" class="stream-language">{{ stream.language.toUpperCase() }}</span>
               </div>
               <div class="stream-badges">
-                <span v-if="stream.official" class="badge official">OFICIAL</span>
-                <span v-if="stream.main" class="badge main">PRINCIPAL</span>
+                <span v-if="stream.official" class="badge official">{{ $t('match.official') }}</span>
+                <span v-if="stream.main" class="badge main">{{ $t('match.main') }}</span>
               </div>
             </a>
           </div>
@@ -161,8 +128,8 @@
 
         <!-- Links Section -->
         <div class="links-section">
-          <h3 class="section-title">Links Relevantes</h3>
-          <p v-if="isSearchingLinks" class="links-subtitle">Buscando diretamente na Liquipedia...</p>
+          <h3 class="section-title">{{ $t('match.relevantLinks') }}</h3>
+          <p v-if="isSearchingLinks" class="links-subtitle">{{ $t('match.searchingLiquipedia') }}</p>
           <div class="links-container">
             <div v-if="matchInfo.league?.name || matchInfo.serie?.name" class="link-item">
               <img src="/liquipedia.svg" alt="Liquipedia" class="liquipedia-icon" />
@@ -178,10 +145,10 @@
               </a>
               <span v-else-if="dynamicLinks.tournament.loading" class="link-text loading">
                 <v-progress-circular size="12" width="2" indeterminate></v-progress-circular>
-                Procurando {{ matchInfo.league?.name || matchInfo.serie?.name }}...
+                {{ $t('match.searching', { name: matchInfo.league?.name || matchInfo.serie?.name }) }}
               </span>
               <span v-else class="link-text unavailable">
-                {{ matchInfo.league?.name || matchInfo.serie?.name }} - Não encontrado
+                {{ $t('match.notFound', { name: matchInfo.league?.name || matchInfo.serie?.name }) }}
               </span>
             </div>
             <div v-if="teamNames[0] !== 'Team 1'" class="link-item">
@@ -198,10 +165,10 @@
               </a>
               <span v-else-if="dynamicLinks.team1.loading" class="link-text loading">
                 <v-progress-circular size="12" width="2" indeterminate></v-progress-circular>
-                Procurando {{ teamNames[0] }}...
+                {{ $t('match.searching', { name: teamNames[0] }) }}
               </span>
               <span v-else class="link-text unavailable">
-                {{ teamNames[0] }} - Não encontrado
+                {{ $t('match.notFound', { name: teamNames[0] }) }}
               </span>
             </div>
             <div v-if="teamNames[1] !== 'Team 2'" class="link-item">
@@ -218,10 +185,10 @@
               </a>
               <span v-else-if="dynamicLinks.team2.loading" class="link-text loading">
                 <v-progress-circular size="12" width="2" indeterminate></v-progress-circular>
-                Procurando {{ teamNames[1] }}...
+                {{ $t('match.searching', { name: teamNames[1] }) }}
               </span>
               <span v-else class="link-text unavailable">
-                {{ teamNames[1] }} - Não encontrado
+                {{ $t('match.notFound', { name: teamNames[1] }) }}
               </span>
             </div>
           </div>
@@ -269,9 +236,9 @@
           :src="teamLogoThumb(false, props.matchInfo.opponents?.[0]?.opponent?.location)" 
           v-if="props.matchInfo.opponents?.[0]"
         />
-        <span class="team-name-text">{{ props.matchInfo.opponents?.[0]?.opponent?.name || 'Team 1' }}</span>
+        <span class="team-name-text">{{ props.matchInfo.opponents?.[0]?.opponent?.name || $t('match.team1') }}</span>
         <v-icon class="vs-icon">mdi-close</v-icon>
-        <span class="team-name-text">{{ props.matchInfo.opponents?.[1]?.opponent?.name || 'Team 2' }}</span>
+        <span class="team-name-text">{{ props.matchInfo.opponents?.[1]?.opponent?.name || $t('match.team2') }}</span>
         <v-img 
           class="country-flag" 
           :src="teamLogoThumb(false, props.matchInfo.opponents?.[1]?.opponent?.location)" 
@@ -281,7 +248,7 @@
     </div>
 
     <div class="modal-content mobile">
-      <h3 class="section-title">Integrantes do time</h3>
+      <h3 class="section-title">{{ $t('match.teamMembers') }}</h3>
       <div v-if="props.matchInfo.rosters" class="team-rosters mobile">
         <!-- Team 1 Roster (Mobile) -->
         <div class="roster-column mobile">
@@ -300,7 +267,7 @@
       
       <!-- Mobile Streams Section -->
       <div v-if="availableStreams.length > 0" class="streams-section mobile">
-        <h3 class="section-title">Live Streams</h3>
+        <h3 class="section-title">{{ $t('match.liveStreams') }}</h3>
         <div class="streams-container">
           <a 
             v-for="(stream, index) in availableStreams" 
@@ -316,16 +283,16 @@
               <span v-if="stream.language" class="stream-language">{{ stream.language.toUpperCase() }}</span>
             </div>
             <div class="stream-badges">
-              <span v-if="stream.official" class="badge official">OFICIAL</span>
-              <span v-if="stream.main" class="badge main">PRINCIPAL</span>
+              <span v-if="stream.official" class="badge official">{{ $t('match.official') }}</span>
+              <span v-if="stream.main" class="badge main">{{ $t('match.main') }}</span>
             </div>
           </a>
         </div>
       </div>
       
       <div class="links-section mobile">
-        <h3 class="section-title">Links Relevantes</h3>
-        <p v-if="isSearchingLinks" class="links-subtitle">Buscando diretamente na Liquipedia...</p>
+        <h3 class="section-title">{{ $t('match.relevantLinks') }}</h3>
+        <p v-if="isSearchingLinks" class="links-subtitle">{{ $t('match.searchingLiquipedia') }}</p>
         <div class="links-container mobile">
           <div v-if="matchInfo.league?.name || matchInfo.serie?.name" class="link-item">
             <img src="/liquipedia.svg" alt="Liquipedia" class="liquipedia-icon" />
@@ -341,10 +308,10 @@
             </a>
             <span v-else-if="dynamicLinks.tournament.loading" class="link-text loading">
               <v-progress-circular size="12" width="2" indeterminate></v-progress-circular>
-              Procurando {{ matchInfo.league?.name || matchInfo.serie?.name }}...
+              {{ $t('match.searching', { name: matchInfo.league?.name || matchInfo.serie?.name }) }}
             </span>
             <span v-else class="link-text unavailable">
-              {{ matchInfo.league?.name || matchInfo.serie?.name }} - Não encontrado
+              {{ $t('match.notFound', { name: matchInfo.league?.name || matchInfo.serie?.name }) }}
             </span>
           </div>
           <div v-if="teamNames[0] !== 'Team 1'" class="link-item">
@@ -361,10 +328,10 @@
             </a>
             <span v-else-if="dynamicLinks.team1.loading" class="link-text loading">
               <v-progress-circular size="12" width="2" indeterminate></v-progress-circular>
-              Procurando {{ teamNames[0] }}...
+              {{ $t('match.searching', { name: teamNames[0] }) }}
             </span>
             <span v-else class="link-text unavailable">
-              {{ teamNames[0] }} - Não encontrado
+              {{ $t('match.notFound', { name: teamNames[0] }) }}
             </span>
           </div>
           <div v-if="teamNames[1] !== 'Team 2'" class="link-item">
@@ -381,10 +348,10 @@
             </a>
             <span v-else-if="dynamicLinks.team2.loading" class="link-text loading">
               <v-progress-circular size="12" width="2" indeterminate></v-progress-circular>
-              Procurando {{ teamNames[1] }}...
+              {{ $t('match.searching', { name: teamNames[1] }) }}
             </span>
             <span v-else class="link-text unavailable">
-              {{ teamNames[1] }} - Não encontrado
+              {{ $t('match.notFound', { name: teamNames[1] }) }}
             </span>
           </div>
         </div>
@@ -415,6 +382,8 @@ const emit = defineEmits(['closeModal']);
 
 const { mobile } = useDisplay();
 const { teamLogoThumb } = useLogos();
+const { formatDate } = useFormatDate();
+const { t } = useI18n();
 const gamesStore = useGamesStore();
 
 const teamNames = computed(() => {
@@ -493,11 +462,11 @@ function getGameIcon(videogameName) {
 
 // Direct Liquipedia search using Playwright
 async function searchLiquipediaDirectly(searchTerm, gameType) {
-  // No modo mock não busca na Liquipedia, só devolve o link de busca
+  // In mock mode, skip the Liquipedia search and return the search link
   if (useRuntimeConfig().public.mockData) {
     return {
       url: `https://liquipedia.net/leagueoflegends/Special:Search?search=${encodeURIComponent(searchTerm)}`,
-      title: `${searchTerm} - Buscar na Liquipedia`
+      title: t('match.searchOnLiquipedia', { term: searchTerm })
     };
   }
 
@@ -515,7 +484,7 @@ async function searchLiquipediaDirectly(searchTerm, gameType) {
         console.warn('Liquipedia search not available in development mode (Netlify functions not running)');
         const fallbackResult = { 
           url: `https://liquipedia.net/leagueoflegends/Special:Search?search=${encodeURIComponent(searchTerm)}`, 
-          title: `${searchTerm} - Buscar na Liquipedia` 
+          title: t('match.searchOnLiquipedia', { term: searchTerm }) 
         };
         return fallbackResult;
       }
@@ -540,7 +509,7 @@ async function searchLiquipediaDirectly(searchTerm, gameType) {
     const game = gameMap[gameType?.toLowerCase()] || 'leagueoflegends';
     const fallbackResult = { 
       url: `https://liquipedia.net/${game}/Special:Search?search=${encodeURIComponent(searchTerm)}`,
-      title: `Buscar "${searchTerm}" na Liquipedia` 
+      title: t('match.searchOnLiquipedia', { term: searchTerm }) 
     };
     
     // Cache the fallback result too
@@ -634,7 +603,7 @@ async function loadDynamicLinks() {
         if (dynamicLinks.value[type].loading) {
           dynamicLinks.value[type] = {
             url: '#',
-            title: 'Erro na busca',
+            title: t('match.searchError'),
             loading: false
           };
         }
@@ -748,13 +717,7 @@ const currentScore = computed(() => {
 onBeforeMount(async () => {
   try {
     if (props.matchInfo?.opponents && props.matchInfo.opponents.length >= 2) {
-  await gamesStore.fetchSupabaseDataForMatch(
-    props.matchInfo.id,
-    props.matchOccurrence,
-    props.matchInfo.serie_id,
-        teamNames.value
-  );
-  await gamesStore.fetchGameRosters(props.matchInfo, props.matchOccurrence);
+      await gamesStore.fetchGameRosters(props.matchInfo, props.matchOccurrence);
       
       // Load dynamic Liquipedia links
       await loadDynamicLinks();
@@ -768,23 +731,6 @@ onBeforeMount(async () => {
 
 
 
-function formatDate(inputDate) {
-  const date = new Date(inputDate);
-
-  // Adjust for GMT-3 - GMT-3 É O NOSSO TIME ZONE NO BRASIL, SEMPRE TER ISTO EM MENTE
-  date.setHours(date.getHours());
-
-  // Get day, month, hours, and minutes
-  const day = date.getDate().toString().padStart(2, "0");
-  const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
-  const hours = date.getHours().toString().padStart(2, "0");
-  const minutes = date.getMinutes().toString().padStart(2, "0");
-
-  // Construct the formatted string
-  const formattedDate = `${day}/${month} ${hours}:${minutes}`;
-
-  return formattedDate;
-}
 </script>
 
 <style lang="scss" scoped>
@@ -1240,117 +1186,6 @@ function formatDate(inputDate) {
   @media (max-width: 960px) {
     padding: 0;
   }
-}
-
-.betting-section {
-  margin-bottom: 32px;
-  
-  @media (max-width: 960px) {
-    margin-bottom: 24px;
-  }
-}
-
-.betting-odds-container {
-  display: flex;
-  gap: 16px;
-  
-  &.horizontal {
-    flex-direction: row;
-    justify-content: space-between;
-    
-    @media (max-width: 960px) {
-      flex-direction: column;
-      gap: 12px;
-    }
-  }
-  
-  @media (max-width: 960px) {
-    flex-direction: column;
-    gap: 12px;
-  }
-}
-
-.betting-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 16px 12px;
-  border-radius: 6px;
-  border: 1px solid #e9ecef;
-  background: white;
-  min-width: 120px;
-  flex: 1;
-  
-  &.rivalry-card {
-    border-top: 4px solid #ff6b35;
-  }
-  
-  &.betway-card {
-    border-top: 4px solid #00a859;
-  }
-  
-  &.ggbet-card {
-    border-top: 4px solid #ff6600;
-  }
-  
-  @media (max-width: 960px) {
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 12px 16px;
-    
-    &.rivalry-card,
-    &.betway-card,
-    &.ggbet-card {
-      border-top: none;
-      border-left: 4px solid;
-    }
-    
-    &.rivalry-card {
-      border-left-color: #ff6b35;
-    }
-    
-    &.betway-card {
-      border-left-color: #00a859;
-    }
-    
-    &.ggbet-card {
-      border-left-color: #ff6600;
-    }
-  }
-}
-
-.betting-brand {
-  font-family: "Poppins";
-  font-weight: 600;
-  font-size: 14px;
-  color: #333;
-  margin-bottom: 8px;
-  
-  @media (max-width: 960px) {
-    margin-bottom: 0;
-  }
-}
-
-.odds-display {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.odd {
-  font-family: "Poppins";
-  font-weight: 600;
-  font-size: 14px;
-  color: #333;
-  min-width: 24px;
-  text-align: center;
-}
-
-.separator {
-  font-family: "Poppins";
-  font-size: 14px;
-  color: #666;
 }
 
 .streams-section {

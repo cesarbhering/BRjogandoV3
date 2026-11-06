@@ -1,13 +1,6 @@
 <template>
-  <div>
-    CRONOGRAMA
-  </div>
+  <v-container class="py-10">
+    <h1>{{ $t('pages.cronogram') }}</h1>
+    <p>{{ $t('pages.comingSoon') }}</p>
+  </v-container>
 </template>
-
-<script setup>
-
-</script>
-
-<style lang="scss" scoped>
-
-</style>

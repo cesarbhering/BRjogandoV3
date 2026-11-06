@@ -1,6 +1,6 @@
 import { defineVitestConfig } from "@nuxt/test-utils/config";
 
-// Os testes de componente sempre rodam no modo mock (mesmo que `npm run dev:mock`)
+// Component tests always run in mock mode (same as `npm run dev:mock`)
 process.env.MOCK_DATA = "true";
 
 export default defineVitestConfig({
@@ -10,7 +10,7 @@ export default defineVitestConfig({
     include: ["tests/components/**/*.spec.js"],
     setupFiles: ["tests/setup.js"],
     environmentOptions: {
-      // Tela de desktop: o Vuetify considera mobile abaixo de 1280px
+      // Desktop screen: Vuetify treats anything below 1280px as mobile
       happyDom: { width: 1400, height: 1000 },
       nuxt: {
         domEnvironment: "happy-dom",

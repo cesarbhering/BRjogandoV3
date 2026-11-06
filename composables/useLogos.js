@@ -1,8 +1,9 @@
 export const useLogos = () => {
   /**
-   * Retorna o url do thumb do logo carregado no panda score, caso não tenha exibe a bandeira do país da organização.
-   * @param {Number} opponentNumber index do opponent dentro do array recebido na props matchInfo.opponents.
-   * @returns {Object} {URL: URL da logo do time ou da bandeira da organização, ALT: Descrição da imagem}.
+   * Returns the URL of the team logo thumbnail from PandaScore. If there is no logo, returns the flag of the organization's country.
+   * @param {String} defaultImgUrl Team logo URL from PandaScore.
+   * @param {String} nationality Country code used for the flag fallback.
+   * @returns {String} URL of the team logo or of the organization's flag.
    */
   const teamLogoThumb = (defaultImgUrl, nationality) => {
     if (defaultImgUrl) {
@@ -16,9 +17,9 @@ export const useLogos = () => {
       return transformedURL
     
     }
-    // Quando for BR importar o br-flag.svg que já temos no assets, pra economizar tempo de download.
+    // TODO: for BR, use the br-flag.svg already in assets to save a download.
     if (nationality) {
-      // No modo mock as bandeiras ficam em public/mocks/flags
+      // In mock mode the flags are served from public/mocks/flags
       if (useRuntimeConfig().public.mockData) {
         return `/mocks/flags/${nationality.toLowerCase()}.webp`
       }

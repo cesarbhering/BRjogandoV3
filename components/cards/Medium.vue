@@ -8,14 +8,12 @@
       <p :class="mobile ? 'mt-n2':''">
         {{ matchInfo.league.name }}
         -
-        {{
-         `Md ${matchInfo.games.length}`
-        }}
+        {{ $t("cards.bestOf", { n: matchInfo.games.length }) }}
       </p>
       <p v-if="!mobile" class="d-inline-block text-truncate">{{ matchInfo.serie.name || matchInfo.serie.full_name }}</p>
     </v-card-subtitle>
     <v-card-text class="pt-0">
-      <!-- LOGO/SIGLA/SCORE -->
+      <!-- LOGO/ACRONYM/SCORE -->
       <div
         v-for="(opponent, index) in matchInfo.opponents"
         class="opponent-line justify-space-between"
@@ -35,7 +33,7 @@
               "
             />
           </div>
-          <!-- SIGLA -->
+          <!-- ACRONYM -->
           <p class="text-h4 text--primary acronym" :class="mobile ? 'pl-0' : 'pl-4'">
             {{
               opponent.opponent.acronym ||
@@ -45,16 +43,21 @@
         </div>
         <div>
           <!-- SCORE -->
-          <!-- @TODO: QUANDO ESTA 1X0 OS NUMEROS NAO FICAM ALINHADOS -->
+          <!-- TODO: the numbers are not aligned when the score is 1x0 -->
           <p class="text-h4 text--primary mr-5 score text-center">
             {{ matchInfo.results[index].score }}
           </p>
         </div>
       </div>
-      <!-- AO VIVO SVG -->
-       <!-- AO VIVO SVG -->
+      <!-- LIVE SVG -->
        <div v-if="!mobile" class="live text-center">
-        <img src="../../assets/image/aovivo.svg" alt="Live game" />
+        <span class="live-badge">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="8" cy="8" r="7.5" fill="none" stroke="#FF0000" />
+            <circle cx="8" cy="8" r="4" fill="#FF0000" />
+          </svg>
+          {{ $t('cards.live') }}
+        </span>
       </div>
       <div v-else class="match-infos text-center">
         <p>{{ matchInfo.serie.name || matchInfo.serie.full_name }}</p>
@@ -199,18 +202,19 @@ const vVideoGameBasedBackground = {
 }
 
 .live {
-  width: 100%;
-  max-width: 31px;
   position: absolute;
   bottom: 0;
-  padding-left: 31%;
-  @media (max-width: 960px) {
-    padding-left: 37%;
+  left: 0;
+  right: 0;
+}
 
-    img {
-      max-width: 51px;
-    }
-  }
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #ff0000;
+  font-size: 16px;
+  line-height: 26px;
 }
 
 .custom-dialog .v-dialog__content {

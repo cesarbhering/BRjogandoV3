@@ -7,18 +7,18 @@ const mocks = {
 };
 
 /**
- * Busca os jogos da PandaScore ou, com a flag de mock ligada, dos JSONs em /mocks.
- * @param {String} matchOccurrence running, upcoming ou past
- * @returns {Promise<Array>} lista de jogos
+ * Fetches matches from PandaScore or, with the mock flag on, from the JSON files in /mocks.
+ * @param {String} matchOccurrence running, upcoming or past
+ * @returns {Promise<Array>} list of matches
  */
 const fetchMatches = async (matchOccurrence) => {
   if (useRuntimeConfig().public.mockData) {
     const mock = (await mocks[matchOccurrence]()).default;
-    // Logos baixados em public/mocks, para não fazer chamada externa no modo mock
+    // Logos are saved in public/mocks, so mock mode makes no external calls
     const localMock = JSON.parse(
       JSON.stringify(mock).replaceAll("https://cdn-api.pandascore.co/", "/mocks/")
     );
-    // O mock de past veio como array puro, os outros como { data: [...] }
+    // The past mock is a plain array, the others are { data: [...] }
     return Array.isArray(localMock) ? localMock : localMock.data;
   }
   const res = await fetch(
@@ -53,44 +53,6 @@ export const useGamesStore = defineStore({
       fetchMatches("past").then((matches) => {
         this.pastMatches = matches;
       });
-    },
-
-    /**
-     * Faz a chamada no supabase para pegar dados adicionais de um jogo.
-     * @param {Number} pandaScoreMatchId
-     * @param {String} matchOccurrence
-     */
-    async fetchSupabaseDataForMatch(
-      pandaScoreMatchId,
-      matchOccurrence,
-      pandaScoreSerieId,
-      teamNames
-    ) {
-      if (useRuntimeConfig().public.mockData) return;
-      try {
-        const response = await fetch(
-          `/.netlify/functions/fetchSupabaseDataForMatch?matchOccurrence=${matchOccurrence}&pandaScoreSerieId=${pandaScoreSerieId}&teamNames=${teamNames}`
-        );
-        const data = await response.json();
-        //Adiciona as informações no pinia
-        this[`${matchOccurrence}Matches`].find(
-          (match) => match.id === pandaScoreMatchId
-        ).supabaseDataForMatch = Object.assign({}, ...data.data);
-      } catch (error) {
-        console.error("Error fetching Supabase data:", error);
-      }
-    },
-
-    fetchOdds1xBet(matchUrl1xBet, pandaScoreMatchId, matchOccurrence) {
-      if (useRuntimeConfig().public.mockData) return;
-      fetch(`/.netlify/functions/fetchOdds1xBet?matchUrl1xBet=${matchUrl1xBet}`)
-        .then((res) => res.json())
-        .then(async (res) => {
-          const match = this[`${matchOccurrence}Matches`].find(
-            (match) => match.id === pandaScoreMatchId
-          );
-          Object.assign(match, { odds: { odds1xBet: res.data } });
-        });
     },
 
     fetchGameRosters(matchDetails, matchOccurrence) {

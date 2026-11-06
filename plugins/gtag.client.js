@@ -1,6 +1,6 @@
 export default defineNuxtPlugin((nuxtApp) => {
   const { gtagId, mockData } = useRuntimeConfig().public;
-  // Sem chamadas externas no modo mock
+  // No external calls in mock mode
   if (mockData) return;
   
   function gtag() {
