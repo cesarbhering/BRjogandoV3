@@ -42,28 +42,12 @@ import { useDisplay } from "vuetify";
 
 const { mobile } = useDisplay();
 const { teamLogoThumb } = useLogos();
+const { formatDate } = useFormatDate();
 
 const props = defineProps({
   matchInfo: { type: Object, required: true },
 });
 
-function formatDate(inputDate) {
-  const date = new Date(inputDate);
-
-  // Adjust for GMT-3 - GMT-3 É O NOSSO TIME ZONE NO BRASIL, SEMPRE TER ISTO EM MENTE
-  date.setHours(date.getHours());
-
-  // Get day, month, hours, and minutes
-  const day = date.getDate().toString().padStart(2, "0");
-  const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
-  const hours = date.getHours().toString().padStart(2, "0");
-  const minutes = date.getMinutes().toString().padStart(2, "0");
-
-  // Construct the formatted string
-  const formattedDate = `${day}/${month} ${hours}:${minutes}`;
-
-  return formattedDate;
-}
 </script>
 
 <style lang="scss" scoped>

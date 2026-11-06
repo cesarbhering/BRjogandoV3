@@ -52,9 +52,9 @@
           
           <!-- Team Names -->
           <div class="team-names">
-            <span class="team-name-text">{{ props.matchInfo.opponents?.[0]?.opponent?.name || 'Team 1' }}</span>
+            <span class="team-name-text">{{ props.matchInfo.opponents?.[0]?.opponent?.name || $t('match.team1') }}</span>
             <v-icon class="vs-icon">mdi-close</v-icon>
-            <span class="team-name-text">{{ props.matchInfo.opponents?.[1]?.opponent?.name || 'Team 2' }}</span>
+            <span class="team-name-text">{{ props.matchInfo.opponents?.[1]?.opponent?.name || $t('match.team2') }}</span>
           </div>
           
           <!-- Team 2 Logo -->
@@ -78,7 +78,7 @@
       <div class="modal-content">
         <!-- Team Members Section -->
         <div class="team-members-section">
-          <h3 class="section-title">Integrantes do time</h3>
+          <h3 class="section-title">{{ $t('match.teamMembers') }}</h3>
           
           <div v-if="!props.matchInfo.rosters" class="loading-container">
             <v-progress-circular :size="40" color="primary" indeterminate></v-progress-circular>
@@ -103,7 +103,7 @@
 
         <!-- Streams Section -->
         <div v-if="availableStreams.length > 0" class="streams-section">
-          <h3 class="section-title">Live Streams</h3>
+          <h3 class="section-title">{{ $t('match.liveStreams') }}</h3>
           <div class="streams-container">
             <a 
               v-for="(stream, index) in availableStreams" 
@@ -119,8 +119,8 @@
                 <span v-if="stream.language" class="stream-language">{{ stream.language.toUpperCase() }}</span>
               </div>
               <div class="stream-badges">
-                <span v-if="stream.official" class="badge official">OFICIAL</span>
-                <span v-if="stream.main" class="badge main">PRINCIPAL</span>
+                <span v-if="stream.official" class="badge official">{{ $t('match.official') }}</span>
+                <span v-if="stream.main" class="badge main">{{ $t('match.main') }}</span>
               </div>
             </a>
           </div>
@@ -128,8 +128,8 @@
 
         <!-- Links Section -->
         <div class="links-section">
-          <h3 class="section-title">Links Relevantes</h3>
-          <p v-if="isSearchingLinks" class="links-subtitle">Buscando diretamente na Liquipedia...</p>
+          <h3 class="section-title">{{ $t('match.relevantLinks') }}</h3>
+          <p v-if="isSearchingLinks" class="links-subtitle">{{ $t('match.searchingLiquipedia') }}</p>
           <div class="links-container">
             <div v-if="matchInfo.league?.name || matchInfo.serie?.name" class="link-item">
               <img src="/liquipedia.svg" alt="Liquipedia" class="liquipedia-icon" />
@@ -145,10 +145,10 @@
               </a>
               <span v-else-if="dynamicLinks.tournament.loading" class="link-text loading">
                 <v-progress-circular size="12" width="2" indeterminate></v-progress-circular>
-                Procurando {{ matchInfo.league?.name || matchInfo.serie?.name }}...
+                {{ $t('match.searching', { name: matchInfo.league?.name || matchInfo.serie?.name }) }}
               </span>
               <span v-else class="link-text unavailable">
-                {{ matchInfo.league?.name || matchInfo.serie?.name }} - Não encontrado
+                {{ $t('match.notFound', { name: matchInfo.league?.name || matchInfo.serie?.name }) }}
               </span>
             </div>
             <div v-if="teamNames[0] !== 'Team 1'" class="link-item">
@@ -165,10 +165,10 @@
               </a>
               <span v-else-if="dynamicLinks.team1.loading" class="link-text loading">
                 <v-progress-circular size="12" width="2" indeterminate></v-progress-circular>
-                Procurando {{ teamNames[0] }}...
+                {{ $t('match.searching', { name: teamNames[0] }) }}
               </span>
               <span v-else class="link-text unavailable">
-                {{ teamNames[0] }} - Não encontrado
+                {{ $t('match.notFound', { name: teamNames[0] }) }}
               </span>
             </div>
             <div v-if="teamNames[1] !== 'Team 2'" class="link-item">
@@ -185,10 +185,10 @@
               </a>
               <span v-else-if="dynamicLinks.team2.loading" class="link-text loading">
                 <v-progress-circular size="12" width="2" indeterminate></v-progress-circular>
-                Procurando {{ teamNames[1] }}...
+                {{ $t('match.searching', { name: teamNames[1] }) }}
               </span>
               <span v-else class="link-text unavailable">
-                {{ teamNames[1] }} - Não encontrado
+                {{ $t('match.notFound', { name: teamNames[1] }) }}
               </span>
             </div>
           </div>
@@ -236,9 +236,9 @@
           :src="teamLogoThumb(false, props.matchInfo.opponents?.[0]?.opponent?.location)" 
           v-if="props.matchInfo.opponents?.[0]"
         />
-        <span class="team-name-text">{{ props.matchInfo.opponents?.[0]?.opponent?.name || 'Team 1' }}</span>
+        <span class="team-name-text">{{ props.matchInfo.opponents?.[0]?.opponent?.name || $t('match.team1') }}</span>
         <v-icon class="vs-icon">mdi-close</v-icon>
-        <span class="team-name-text">{{ props.matchInfo.opponents?.[1]?.opponent?.name || 'Team 2' }}</span>
+        <span class="team-name-text">{{ props.matchInfo.opponents?.[1]?.opponent?.name || $t('match.team2') }}</span>
         <v-img 
           class="country-flag" 
           :src="teamLogoThumb(false, props.matchInfo.opponents?.[1]?.opponent?.location)" 
@@ -248,7 +248,7 @@
     </div>
 
     <div class="modal-content mobile">
-      <h3 class="section-title">Integrantes do time</h3>
+      <h3 class="section-title">{{ $t('match.teamMembers') }}</h3>
       <div v-if="props.matchInfo.rosters" class="team-rosters mobile">
         <!-- Team 1 Roster (Mobile) -->
         <div class="roster-column mobile">
@@ -267,7 +267,7 @@
       
       <!-- Mobile Streams Section -->
       <div v-if="availableStreams.length > 0" class="streams-section mobile">
-        <h3 class="section-title">Live Streams</h3>
+        <h3 class="section-title">{{ $t('match.liveStreams') }}</h3>
         <div class="streams-container">
           <a 
             v-for="(stream, index) in availableStreams" 
@@ -283,16 +283,16 @@
               <span v-if="stream.language" class="stream-language">{{ stream.language.toUpperCase() }}</span>
             </div>
             <div class="stream-badges">
-              <span v-if="stream.official" class="badge official">OFICIAL</span>
-              <span v-if="stream.main" class="badge main">PRINCIPAL</span>
+              <span v-if="stream.official" class="badge official">{{ $t('match.official') }}</span>
+              <span v-if="stream.main" class="badge main">{{ $t('match.main') }}</span>
             </div>
           </a>
         </div>
       </div>
       
       <div class="links-section mobile">
-        <h3 class="section-title">Links Relevantes</h3>
-        <p v-if="isSearchingLinks" class="links-subtitle">Buscando diretamente na Liquipedia...</p>
+        <h3 class="section-title">{{ $t('match.relevantLinks') }}</h3>
+        <p v-if="isSearchingLinks" class="links-subtitle">{{ $t('match.searchingLiquipedia') }}</p>
         <div class="links-container mobile">
           <div v-if="matchInfo.league?.name || matchInfo.serie?.name" class="link-item">
             <img src="/liquipedia.svg" alt="Liquipedia" class="liquipedia-icon" />
@@ -308,10 +308,10 @@
             </a>
             <span v-else-if="dynamicLinks.tournament.loading" class="link-text loading">
               <v-progress-circular size="12" width="2" indeterminate></v-progress-circular>
-              Procurando {{ matchInfo.league?.name || matchInfo.serie?.name }}...
+              {{ $t('match.searching', { name: matchInfo.league?.name || matchInfo.serie?.name }) }}
             </span>
             <span v-else class="link-text unavailable">
-              {{ matchInfo.league?.name || matchInfo.serie?.name }} - Não encontrado
+              {{ $t('match.notFound', { name: matchInfo.league?.name || matchInfo.serie?.name }) }}
             </span>
           </div>
           <div v-if="teamNames[0] !== 'Team 1'" class="link-item">
@@ -328,10 +328,10 @@
             </a>
             <span v-else-if="dynamicLinks.team1.loading" class="link-text loading">
               <v-progress-circular size="12" width="2" indeterminate></v-progress-circular>
-              Procurando {{ teamNames[0] }}...
+              {{ $t('match.searching', { name: teamNames[0] }) }}
             </span>
             <span v-else class="link-text unavailable">
-              {{ teamNames[0] }} - Não encontrado
+              {{ $t('match.notFound', { name: teamNames[0] }) }}
             </span>
           </div>
           <div v-if="teamNames[1] !== 'Team 2'" class="link-item">
@@ -348,10 +348,10 @@
             </a>
             <span v-else-if="dynamicLinks.team2.loading" class="link-text loading">
               <v-progress-circular size="12" width="2" indeterminate></v-progress-circular>
-              Procurando {{ teamNames[1] }}...
+              {{ $t('match.searching', { name: teamNames[1] }) }}
             </span>
             <span v-else class="link-text unavailable">
-              {{ teamNames[1] }} - Não encontrado
+              {{ $t('match.notFound', { name: teamNames[1] }) }}
             </span>
           </div>
         </div>
@@ -382,6 +382,8 @@ const emit = defineEmits(['closeModal']);
 
 const { mobile } = useDisplay();
 const { teamLogoThumb } = useLogos();
+const { formatDate } = useFormatDate();
+const { t } = useI18n();
 const gamesStore = useGamesStore();
 
 const teamNames = computed(() => {
@@ -475,7 +477,7 @@ async function searchLiquipediaDirectly(searchTerm, gameType) {
         console.warn('Liquipedia search not available in development mode (Netlify functions not running)');
         const fallbackResult = { 
           url: `https://liquipedia.net/leagueoflegends/Special:Search?search=${encodeURIComponent(searchTerm)}`, 
-          title: `${searchTerm} - Buscar na Liquipedia` 
+          title: t('match.searchOnLiquipedia', { term: searchTerm }) 
         };
         return fallbackResult;
       }
@@ -500,7 +502,7 @@ async function searchLiquipediaDirectly(searchTerm, gameType) {
     const game = gameMap[gameType?.toLowerCase()] || 'leagueoflegends';
     const fallbackResult = { 
       url: `https://liquipedia.net/${game}/Special:Search?search=${encodeURIComponent(searchTerm)}`,
-      title: `Buscar "${searchTerm}" na Liquipedia` 
+      title: t('match.searchOnLiquipedia', { term: searchTerm }) 
     };
     
     // Cache the fallback result too
@@ -594,7 +596,7 @@ async function loadDynamicLinks() {
         if (dynamicLinks.value[type].loading) {
           dynamicLinks.value[type] = {
             url: '#',
-            title: 'Erro na busca',
+            title: t('match.searchError'),
             loading: false
           };
         }
@@ -722,23 +724,6 @@ onBeforeMount(async () => {
 
 
 
-function formatDate(inputDate) {
-  const date = new Date(inputDate);
-
-  // Adjust for GMT-3 - GMT-3 É O NOSSO TIME ZONE NO BRASIL, SEMPRE TER ISTO EM MENTE
-  date.setHours(date.getHours());
-
-  // Get day, month, hours, and minutes
-  const day = date.getDate().toString().padStart(2, "0");
-  const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
-  const hours = date.getHours().toString().padStart(2, "0");
-  const minutes = date.getMinutes().toString().padStart(2, "0");
-
-  // Construct the formatted string
-  const formattedDate = `${day}/${month} ${hours}:${minutes}`;
-
-  return formattedDate;
-}
 </script>
 
 <style lang="scss" scoped>

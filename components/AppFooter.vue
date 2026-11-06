@@ -6,16 +6,16 @@
       </div>
       <div class="footer-infos">
         <div class="footer-infos-links">
-          <NuxtLink :to="{ name: 'institutional-about' }"> Sobre </NuxtLink>
-          <NuxtLink :to="{ name: 'institutional-contact' }"> Contato </NuxtLink>
-          <NuxtLink :to="{ name: 'institutional-terms' }"> Termo de Uso </NuxtLink>
-          <NuxtLink :to="{ name: 'institutional-games' }"> Jogos</NuxtLink>
-          <NuxtLink :to="{ name: 'institutional-profile' }"> Perfil </NuxtLink>
-          <NuxtLink :to="{ name: 'institutional-questions' }"> Perguntas Frequentes </NuxtLink>
-          <NuxtLink :to="{ name: 'institutional-privacy' }"> Política de Privacidade </NuxtLink>
+          <NuxtLink :to="{ name: 'institutional-about' }"> {{ $t('footer.about') }} </NuxtLink>
+          <NuxtLink :to="{ name: 'institutional-contact' }"> {{ $t('footer.contact') }} </NuxtLink>
+          <NuxtLink :to="{ name: 'institutional-terms' }"> {{ $t('footer.terms') }} </NuxtLink>
+          <NuxtLink :to="{ name: 'institutional-games' }"> {{ $t('footer.games') }} </NuxtLink>
+          <NuxtLink :to="{ name: 'institutional-profile' }"> {{ $t('footer.profile') }} </NuxtLink>
+          <NuxtLink :to="{ name: 'institutional-questions' }"> {{ $t('footer.faq') }} </NuxtLink>
+          <NuxtLink :to="{ name: 'institutional-privacy' }"> {{ $t('footer.privacy') }} </NuxtLink>
         </div>
         <div class="footer-infos-social-media">
-          <div><p>Redes Sociais</p></div>
+          <div><p>{{ $t('footer.socialMedia') }}</p></div>
           <div>
             <NuxtLink :to="{ name: 'institutional-cronogram' }"> <img src="../assets/image/logo-twitter-branco.png" alt="logo-twitter"></NuxtLink>
             <NuxtLink :to="{ name: 'institutional-about' }"> <img src="../assets/image/logo-instagram-branco.png" alt=""> </NuxtLink>
@@ -25,7 +25,7 @@
       </div>
       <div class="footer-creators">
         <div>
-          <p>BR Jogando &copy 2023. Todos os direitos reservados.</p>
+          <p>{{ $t('footer.rights') }}</p>
         </div>        
       </div> 
     </v-footer>

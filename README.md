@@ -1,6 +1,6 @@
 # BR Jogando
 
-**BR Jogando** is a web app that follows Brazilian teams and players in professional esports. It lists live, upcoming and recent matches for Counter-Strike, Valorant, League of Legends, Dota 2 and Rainbow Six Siege, all in one place and in Portuguese.
+**BR Jogando** is a web app that follows Brazilian teams and players in professional esports. It lists live, upcoming and recent matches for Counter-Strike, Valorant, League of Legends, Dota 2 and Rainbow Six Siege, all in one place, in English and Portuguese.
 
 Live site: **https://brjogando.com.br**
 
@@ -14,6 +14,7 @@ Brazilian esports fans who want to know when their teams play next, follow live 
 - **Match details modal** with the score, the date and time, team rosters and links to the live streams.
 - **Liquipedia links** for each team, found automatically by a serverless function.
 - **Per-game icons and artwork** so you can tell at a glance which game a match belongs to.
+- **English and Portuguese**, with a language switch in the header. English is the default and the choice is remembered.
 - **Dark mode** and a responsive layout for phones and desktops.
 
 ## Built with
@@ -23,7 +24,7 @@ Brazilian esports fans who want to know when their teams play next, follow live 
 | Framework | [Nuxt 3](https://nuxt.com) as a single-page app, with Vue 3 |
 | UI | [Vuetify 3](https://vuetifyjs.com), Sass, Material Design Icons, Font Awesome |
 | State | [Pinia](https://pinia.vuejs.org) |
-| i18n | `@nuxtjs/i18n` with Portuguese as the default locale |
+| i18n | `@nuxtjs/i18n`, English by default with a Portuguese (pt-BR) switch in the header |
 | Backend | [Netlify Functions](https://docs.netlify.com/functions/overview/) on Node.js |
 | Data | PandaScore REST API |
 | Scraping | `playwright-core` to search Liquipedia |

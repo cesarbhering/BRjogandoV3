@@ -13,6 +13,14 @@ export default defineNuxtConfig({
 
   i18n: {
     vueI18n: "./i18n.config.js",
+    strategy: "no_prefix",
+    defaultLocale: "en",
+    locales: [
+      { code: "en", iso: "en-US", name: "English" },
+      { code: "pt-BR", iso: "pt-BR", name: "Português" },
+    ],
+    // English is always the default; the visitor's choice is saved by plugins/locale.client.js
+    detectBrowserLanguage: false,
   },
 
   css: [
@@ -27,7 +35,7 @@ export default defineNuxtConfig({
   },
   
   alias: {
-    // Resolve bug do pinia ao ser instalado pelo NPM (Cannot start nuxt:  Cannot find module 'pinia/dist/pinia.mjs')
+    // Works around a Pinia bug when installed with npm (Cannot start nuxt: Cannot find module 'pinia/dist/pinia.mjs')
     pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs"
   }
 

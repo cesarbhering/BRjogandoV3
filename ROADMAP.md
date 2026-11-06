@@ -44,9 +44,8 @@ This is the work planned for BR Jogando. Items are grouped by theme and roughly 
 
 | Item | Estimate |
 |---|---|
-| Move every hardcoded Portuguese string into the i18n files | 4h |
-| Add a full English translation and a language switcher | 4h |
-| Make date and time formatting follow the selected locale | 2h |
+| Add Spanish as a third language, for the rest of Latin America | 3h |
+| Translate the SEO and Open Graph tags on every page, not only the home page | 2h |
 
 ## 6. Performance and reliability
 
@@ -67,4 +66,4 @@ This is the work planned for BR Jogando. Items are grouped by theme and roughly 
 | Improve SEO with per-page titles, descriptions and Open Graph tags | 3h |
 | Review accessibility: alt text, color contrast and keyboard navigation | 3h |
 
-**Total:** about 135 hours of planned work.
+**Total:** about 130 hours of planned work.
